@@ -2,9 +2,10 @@ module DotRuby
 
   module V0
 
-    # The explict setters follow strict validation rules
-    # specific to reading and writeing metadata in YAML format.
-    module ExplicitSetters
+    # The Canonical module defines explict setters for Metadata's attributes.
+    # These setters follow strict validation rules specific to reading and
+    # writing of `.ruby` YAML formatted files.
+    module Canonical
 
       # Project's <i>packaging name</i> must be a string without spaces
       # using only [a-zA-Z0-9_-].
@@ -166,6 +167,12 @@ module DotRuby
         validate_word(value)
         super(value)
       end
+
+      # TODO: Separate field like this, or just any field not recognized?
+      #def extra=(value)
+      #  validate_hash(:extra, value)
+      #  super(valid)
+      #end
 
     private
 

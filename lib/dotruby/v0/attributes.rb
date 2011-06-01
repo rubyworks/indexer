@@ -1,7 +1,9 @@
 module DotRuby
 
+  # First revision of dotruby specification.
   module V0
 
+    # The Attributes module defines all of the accepted metadata fields.
     module Attributes
 
       # The revision of .ruby specification
@@ -92,6 +94,9 @@ module DotRuby
       attr_accessor :namespace
 
       #attr_accessor :engine_check ?
+
+      # Any user-define extraneous metadata.
+      attr_accessor :extra
     end
 
   end
