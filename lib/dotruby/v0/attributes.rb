@@ -53,10 +53,7 @@ module DotRuby
       # NOTE: Do not need, executable should alwasy by in bin/, right?
       #attr_accessor :executables
 
-      # The files of the project
-      attr_accessor :files
-
-      # The requirements of the project
+      # The packages this package requires to function.
       attr_accessor :requires  #:requirements, :dependencies
 
       # The packages with which this project cannot function.
@@ -70,7 +67,8 @@ module DotRuby
       #attr_accessor :provides
 
       # The version of Ruby required by the project
-      attr_accessor :required_ruby_version
+      # NOTE: is it possible to to makes this a part of ordinary requirements?
+      #attr_accessor :required_ruby_version
 
       # The post-installation message
       # NOTE: Do we really need such a long name?
@@ -95,8 +93,29 @@ module DotRuby
 
       #attr_accessor :engine_check ?
 
-      # Any user-define extraneous metadata.
+      # Any user-defined extraneous metadata.
       attr_accessor :extra
+
+      # The files of the project
+      # Is this neccessary?
+      #attr_accessor :files
+
+    private
+
+      #
+      def initialize_defaults
+        @licenses     = []
+        @authors      = {}
+        @maintainers  = {}
+        @resources    = {}
+        @repositories = {}
+        @loadpath     = ['lib']
+        @requires     = []
+        @conflicts    = []
+        @replaces     = []
+        @extra        = {}
+      end
+
     end
 
   end
