@@ -1,7 +1,17 @@
 # .ruby spec
 
+## The Lowdown
+
+The .ruby file specification...
+
 
 ## Fields
+
+### Revision
+
+The revision of .ruby specification.
+
+    revision: 0
 
 ### Name
 
@@ -27,6 +37,35 @@ The Codename is a arbitraty name given to the particular version.
 The title is a single line string.
 
     title: Hello World
+
+### Date
+
+Date is the date the .ruby file was generated. For packages of the project
+this will be essentially the date a package was released. The format is
+standard ISO UTC. It can also have an optional HH::MM::SS timestamp.
+
+    date: 2011-06-02
+
+### Created
+
+Created is the date the project was began. The format is
+standard ISO UTC. It can also have an optional HH::MM::SS timestamp.
+
+    created: 2011-05-29
+
+### Summary
+
+Summary is a one-line summary description of the project.
+
+    summary: Say hello to the world!
+
+### Description
+
+Description is a multi-line detailed description of the project.
+
+    description:
+      Hello World allows anyone to  say hello to the world.
+      It's fun to do and easy to use.
 
 ### Authors
 
@@ -66,9 +105,21 @@ orgnaization which which this package is assocciated.
 The Copyright is an abribtrate string containing the projects copyright
 notice. DO NOT include license information in this.
 
-  copyright: |
-    (c) 2011 Thomas T. Thomas
-    (c) 2010 James J. James
+    copyright: |
+      (c) 2011 Thomas T. Thomas
+      (c) 2010 James J. James, Jr.
+
+
+### Licenses
+
+Licenses is a list licenses the package is distributed under. The first
+MUST be the primary license. The names should be the short representations
+the licenses followed by a version number if it applies.
+
+    licenses:
+      - GPL3
+      - Apache2.0
+      - MIT
 
 ### Requirements
 
@@ -101,17 +152,17 @@ development, e.g.
 Conflicts is a list of packages which have known issues when operating 
 in the same process as this package.
 
-  conflicts:
-    badmojo: 0+
+    conflicts:
+      badmojo: 0+
 
 ### Replacements
 
 Replacements is simply a list of packages that more or less do the same
 thing as this package. A good example is a Markdown parser:
 
-  replacements:
-    - rdiscount
-    - BlueCloth
+    replacements:
+      - rdiscount
+      - BlueCloth
 
 ### External Requirements
 
@@ -143,6 +194,23 @@ for the package repository.
     repositories:
       public: http://github.com/fooworks/hello_world.git
 
+### Loadpath
+
+(or `require_paths`?)
+
+The load_path provides a list of paths within the project that the load system
+should search for scripts.
+
+    load_path:
+      - lib
+
+### Message
+
+The post install message.
+
+  message: |
+    Thanks for installing Hello World!
+
 ### Extra
 
 Any extraneous metadata can be placed in the `extra` field as a hash entry.
@@ -150,5 +218,4 @@ This will be very rarely used.
 
     extra:
       need: good example
-
 
