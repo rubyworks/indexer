@@ -1,7 +1,8 @@
 module DotRuby
 
+  # Specific Specification.
   #
-  class CanonicalMetadata
+  class Spec
 
     #
     def initialize(data={})
