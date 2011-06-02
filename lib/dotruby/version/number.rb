@@ -1,87 +1,91 @@
 module DotRuby
 
-  # Represents a standard three-number version.
-  #
-  # @see http://semver.org/
-  #
-  # TODO: Maybe Use POM's VersionNumber class instead as it is more feature rich.
-  class VersionNumber
+  module Version
 
-    # Major version number
-    attr_reader :major
+    # Represents a standard three-number version.
+    #
+    # @see http://semver.org/
+    #
+    # TODO: Maybe Use POM's VersionNumber class instead as it is more feature rich.
+    class Number
 
-    # Minor version number
-    attr_reader :minor
+      # Major version number
+      attr_reader :major
 
-    # Patch version number
-    attr_reader :patch
+      # Minor version number
+      attr_reader :minor
 
-    # The build string
-    attr_reader :build
+      # Patch version number
+      attr_reader :patch
 
-    #
-    # Creates a new version.
-    #
-    # @param [Integer, nil] major
-    #   The major version number.
-    #
-    # @param [Integer, nil] minor
-    #   The minor version number.
-    #
-    # @param [Integer, nil] patch
-    #   The patch version number.
-    #
-    # @param [Integer, nil] build (nil)
-    #   The build version number.
-    #
-    def initialize(major,minor,patch,build=nil)
-      @major = (major || 0)
-      @minor = (minor || 0)
-      @patch = (patch || 0)
-      @build = build
-    end
+      # The build string
+      attr_reader :build
 
-    #
-    # Parses a version string.
-    #
-    # @param [String] string
-    #   The version string.
-    #
-    # @return [Version]
-    #   The parsed version.
-    #
-    def self.parse(string)
-      major, minor, patch, build = string.split('.',4)
+      #
+      # Creates a new version.
+      #
+      # @param [Integer, nil] major
+      #   The major version number.
+      #
+      # @param [Integer, nil] minor
+      #   The minor version number.
+      #
+      # @param [Integer, nil] patch
+      #   The patch version number.
+      #
+      # @param [Integer, nil] build (nil)
+      #   The build version number.
+      #
+      def initialize(major,minor,patch,build=nil)
+        @major = (major || 0)
+        @minor = (minor || 0)
+        @patch = (patch || 0)
+        @build = build
+      end
 
-      return self.new(
-        (major || 0).to_i,
-        (minor || 0).to_i,
-        (patch || 0).to_i,
-        build
-      )
-    end
+      #
+      # Parses a version string.
+      #
+      # @param [String] string
+      #   The version string.
+      #
+      # @return [Version]
+      #   The parsed version.
+      #
+      def self.parse(string)
+        major, minor, patch, build = string.split('.',4)
 
-    #
-    # Converts the version to a String.
-    #
-    def to_s
-      [major, minor, patch, build].compact.join('.')
-    end
+        return self.new(
+          (major || 0).to_i,
+          (minor || 0).to_i,
+          (patch || 0).to_i,
+          build
+        )
+      end
 
-    #
-    # Converts the version to YAML.
-    #
-    # @param [IO] io
-    #   The output stream to write to.
-    #
-    # @return [String]
-    #   The resulting YAML.
-    #
-    def to_yaml(io)
-      str = "#{@major}.#{@minor}.#{@patch}"
-      str << ".#{@build}" if @build
+      #
+      # Converts the version to a String.
+      #
+      def to_s
+        [major, minor, patch, build].compact.join('.')
+      end
 
-      return str.to_yaml(io)
+      #
+      # Converts the version to YAML.
+      #
+      # @param [IO] io
+      #   The output stream to write to.
+      #
+      # @return [String]
+      #   The resulting YAML.
+      #
+      def to_yaml(io)
+        str = "#{@major}.#{@minor}.#{@patch}"
+        str << ".#{@build}" if @build
+
+        return str.to_yaml(io)
+      end
+
     end
 
   end
