@@ -187,8 +187,7 @@ module DotRuby
       end
 
       #
-      #
-      alias_accessor :requires, :requirements
+      alias :requires= :requirements=
 
       #
       # Sets the dependencies of the project.
