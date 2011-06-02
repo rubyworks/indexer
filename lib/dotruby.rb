@@ -10,6 +10,8 @@ module DotRuby
 
 end
 
+require 'yaml'
+
 require 'dotruby/exceptions/invalid_metadata'
 require 'dotruby/exceptions/invalid_version'
 
