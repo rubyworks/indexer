@@ -191,7 +191,7 @@ module DotRuby
 
       def validate_word(field, word)
         validate_string(field, word)
-        raise(InvalidMetadata, "#{field} must be a word") if /[A-Za-z0-9_-]/ !~ word
+        raise(InvalidMetadata, "#{field} must be a word") if /^[A-Za-z0-9_-]*$/ !~ word
       end
 
       def validate_array(field, array)
