@@ -54,13 +54,13 @@ module DotRuby
       #attr_accessor :executables
 
       # The packages this package requires to function.
-      attr_accessor :requires  #:requirements, :dependencies
+      attr_accessor :requirements
+
+      # The packages that this package can replace (near equivalent APIs).
+      attr_accessor :replacements
 
       # The packages with which this project cannot function.
       attr_accessor :conflicts
-
-      # The packages that this package can replace (near equivalent APIs).
-      attr_accessor :replaces
 
       # 
       # NOTE: This is a Debian concept. Is it useful?
@@ -83,6 +83,11 @@ module DotRuby
       # Copyright notice for the project.
       attr_accessor :copyright
 
+      # Any user-defined extraneous metadata.
+      attr_accessor :extra
+
+# TODO: NOT SURE AT ALL ABOUT THESE
+
       # The SCM which the project is currently utilizing.
       # NOTE: Is this a good idea?
       attr_accessor :scm
@@ -91,30 +96,12 @@ module DotRuby
       # NOTE: how to best handle this?
       attr_accessor :namespace
 
+      # The engines and versions of ruby the project has been tested under.
       #attr_accessor :engine_check ?
-
-      # Any user-defined extraneous metadata.
-      attr_accessor :extra
 
       # The files of the project
       # Is this neccessary?
       #attr_accessor :files
-
-    private
-
-      #
-      def initialize_defaults
-        @licenses     = []
-        @authors      = {}
-        @maintainers  = {}
-        @resources    = {}
-        @repositories = {}
-        @loadpath     = ['lib']
-        @requires     = []
-        @conflicts    = []
-        @replaces     = []
-        @extra        = {}
-      end
 
     end
 

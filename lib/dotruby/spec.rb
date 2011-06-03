@@ -13,7 +13,7 @@ module DotRuby
       extend DotRuby.v(@revision)::Attributes
       extend DotRuby.v(@revision)::Canonical
 
-      initialize_defaults
+      initialize_attributes
 
       merge!(data)
     end

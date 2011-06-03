@@ -147,9 +147,14 @@ module DotRuby
       # @param [Array<String>, String] paths
       #   The require-paths or a glob-pattern.
       #
-      def require_paths=(paths)
-        @require_paths = each_path(paths).to_a
+      def load_path=(paths)
+        @load_path = each_path(paths).to_a
       end
+
+      #
+      #
+      #
+      alias :require_paths :load_path
 
       #
       # Sets the post-install message of the project.
@@ -239,7 +244,7 @@ module DotRuby
       alias :requires= :requirements=
 
       #
-      # Common alias for #requirements.
+      # Alias for #requirements.
       #
       alias :dependencies= :requirements=
 
@@ -394,18 +399,46 @@ module DotRuby
       # Initializes the {Metdata} attributes.
       #
       def initialize_attributes
-        @licenses              = []
         @authors               = []
-        @maintatiners          = []
-
-        @require_paths         = []
-
-        @requirements          = []
-        @replacements          = []
-        @conflicts             = []
         @external_requirements = []
+        @licenses              = []
+        @maintainers           = []
+        @replacements          = []
+
+        @conflicts             = {}
+        @extra                 = {}
+        @repositories          = {}
+        @requirements          = {}
+        @resources             = {}
+
+        @load_path             = ['lib']
 
         #@files = []
+      end
+
+    private
+
+      #
+      # Iterates over the paths.
+      #
+      # @param [Array<String>, String] paths
+      #   The paths or path glob pattern to iterate over.
+      #
+      # @yield [path]
+      #   The given block will be passed each individual path.
+      #
+      # @yieldparam [String] path
+      #   An individual path.
+      #
+      # @ since 0.1.3
+      #
+      def each_path(paths,&block)
+        case paths
+        when Array
+          paths.each(&block)
+        else
+          glob(paths,&block)
+        end
       end
 
     end

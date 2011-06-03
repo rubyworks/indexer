@@ -55,7 +55,7 @@ module DotRuby
 
       # Loadpath must be an Array of valid pathnames or a String of pathnames
       # separated by colons or semi-colons.
-      def loadpath=(value)
+      def load_path=(value)
         case value
         when Array
           # TODO
@@ -68,7 +68,7 @@ module DotRuby
       end
 
       # Requirements must be a list of package references.
-      def requires=(value)
+      def requirements=(value)
         validate_package_references(:requirements, value)
         super(value)
       end
@@ -79,9 +79,9 @@ module DotRuby
         super(value)
       end
 
-      # List of packages that this package can replace (approx. same API).
-      def replaces=(value)
-        validate_package_references(:replaces, value)
+      # List of packages that this package can serve as a replacement.
+      def replacements=(value)
+        validate_array(:replaces, value)
         super(value)
       end
 
@@ -93,11 +93,19 @@ module DotRuby
         super(value)
       end
 
-      # Compnay must be a single line string.
+# TODO: Company or Organization or both?
+
+      # Company must be a single line string.
       def company=(value)
         validate_single_line(:company, value)
         super(value)
       end
+
+      # Organization must be a single line string.
+      def organization=(value)
+        validate_single_line(:organization, value)
+        super(value)
+      end     
 
       # The creation date must be a valide UTC formatted date.
       def created=(value)
@@ -106,7 +114,7 @@ module DotRuby
       end
 
       # List of license, e.g. 'Apache 2.0'.
-      def validate_licenses(value)
+      def licenses=(value)
         validate_array(:licenses, value)
         super(value)
       end
@@ -155,9 +163,9 @@ module DotRuby
         super(value)
       end
 
-      # Namespace must be a string.
+      # Namespace must be a single line string.
       def namespace=(value)
-        validate_string(:namespace, value)
+        validate_single_line(:namespace, value)
         #raise InvalidMetadata unless /^(class|module)/ =~ value
         super(value)
       end
@@ -168,11 +176,11 @@ module DotRuby
         super(value)
       end
 
-      # TODO: Separate field like this, or just any field not recognized?
-      #def extra=(value)
-      #  validate_hash(:extra, value)
-      #  super(valid)
-      #end
+      #
+      def extra=(value)
+        validate_hash(:extra, value)
+        super(valid)
+      end
 
     private
 
@@ -223,6 +231,29 @@ module DotRuby
         if not /^(\w+)\:\/\/\S+$/ =~ url
           raise(InvalidMetadata, "#{field} must be a URL")
         end
+      end
+
+    protected
+
+      #
+      # Initializes the {Metdata} attributes.
+      #
+      def initialize_attributes
+        @authors               = []
+        @external_requirements = []
+        @licenses              = []
+        @maintainers           = []
+        @replacements          = []
+
+        @conflicts             = {}
+        @extra                 = {}
+        @repositories          = {}
+        @requirements          = {}
+        @resources             = {}
+
+        @load_path             = ['lib']
+
+        #@files = []
       end
 
     end
