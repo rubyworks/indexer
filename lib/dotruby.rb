@@ -15,9 +15,11 @@ require 'yaml'
 require 'dotruby/exceptions/invalid_metadata'
 require 'dotruby/exceptions/invalid_version'
 
+require 'dotruby/hash_like'
+require 'dotruby/spec'
 require 'dotruby/metadata'
-require 'dotruby/canonical_metadata'
-require 'dotruby/version_number'
+require 'dotruby/version/number'
+require 'dotruby/version/constraint'
 
 require 'dotruby/v0'
 
