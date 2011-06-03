@@ -2,6 +2,7 @@ module DotRuby
 
   # TODO: What shall we call this class? It is the "convenience" specification.
   class Metadata
+    include HashLike
 
     #
     def initialize(data={})
