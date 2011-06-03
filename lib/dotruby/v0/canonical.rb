@@ -79,9 +79,15 @@ module DotRuby
         super(value)
       end
 
-      # List of packages that this package can serve as a replacement.
+      #
+      def alternatives=(value)
+        validate_array(:alternatives, value)
+        super(value)
+      end
+
+      # List of packages for which this package serves as a replacement.
       def replacements=(value)
-        validate_array(:replaces, value)
+        validate_array(:replacements, value)
         super(value)
       end
 

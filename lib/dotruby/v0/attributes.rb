@@ -56,7 +56,19 @@ module DotRuby
       # The packages this package requires to function.
       attr_accessor :requirements
 
+      # A list of packages that provide more or less the same functionality.
+      # A good example is for a markdown library.
+      #
+      #   alternatives:
+      #     - rdiscount
+      #     - redcarpet
+      #     - BlueCloth
+      #
+      attr_accessor :alternatives
+
       # The packages that this package can replace (near equivalent APIs).
+      # This is similar to `alternatives` but defines a stringer relationship.
+      # Think Erubis for ERB, or libXML2 or libXML.
       attr_accessor :replacements
 
       # The packages with which this project cannot function.

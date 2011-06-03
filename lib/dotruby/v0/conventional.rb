@@ -199,15 +199,33 @@ module DotRuby
       # @param [Array, String] replacements
       #   The replacements for the project.
       #
+      def alternatives=(alternatives)
+        unless alternatives.kind_of?(Array)
+          raise(InvalidMetadata, "alternatives must be a Array")
+        end
+
+        @alternatives.clear
+
+        alternatives.each do |name|
+          add_alternative(name)
+        end
+      end
+
+      #
+      # Sets the packages this package could (more or less) replace.
+      # 
+      # @param [Array, String] replacements
+      #   The replacements for the project.
+      #
       def replacements=(replacements)
-        unless replacements.kind_of?(Hash)
-          raise(InvalidMetadata, "replacements must be a Hash")
+        unless replacements.kind_of?(Array)
+          raise(InvalidMetadata, "replacements must be a Array")
         end
 
         @replacements.clear
 
-        replacements.each do |name, specifics|
-          add_replacement(name, specifics)
+        replacements.each do |name|
+          add_replacement(name)
         end
       end
 
@@ -262,16 +280,23 @@ module DotRuby
       end
 
       #
+      # Adds a new alternative.
+      #
+      # @param [String] name
+      #   The name of the alternative.
+      #
+      def add_alternative(name)
+        @alternative << name.to_s
+      end
+
+      #
       # Adds a new replacement.
       #
       # @param [String] name
       #   The name of the replacement.
       #
-      # @param [Hash] specifics
-      #   The specifics of the replacement.
-      #
-      def add_replacement(name, specifics)
-        @replacements << Requirement.parse(name, specifics)
+      def add_replacement(name)
+        @replacements << name.to_s
       end
 
       #
