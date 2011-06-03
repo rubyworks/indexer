@@ -13,17 +13,17 @@ In this case the revision number will be set to the latest available.
 In addition, certain attributes will have default values.
 
     spec.licenses.should     == []
-    spec.requires.should     == []
-    spec.conflicts.should    == []
-    spec.replaces.should     == []
+    spec.requirements.should == {}
+    spec.conflicts.should    == {}
+    spec.replacements.should == []
 
-    spec.authors.should      == {}
-    spec.maintainers.should  == {}
+    spec.authors.should      == []
+    spec.maintainers.should  == []
     spec.resources.should    == {}
     spec.repositories.should == {}
     spec.extra.should        == {}
 
-    spec.loadpath.should     == ['lib']
+    spec.load_path.should    == ['lib']
 
 ## Valid Settings
 
