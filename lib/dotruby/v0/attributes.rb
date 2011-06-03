@@ -47,7 +47,7 @@ module DotRuby
       attr_accessor :date
 
       # The directories to search within the project when requiring files
-      attr_accessor :loadpath #:load_path / :require_paths
+      attr_accessor :load_path  # :loadpath or :require_paths ?
 
       # The names of the executable scripts
       # NOTE: Do not need, executable should alwasy by in bin/, right?

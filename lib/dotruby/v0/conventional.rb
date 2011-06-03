@@ -154,7 +154,14 @@ module DotRuby
       #
       #
       #
-      alias :require_paths :load_path
+      alias :require_paths= :load_path=
+
+      #
+      #
+      #
+      def require_paths
+        @load_path
+      end
 
       #
       # Sets the post-install message of the project.
@@ -326,7 +333,7 @@ module DotRuby
       #
       #
       #
-      alias :runtime_dependencies, :runtime_requirements
+      alias :runtime_dependencies :runtime_requirements
 
       #
       # Returns the development requirements of the project.
@@ -342,7 +349,7 @@ module DotRuby
       #
       #
       #
-      alias :development_dependencies, :development_requirements
+      alias :development_dependencies :development_requirements
 
       #
       # Sets the external requirements for the project.
