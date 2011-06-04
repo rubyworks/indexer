@@ -1,23 +1,11 @@
+require 'dotruby/metadata'
+
 module DotRuby
 
   # Specific Specification.
   #
-  class Spec
+  class Spec < Metadata
     include HashLike
-
-    #
-    def initialize(data={})
-      @revision = data['revision'] ||
-                  data[:revision]  ||
-                  CURRENT_REVISION
-
-      extend DotRuby.v(@revision)::Attributes
-      extend DotRuby.v(@revision)::Canonical
-
-      initialize_attributes
-
-      merge!(data)
-    end
 
     # Save .ruby file.
     #
