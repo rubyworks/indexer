@@ -44,11 +44,23 @@ module DotRuby
     #
     def to_h
       data = {}
+
       instance_variables.each do |iv|
         name = iv.to_s.sub(/^@/,'')
         data[name] = send(name)
       end
+
       data
+    end
+
+    #
+    # Converts the Hash-like object to YAML.
+    #
+    # @param [IO] io
+    #   The stream to write the YAML to.
+    #
+    def to_yaml(io)
+      to_h.to_yaml(io)
     end
 
   end
