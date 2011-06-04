@@ -5,6 +5,8 @@ module DotRuby
   # Specific Specification.
   #
   class Spec < Metadata
+    FILE_NAME = '.rbuy'
+
     include HashLike
 
     # Save .ruby file.
@@ -12,7 +14,7 @@ module DotRuby
     # @param [String] file
     #   The file name in which to save the metadata as YAML.
     #
-    def save!(file='.ruby')
+    def save!(file=FILE_NAME)
       File.open(file, 'w') do |f|
         to_yaml(f)
       end
@@ -33,7 +35,7 @@ module DotRuby
     #   The directory from which to start the upward search.
     #
     def self.find(from=Dir.pwd)
-      read(File.join(root(from),'.ruby'))
+      read(File.join(root(from),FILE_NAME))
     end
 
     # Find project root by looking upward for a .ruby file.
@@ -43,7 +45,7 @@ module DotRuby
     #
     def self.root(from=Dir.pwd)
       Dir.ascend(from) do |path|
-        if File.file?(File.join(path, '.ruby'))
+        if File.file?(File.join(path,FILE_NAME))
           break path
         end
       end
