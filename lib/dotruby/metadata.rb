@@ -8,11 +8,10 @@ module DotRuby
     def initialize(data={})
       @revision = (data.delete('revision') || CURRENT_REVISION)
 
-      extend DotRuby.v(revision)::Attributes
-      extend DotRuby.v(revision)::Conventional
+      extend DotRuby.v(@revision)::Attributes
+      extend DotRuby.v(@revision)::Conventional
 
       initialize_attributes
-
       merge!(data)
     end
 
