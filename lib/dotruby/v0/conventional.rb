@@ -102,7 +102,7 @@ module DotRuby
       # @param [Array<String>, String] authors
       #   The originating authors of the project.
       #
-      # TODO: if an entry is just a string convert it to a hash.
+      # @todo if an entry is just a string convert it to a hash.
       def authors=(authors)
         @authors = case authors
                    when Array
@@ -118,9 +118,7 @@ module DotRuby
       # @param [Array<String>, String] maintainer
       #   The current maintainers of the project.
       #
-      #--
-      # TODO: if an entry is just a string convert it to a hash.
-      #++
+      # @todo if an entry is just a string convert it to a hash.
       def maintainers=(maintainers)
         @maintainers = case manitainers
                        when Array
@@ -154,7 +152,7 @@ module DotRuby
       #
       #
       #
-      alias :require_paths= :load_path=
+      alias require_paths= load_path=
 
       #
       #
@@ -239,7 +237,7 @@ module DotRuby
       #
       # Alternate short name for #replacements.
       #
-      alias :replaces= :replacements=
+      alias replaces= replacements=
 
       #
       # Sets the requirements of the project. Also commonly refered
@@ -266,12 +264,12 @@ module DotRuby
       #
       # Alternate short name for #requirements.
       #
-      alias :requires= :requirements=
+      alias requires= requirements=
 
       #
       # Alias for #requirements.
       #
-      alias :dependencies= :requirements=
+      alias dependencies= requirements=
 
       #
       # Adds a new requirement.
@@ -333,12 +331,12 @@ module DotRuby
       #
       #
       #
-      alias :runtime_dependencies :runtime_requirements
+      alias runtime_dependencies runtime_requirements
 
       #
       # Returns the development requirements of the project.
       #
-      # @returns [Array<Requirement>] development requirements.
+      # @return [Array<Requirement>] development requirements.
       #
       def development_requirements
         requirements.select do |requirement|
@@ -349,7 +347,7 @@ module DotRuby
       #
       #
       #
-      alias :development_dependencies :development_requirements
+      alias development_dependencies development_requirements
 
       #
       # Sets the external requirements for the project.
@@ -371,17 +369,15 @@ module DotRuby
                                  end
       end
 
-=begin
       #
       # Sets the files of the project.
       #
       # @param [Array<String>, String] paths
       #   The files or the glob-pattern listed in the metadata file.
       #
-      def files=(paths)
-        @files = each_path(paths).to_a
-      end
-=end
+      # def files=(paths)
+      #   @files = each_path(paths).to_a
+      # end
 
       #
       # Set extraneous user-defined metdata.
@@ -396,9 +392,8 @@ module DotRuby
       #
       # Convert convenience form of metadata to canonical form.
       #
-      #--
-      # TODO: Maybe this code should be a in different file?
-      #++
+      # @todo Maybe this code should be a in different file?
+      #
       def to_canonical
         data = {}
         instance_variables.each do |iv|
@@ -428,7 +423,7 @@ module DotRuby
     protected
 
       #
-      # Initializes the {Metdata} attributes.
+      # Initializes the {Metadata} attributes.
       #
       def initialize_attributes
         @authors               = []

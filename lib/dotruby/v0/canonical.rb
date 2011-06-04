@@ -2,13 +2,13 @@ module DotRuby
 
   module V0
 
-    # The Canonical module defines explict setters for Metadata's attributes.
+    # The Canonical module defines explict setters for {Metadata}'s attributes.
     # These setters follow strict validation rules specific to reading and
     # writing of `.ruby` YAML formatted files.
     module Canonical
 
-      # Project's <i>packaging name</i> must be a string without spaces
-      # using only [a-zA-Z0-9_-].
+      # Project's _packaging name_ must be a string without spaces
+      # using only `[a-zA-Z0-9_-]`.
       def name=(value)
         validate_word(:name, value)
         super(value)
@@ -242,7 +242,7 @@ module DotRuby
     protected
 
       #
-      # Initializes the {Metdata} attributes.
+      # Initializes the {Metadata} attributes.
       #
       def initialize_attributes
         @authors               = []

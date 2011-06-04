@@ -56,7 +56,7 @@ module DotRuby
     end
 
     #
-    alias :group=, :groups=
+    alias group= groups=
 
     #
     # The groups to which the requirement belongs.

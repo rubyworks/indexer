@@ -64,7 +64,7 @@ module DotRuby
     #
     # Convert metadata to a Hash.
     #
-    # @returns [Hash{String => Object}]
+    # @return [Hash{String => Object}]
     #
     def to_h
       data = {}
