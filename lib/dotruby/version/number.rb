@@ -67,7 +67,10 @@ module DotRuby
       # Converts the version to a String.
       #
       def to_s
-        [major, minor, patch, build].compact.join('.')
+        str = "#{@major}.#{@minor}.#{@patch}"
+        str << ".#{@build}" if @build
+
+        return str
       end
 
       #
@@ -80,10 +83,7 @@ module DotRuby
       #   The resulting YAML.
       #
       def to_yaml(io)
-        str = "#{@major}.#{@minor}.#{@patch}"
-        str << ".#{@build}" if @build
-
-        return str.to_yaml(io)
+        to_s.to_yaml(io)
       end
 
     end
