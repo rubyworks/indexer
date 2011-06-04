@@ -17,7 +17,7 @@ module DotRuby
       #
       def version=(value)
         validate_string(:version, value)
-        if not /^((\d+)\.)+$/ =~ value  # FIXME: regexp is wrong
+        unless /^((\d+)\.)+$/ =~ value  # FIXME: regexp is wrong
           raise(InvalidMetadata, "version must be a dot separated list of integers")
         end
         super(value)
@@ -191,7 +191,7 @@ module DotRuby
     private
 
       def validate_string(field, string)
-        if not String === string
+        unless String === string
           raise(InvalidMetadata, "#{field} must be a string")
         end
       end
@@ -209,32 +209,32 @@ module DotRuby
       end
 
       def validate_array(field, array)
-        if not Array === array
+        unless Array === array
           raise(InvalidMetadata, "#{field} must be an array")
         end
       end
 
       def validate_array(field, hash)
-        if not Hash === hash
+        unless Hash === hash
           raise(InvalidMetadata, "#{field} must be a Hash")
         end
       end
 
       def validate_date(field, date)
-        if not /^\d\d\d\d-\d\d-\d\d( \s\d\d:\d\d:\d\d)?$/ =~ date
+        unless /^\d\d\d\d-\d\d-\d\d( \s\d\d:\d\d:\d\d)?$/ =~ date
           raise(InvalidMetadata, "#{field} must be a UTC formatted date string")
         end
       end
    
       def validate_package_references(field, references)
-        if not Array === references
+        unless Array === references
           raise(InvalidMetadata, "#{field} must be an array")
         end
         # TODO: valid version and type
       end
 
       def validate_url(field, url)
-        if not /^(\w+)\:\/\/\S+$/ =~ url
+        unless /^(\w+)\:\/\/\S+$/ =~ url
           raise(InvalidMetadata, "#{field} must be a URL")
         end
       end
