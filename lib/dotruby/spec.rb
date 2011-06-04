@@ -43,12 +43,20 @@ module DotRuby
     # @param [String] from
     #   The directory from which to start the upward search.
     #
+    # @return [String]
+    #   The path to the `.ruby` file.
+    #
+    # @raise []
+    #   The `.ruby` file could not be located.
+    #
     def self.root(from=Dir.pwd)
       Dir.ascend(from) do |path|
         if File.file?(File.join(path,FILE_NAME))
-          break path
+          return path
         end
       end
+
+      raise("could not locate the #{FILE_NAME} file")
     end
 
   end
