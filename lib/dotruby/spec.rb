@@ -24,7 +24,7 @@ module DotRuby
     #   The file name in which to read the YAML metadata.
     #
     def self.read(file)
-      new(YAML.load(File.new(file)))
+      new(YAML.load_file(file))
     end
 
     # Find project root and read .ruby file.
