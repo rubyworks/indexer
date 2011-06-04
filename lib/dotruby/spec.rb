@@ -9,7 +9,7 @@ module DotRuby
 
     include HashLike
 
-    # Save .ruby file.
+    # Save `.ruby` file.
     #
     # @param [String] file
     #   The file name in which to save the metadata as YAML.
@@ -20,7 +20,7 @@ module DotRuby
       end
     end
 
-    # Read .ruby from file.
+    # Read `.ruby` from file.
     #
     # @param [String] file
     #   The file name in which to read the YAML metadata.
@@ -29,7 +29,7 @@ module DotRuby
       new(YAML.load_file(file))
     end
 
-    # Find project root and read .ruby file.
+    # Find project root and read `.ruby` file.
     #
     # @param [String] from
     #   The directory from which to start the upward search.
@@ -38,7 +38,7 @@ module DotRuby
       read(File.join(root(from),FILE_NAME))
     end
 
-    # Find project root by looking upward for a .ruby file.
+    # Find project root by looking upward for a `.ruby` file.
     #
     # @param [String] from
     #   The directory from which to start the upward search.
