@@ -46,7 +46,8 @@ module DotRuby
       data = {}
 
       instance_variables.each do |iv|
-        name = iv.to_s.sub(/^@/,'')
+        name = iv.to_s[1..-1]
+
         data[name] = send(name)
       end
 
