@@ -1,3 +1,5 @@
+require 'dotruby/exceptions/metadata'
+
 module DotRuby
 
   module HashLike
@@ -11,7 +13,14 @@ module DotRuby
     # @return [Object]
     #   The value associated with the key.
     #
+    # @raise [InvalidMetadata]
+    #   The key is not known.
+    #
     def [](key)
+      unless respond_to?(key)
+        raise(InvalidMetadata,"unknown attribute: #{key.inspect}")
+      end
+
       send(key)
     end
 
@@ -24,8 +33,20 @@ module DotRuby
     # @param [Object] value
     #   The value of the metadata field.
     #
+    # @return [Object]
+    #   The newly set value.
+    #
+    # @raise [InvalidMetadata]
+    #   The key is not known.
+    #
     def []=(key, value)
-      send("#{key}=", value)      
+      setter = "#{key}="
+
+      unless respond_to?(setter)
+        raise(InvalidMetadata,"unknown attribute: #{key.inspect}")
+      end
+
+      send(setter, value)      
     end
 
     #
