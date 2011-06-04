@@ -14,7 +14,7 @@ module DotRuby
     #
     def save!(file='.ruby')
       File.open(file, 'w') do |f|
-        f << to_h.to_yaml
+        to_yaml(f)
       end
     end
 
