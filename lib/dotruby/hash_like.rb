@@ -8,6 +8,9 @@ module DotRuby
     # @param [String, Symbol] key
     #   The name of the metadata field.
     #
+    # @return [Object]
+    #   The value associated with the key.
+    #
     def [](key)
       send(key)
     end
@@ -40,7 +43,7 @@ module DotRuby
     #
     # Convert metadata to a Hash.
     #
-    # @returns [Object]
+    # @returns [Hash{String => Object}]
     #
     def to_h
       data = {}
