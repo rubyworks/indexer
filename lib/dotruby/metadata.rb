@@ -6,7 +6,7 @@ module DotRuby
 
     #
     def initialize(data={})
-      @revision = (data['revision'] || CURRENT_REVISION)
+      @revision = (data.delete('revision') || CURRENT_REVISION)
 
       extend DotRuby.v(revision)::Attributes
       extend DotRuby.v(revision)::Conventional
