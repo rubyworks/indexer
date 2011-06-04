@@ -4,8 +4,14 @@ module DotRuby
   CURRENT_REVISION = 0
 
   #
-  def self.v(revision=nil)
-    const_get("V#{revision || CURRENT_REVISION}")
+  def self.v(revision)
+    module_name ="V#{revision}"
+
+    unless const_defined?(module_name)
+      raise("unsupported .ruby version: #{revision.inspect}")
+    end
+
+    const_get(module_name)
   end
 
 end
