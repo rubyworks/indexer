@@ -17,8 +17,11 @@ module DotRuby
       #
       def version=(value)
         validate_string(:version, value)
-        unless /^((\d+)\.)+$/ =~ value  # FIXME: regexp is wrong
-          raise(InvalidMetadata, "version must be a dot separated list of integers")
+        case value
+        when /^\D/
+          raise(InvalidMetadata, "version must start with numer -- #{value}")
+        when /[^.A-Za-z0-9]/
+          raise(InvalidMetadata, "version contains invalid characters -- #{value}")
         end
         super(value)
       end
@@ -188,6 +191,15 @@ module DotRuby
         super(valid)
       end
 
+      # A specification is not valid without a name and verison.
+      #
+      # @return [Boolean] valid specification?
+      def valid?
+        return false unless name
+        return false unless version
+        true
+      end
+
     private
 
       def validate_string(field, string)
@@ -205,7 +217,9 @@ module DotRuby
 
       def validate_word(field, word)
         validate_string(field, word)
-        raise(InvalidMetadata, "#{field} must be a word") if /^[A-Za-z0-9_-]*$/ !~ word
+        raise(InvalidMetadata, "#{field} must start with letter -- #{word}") if /^[A-Za-z]/ !~ word
+        raise(InvalidMetadata, "#{field} must end with a letter or number -- #{word}") if /[A-Za-z0-9]$/ !~ word
+        raise(InvalidMetadata, "#{field} must be a world -- #{word}") if /[^A-Za-z0-9_-]/ =~ word
       end
 
       def validate_array(field, array)

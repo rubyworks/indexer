@@ -22,8 +22,8 @@ require 'dotruby/exceptions/invalid_metadata'
 require 'dotruby/exceptions/invalid_version'
 
 require 'dotruby/hash_like'
+require 'dotruby/specification'
 require 'dotruby/spec'
-require 'dotruby/metadata'
 require 'dotruby/version/number'
 require 'dotruby/version/constraint'
 

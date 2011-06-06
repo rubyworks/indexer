@@ -1,5 +1,3 @@
-require 'dotruby/metadata'
-
 module DotRuby
 
   # Spec the specification generalized for the convenience of developers.

@@ -1,7 +1,6 @@
-require 'dotruby/exceptions/metadata'
-
 module DotRuby
 
+  #
   module HashLike
 
     #
