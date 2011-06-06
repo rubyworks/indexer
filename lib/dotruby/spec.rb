@@ -4,22 +4,7 @@ module DotRuby
   # It offers method aliases and models various parts of the specification 
   # with useful classes.
   #
-  class Spec #< Metadata
-    include HashLike
-
-    #
-    FILE_NAME = '.ruby'
-
-    #
-    def initialize(data={})
-      @revision = data.delete('revision') || CURRENT_REVISION
-
-      extend DotRuby.v(@revision)::Attributes
-      extend DotRuby.v(@revision)::Conventional  # not Canonical
-
-      initialize_attributes
-      merge!(data)
-    end
+  class Spec < Base
 
     # Save `.ruby` file.
     #
@@ -27,7 +12,7 @@ module DotRuby
     #   The file name in which to save the metadata as YAML.
     #
     def save!(file='.ruby')
-      to_metadata.save!(file)
+      to_data.save!(file)
     end
 
     # Read `.ruby` from file.
@@ -36,7 +21,7 @@ module DotRuby
     #   The file name from which to read the YAML metadata.
     #
     def self.read(file)
-      Metadata.read(file).to_spec
+      Data.read(file).to_spec
     end
 
     # Find project root and read `.ruby` file.
@@ -45,7 +30,7 @@ module DotRuby
     #   The directory from which to start the upward search.
     #
     def self.find(dir=Dir.pwd)
-      Metadata.find(dir).to_spec
+      Data.find(dir).to_spec
     end
 
     # Find project root by looking upward for a `.ruby` file.
@@ -60,7 +45,7 @@ module DotRuby
     #   The `.ruby` file could not be located.
     #
     def self.root(from=Dir.pwd)
-      Metadata.root(dir)
+      Data.root(dir)
     end
 
   end

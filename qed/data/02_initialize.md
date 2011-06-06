@@ -1,11 +1,11 @@
-## Specification#initialize
+## Data#initialize
 
 ### Bare Instance
 
-An bare Specification object can be created by passing no arguments
+An bare Data object can be created by passing no arguments
 to the initializer.
 
-    spec = DotRuby::Specification.new
+    spec = DotRuby::Data.new
 
 In this case the revision number will be set to the latest available.
 
@@ -28,29 +28,29 @@ In addition, certain attributes will have default values.
 
 ### Data Argument
 
-A Specification object can be created with initial values by passing a data
+A Data object can be created with initial values by passing a data
 hash to the initializer.
 
-    spec = DotRuby::Specification.new(:name=>'foo', :version=>'0.1.2')
+    spec = DotRuby::Data.new(:name=>'foo', :version=>'0.1.2')
 
     spec.name.should == 'foo'
     spec.version.should == '0.1.2'
 
-Entries passed to the initializer are assigned via the Specifications setters
+Entries passed to the initializer are assigned via Data's setters
 and are validated upon assignment, so no invalid values can get into the
 object's state, e.g.
 
     expect DotRuby::InvalidMetadata do
-      DotRuby::Specification.new(:name=>1)
+      DotRuby::Data.new(:name=>1)
     end
 
 ### Initial Validity 
 
-The only way for a Specification object to be in an invalid state is
+The only way for a Data object to be in an invalid state is
 by the creation of an instance without providing a `name` and `version`.
 Both name and version are required for a specification to be valid.
 
-    spec = DotRuby::Specification.new
+    spec = DotRuby::Data.new
 
     spec.refute.valid?
 

@@ -1,4 +1,4 @@
-## Specification#name
+## Data#name
 
 A valid `name` is a word starting with a letter, ending with a letter or number
 and containing only `a-z`, `A-Z`, `0-9` and `_` or `-` characters.
@@ -12,7 +12,7 @@ Examples of good @names are:
 
 To verify this we can assign each name.
 
-    spec = DotRuby::Specification.new
+    spec = DotRuby::Data.new
 
     @names.split("\n").each do |name|
       spec.name = name.strip[1..-2]
@@ -27,7 +27,7 @@ And these are not good @names:
 
 Likewise, we can verify this by trying to assign each name.
 
-    spec = DotRuby::Specification.new
+    spec = DotRuby::Data.new
 
     @names.split("\n").each do |name|
       expect DotRuby::InvalidMetadata do
