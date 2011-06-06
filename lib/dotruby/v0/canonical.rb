@@ -228,7 +228,7 @@ module DotRuby
         end
       end
 
-      def validate_array(field, hash)
+      def validate_hash(field, hash)
         unless Hash === hash
           raise(InvalidMetadata, "#{field} must be a Hash")
         end
