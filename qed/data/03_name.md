@@ -12,10 +12,10 @@ Examples of good @names are:
 
 To verify this we can assign each name.
 
-    spec = DotRuby::Data.new
+    data = DotRuby::Data.new
 
     @names.split("\n").each do |name|
-      spec.name = name.strip[1..-2]
+      data.name = name.strip[1..-2]
     end
 
 And these are not good @names:
@@ -27,11 +27,11 @@ And these are not good @names:
 
 Likewise, we can verify this by trying to assign each name.
 
-    spec = DotRuby::Data.new
+    data = DotRuby::Data.new
 
     @names.split("\n").each do |name|
       expect DotRuby::InvalidMetadata do
-        spec.name = name.strip[1..-2]
+        data.name = name.strip[1..-2]
       end
     end
 
