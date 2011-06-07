@@ -508,12 +508,18 @@ module DotRuby
       #
       #
       module Conversion
+
         #
         # Convert convenience form of metadata to canonical form.
         #
-        # @todo Maybe this code should be a in different file?
-        #
         def to_data
+          Data.new(data)
+        end
+
+        #
+        #
+        #
+        def to_h
           data = {}
 
           instance_variables.each do |iv|
@@ -534,7 +540,7 @@ module DotRuby
             h[k] = v.to_h
           end
 
-          Data.new(data)
+          data
         end
 
       end
