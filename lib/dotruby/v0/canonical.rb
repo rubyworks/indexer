@@ -7,6 +7,13 @@ module DotRuby
     # writing of `.ruby` YAML formatted files.
     module Canonical
 
+      # Canonical uses time library to validate date-time fields.
+      require 'time'
+
+      # Regular expression to limit date-time fields to ISO 8601 (Zulu).
+      # TODO: support full standard
+      RE_DATE_TIME = /^\d\d\d\d-\d\d-\d\d(\s+\d\d:\d\d:\d\d)?$/
+
       # Project's _packaging name_ must be a string without spaces
       # using only `[a-zA-Z0-9_-]`.
       def name=(value)
@@ -59,14 +66,7 @@ module DotRuby
       # Loadpath must be an Array of valid pathnames or a String of pathnames
       # separated by colons or semi-colons.
       def load_path=(value)
-        case value
-        when Array
-          # TODO
-        when String
-          # TODO
-        else
-          raise(InvalidMetadata, "loadapth must be a string or array")
-        end
+        validate_array(:load_path, value)
         super(value)
       end
 
@@ -188,7 +188,7 @@ module DotRuby
       #
       def extra=(value)
         validate_hash(:extra, value)
-        super(valid)
+        super(value)
       end
 
       # A specification is not valid without a name and verison.
@@ -235,14 +235,20 @@ module DotRuby
       end
 
       def validate_date(field, date)
-        unless /^\d\d\d\d-\d\d-\d\d( \s\d\d:\d\d:\d\d)?$/ =~ date
+        validate_string(field, date)
+        unless RE_DATE_TIME =~ date
+          raise(InvalidMetadata, "#{field} must be a UTC formatted date string")
+        end
+        begin
+          Time.parse(date)
+        rescue
           raise(InvalidMetadata, "#{field} must be a UTC formatted date string")
         end
       end
    
       def validate_package_references(field, references)
-        unless Array === references
-          raise(InvalidMetadata, "#{field} must be an array")
+        unless Hash === references
+          raise(InvalidMetadata, "#{field} must be a hash")
         end
         # TODO: valid version and type
       end

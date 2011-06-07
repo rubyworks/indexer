@@ -89,8 +89,13 @@ module DotRuby
       # The date the project was started.
       attr_accessor :created
 
-      # NOTE: best name for this?
-      attr_accessor :company #organization
+      # The organization by which the project is being developed.
+      attr_accessor :organization
+
+      # The company by which the project is being developed.
+      #
+      # @todo Do we need both company and ogranziation?
+      attr_accessor :company
 
       # Copyright notice for the project.
       attr_accessor :copyright

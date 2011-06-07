@@ -6,7 +6,7 @@ The `licenses` field is a list of license names.
 
     data.licenses = ['GPL3', 'MIT', 'Apache 2.0']
 
-The first license listed MUST be the project primary license.
+The first license listed MUST be the project's primary license.
 
 The `licenses` field can only be assigned an Array of Strings.
 
