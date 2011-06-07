@@ -56,6 +56,9 @@ module DotRuby
       # The packages this package requires to function.
       attr_accessor :requirements
 
+      # The system pacakges this package needs to function.
+      attr_accessor :dependencies
+
       # A list of packages that provide more or less the same functionality.
       # A good example is for a markdown library.
       #
@@ -82,9 +85,8 @@ module DotRuby
       # NOTE: is it possible to to makes this a part of ordinary requirements?
       #attr_accessor :required_ruby_version
 
-      # The post-installation message
-      # NOTE: Do we really need such a long name?
-      attr_accessor :message #:post_install_message
+      # The post-installation message.
+      attr_accessor :install_message
 
       # The date the project was started.
       attr_accessor :created

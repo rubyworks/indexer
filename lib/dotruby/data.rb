@@ -11,6 +11,11 @@ module DotRuby
   #
   class Data < Base
 
+    #
+    def initialize_model
+      extend DotRuby.v(@revision)::Canonical
+    end
+
     # Save `.ruby` file.
     #
     # @param [String] file

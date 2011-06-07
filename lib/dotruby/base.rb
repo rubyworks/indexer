@@ -7,19 +7,19 @@ module DotRuby
     # Default file name of `.ruby` file. It is obviously `.ruby` ;-)
     FILE_NAME = '.ruby'
 
+    # DotRuby uses a strict revision system.
+    attr :revision
+
+    # Set the revision.
+    def revision=(value)
+      @revision = value.to_i
+    end
+
     # New instance.
     def initialize(data={})
-      @revision = data.delete('revision') || CURRENT_REVISION
+      self.revision = data.delete('revision') || data.delete(:revision) || CURRENT_REVISION
 
-      extend DotRuby.v(@revision)::Attributes
-
-      ## @todo how best to handle this?
-      if Spec === self
-        extend DotRuby.v(@revision)::Conventional
-      else
-        extend DotRuby.v(@revision)::Canonical
-      end
-
+      initialize_model
       initialize_attributes
 
       merge!(data)
