@@ -222,11 +222,7 @@ module DotRuby
         #   The requirements must be a `Hash`.
         #
         def requirements=(requirements)
-          unless requirements.kind_of?(Hash)
-            raise(InvalidMetadata, "requirements must be a Hash")
-          end
-
-          @requirements.clear
+          requirements.clear
 
           requirements.each do |name, specifics|
             add_requirement(name, specifics)
@@ -237,14 +233,10 @@ module DotRuby
         # Binary pacakge dependecies.
         #
         def dependencies=(dependencies)
-          unless dependencies.kind_of?(Hash)
-            raise(InvalidMetadata, "dependencies must be a Hash")
-          end
-
           dependencies.clear
 
           dependencies.each do |name, specifics|
-            @dependencies << Requirement.parse(name, specifics)
+            @dependencies << Dependency.parse(name, specifics)
           end
         end
 
@@ -266,6 +258,65 @@ module DotRuby
             raise(InvalidMetadata, "extra must be a Hash")
           end
           @extra = extra
+        end
+
+        #
+        # Adds a new requirement.
+        #
+        # @param [String] name
+        #   The name of the requirement.
+        #
+        # @param [Hash] specifics
+        #   The specifics of the requirement.
+        #
+        def add_requirement(name, specifics)
+          requirements << Requirement.parse(name, specifics)
+        end
+
+        #
+        # Adds a new dependency.
+        #
+        # @param [String] name
+        #   The name of the dependency.
+        #
+        # @param [Hash] specifics
+        #   The specifics of the dependency.
+        #
+        def add_dependency(name, specifics)
+          dependencies << Dependency.parse(name, specifics)
+        end
+
+        #
+        # Adds a new conflict.
+        #
+        # @param [String] name
+        #   The name of the conflict package.
+        #
+        # @param [Hash] specifics
+        #   The specifics of the conflict package.
+        #
+        def add_conflict(name, specifics)
+          conflicts << Requirement.parse(name, specifics)
+        end
+
+        #
+        # Adds a new alternative.
+        #
+        # @param [String] name
+        #   The name of the alternative.
+        #
+        def add_alternative(name)
+          alternatives << name.to_s
+        end
+
+        #
+        # Adds a new replacement.
+        #
+        # @param [String] name
+        #   The name of the replacement.
+        #
+        def add_replacement(name)
+          replacements << name.to_s
         end
 
       protected
@@ -424,96 +475,28 @@ module DotRuby
       #
       #
       #
-      module Utility
-
-        #
-        # Adds a new requirement.
-        #
-        # @param [String] name
-        #   The name of the requirement.
-        #
-        # @param [Hash] specifics
-        #   The specifics of the requirement.
-        #
-        def add_requirement(name, specifics)
-          requirements << Requirement.parse(name, specifics)
-        end
-
-        #
-        # Adds a new dependency.
-        #
-        # @param [String] name
-        #   The name of the dependency.
-        #
-        # @param [Hash] specifics
-        #   The specifics of the dependency.
-        #
-        def add_dependency(name, specifics)
-          dependencies << Dependency.parse(name, specifics)
-        end
-
-        #
-        # Adds a new alternative.
-        #
-        # @param [String] name
-        #   The name of the alternative.
-        #
-        def add_alternative(name)
-          alternatives << name.to_s
-        end
-
-        #
-        # Adds a new replacement.
-        #
-        # @param [String] name
-        #   The name of the replacement.
-        #
-        def add_replacement(name)
-          replacements << name.to_s
-        end
-
-        #
-        # Adds a new conflict.
-        #
-        # @param [String] name
-        #   The name of the conflict package.
-        #
-        # @param [Hash] specifics
-        #   The specifics of the conflict package.
-        #
-        def add_conflict(name, specifics)
-          conflicts << Requirement.parse(name, specifics)
-        end
-
-      end
-
-      #
-      #
-      #
       module Conversion
         #
         # Convert convenience form of metadata to canonical form.
         #
         # @todo Maybe this code should be a in different file?
         #
-        def to_canonical
+        def to_data
           data = {}
+
           instance_variables.each do |iv|
             name = iv.to_s.sub(/^\@/, '')
             data[name] = send(name)
           end
 
           data['date']    = date.strftime('%Y-%m-%d') if date
-
           data['created'] = date.strftime('%Y-%m-%d') if created
 
-          data['requirements'] = requirements.inject({}) do |h, (k,v)|
-            h[k] = v.to_h
+          data['requirements'] = requirements.map do |r|
+            r.to_h
           end
 
-          data['replacements'] = replacements.inject({}) do |h, (k,v)|
-            h[k] = v.to_h
-          end
+          data['replacements'] = replacements.to_a
 
           data['conflicts'] = conflicts.inject({}) do |h, (k,v)|
             h[k] = v.to_h
@@ -528,7 +511,6 @@ module DotRuby
       include Writers
       include Calculations
       include Aliases
-      include Utility
       include Conversion
     end
 
