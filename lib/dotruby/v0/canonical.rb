@@ -9,7 +9,7 @@ module DotRuby
 
       # Canonical module requires Attributes module.
       if RUBY_VERSION > '1.9'
-        require_relative 'v0/attributes'
+        require_relative 'attributes'
       else
         require 'dotruby/v0/attributes'
       end
