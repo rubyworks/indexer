@@ -4,6 +4,10 @@ module DotRuby
   #
   # QUESTION: Does it need to handle multiple version constraints?
   # Currently this only supports one version constraint.
+  #
+  # TODO: Dependency can probably be a sublcass fo Requirement.
+  # It differs only in that Binary Pakacage may require some
+  # additional information --but as of yet that's not certain.
   class Dependency
 
     # The Dependency class requires Repository.
