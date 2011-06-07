@@ -261,7 +261,7 @@ module DotRuby
         end
      
         def validate_package_references(field, references)
-          unless Hash === references
+          unless Array === references
             raise(InvalidMetadata, "#{field} must be a hash")
           end
           # TODO: valid version and type

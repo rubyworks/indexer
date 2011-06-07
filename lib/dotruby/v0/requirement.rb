@@ -3,8 +3,66 @@ module DotRuby
   # Requirement class.
   #
   # QUESTION: Does Requirement really need to handle multiple version constraints?
-  # Currently this only support one version constraint.
+  # Currently this only supports one version constraint.
   class Requirement
+
+    # The Requirement class requires Repository.
+    if RUBY_VERSION > '1.9'
+      require_relative 'repository'
+    else
+      require 'dotruby/v0/repository'
+    end
+
+    # Parse `data` into a Requirement instance.
+    #
+    # TODO: What about respond_to?(:to_str) for String, etc.
+    def self.parse(data)
+      case data
+      when String
+        parse_string(data)
+      when Array
+        parse_array(data)
+      when Hash
+        parse_hash(data)
+      else
+        raise(InvalidMetadata, "requirement")
+      end
+    end
+
+  private
+
+    #
+    #
+    def self.parse_hash(data)
+      name = data.delete('name') || data.delete(:name)
+      new(name, data)
+    end
+
+    #
+    #
+    def self.parse_string(data)
+      name, version, *groups = data.split(/\s+/)
+      ## remove parenthesis
+      groups.first.sub!(/^\(/, '')
+      groups.last.chomp!(')')
+      ## new instance
+      new(name, :version=>version, :groups=>groups)
+    end
+
+    #
+    #
+    #
+    def self.parse_array(data)
+      name, data = *array
+      case data
+      when Hash
+        new(name, data)
+      when String
+        parse_string(name + " " + data)
+      else
+        raise(InvalidMetadata, "requirement")
+      end
+    end
 
     # Create new instance of Requirement.
     #
@@ -16,35 +74,60 @@ module DotRuby
       end
     end
 
+  public
+
     #
-    # Set the requirement's runtime flag.
     #
-    # @param [Boolean] true/false runtime requirement
+    attr_reader :name
+
     #
-    def runtime=(boolean)
-      @runtime = !!boolean
+    #
+    def name=(name)
+      @name = name.to_s
+    end
+
+    #
+    # The requirement's version constraint.
+    #
+    # @return [Version::Constraint] version constraint.
+    #
+    attr_reader :version
+
+    #
+    # Set the version constraint.
+    #
+    def version=(version)
+      @version = Version::Constraint.parse(version)
     end
 
     #
     # Returns true if the requirement is a runtime requirement.
     #
+    def development?
+      @development
+    end
+
+    #
+    # Set the requirement's development flag.
+    #
+    # @param [Boolean] true/false runtime requirement
+    #
+    def development=(boolean)
+      @development = !!boolean
+    end
+
+    #
+    #
     def runtime?
-      @runtime
+     ! @development
     end
 
     #
-    # Set the version number.
+    # The groups to which the requirement belongs.
     #
-    def version=(version)
-      @version = VersionNumber.parse(version)
-    end
-
+    # @return [Array] list of groups
     #
-    # The requirement's version number.
-    #
-    # @return [VersionNumber] version number.
-    #
-    attr :version
+    attr_reader :groups
 
     #
     # Set the groups to which the requirement belongs.
@@ -56,14 +139,37 @@ module DotRuby
     end
 
     #
+    alias group groups
     alias group= groups=
 
     #
-    # The groups to which the requirement belongs.
+    # Is the requirment optional? An optional requirement is recommended
+    # but not strictly necessary.
     #
-    # @return [Array] list of groups
+    def optional?
+      @optional
+    end
+
     #
-    attr :groups
+    # Set
+    #
+    def optional=(boolean)
+      @optional = !!boolean
+    end
+
+    #
+    # The public repository resource in which the requirement source code
+    # can be found.
+    #
+    attr_reader :repo
+
+    #
+    # Set the public repository resource in which the requirement
+    # source code can be found.
+    #
+    def repo=(repo)
+      @repo = Repository.parse(repo)
+    end
 
   end
 

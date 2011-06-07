@@ -8,11 +8,18 @@ module DotRuby
     #
     module Conventional
 
-      # Conventional module requires Attributes module.
+      # Conventional module requires Attributes module and 
+      # all the modelling classes.
       if RUBY_VERSION > '1.9'
         require_relative 'attributes'
+        require_relative 'requirement'
+        require_relative 'dependency'
+        require_relative 'conflict'
       else
         require 'dotruby/v0/attributes'
+        require 'dotruby/v0/requirement'
+        require 'dotruby/v0/dependency'
+        require 'dotruby/v0/conflict'
       end
 
       #
@@ -157,29 +164,76 @@ module DotRuby
         end
 
         #
+        # Sets the requirements of the project. Also commonly refered
+        # to as dependencies.
+        #
+        # @param [Array<Hash>, Hash{String=>Hash}, Hash{String=>String}] requirements
+        #   The requirement details.
+        #
+        # @raise [InvalidMetadata]
+        #   The requirements must be an `Array` or `Hash`.
+        #
+        def requirements=(requirements)
+          case requirements
+          when Array, Hash
+            @requirements.clear
+            requirements.each do |specifics|
+              @requirements << Requirement.parse(specifics)
+            end
+          else
+            raise(InvalidMetadata,"dependencies must be an Array or Hash")
+          end
+        end
+
+        #
+        # Binary pacakge dependecies.
+        #
+        # @param [Array<Hash>, Hash{String=>Hash}, Hash{String=>String}] requirements
+        #   The dependency details.
+        #
+        # @raise [InvalidMetadata]
+        #   The dependencies must be an `Array` or `Hash`.
+        #
+        def dependencies=(dependencies)
+          case dependencies
+          when Array, Hash
+            @dependencies.clear
+            dependencies.each do |specifics|
+              @dependencies << Dependency.parse(specifics)
+            end
+          else
+            raise(InvalidMetadata,"dependencies must be an Array or Hash")
+          end
+        end
+
+        #
         # Sets the packages with which this package is known to have
         # incompatibilites.
         #
-        # @param [Array, String] replacements
+        # @param [Array<Hash>, Hash{String=>String}] conflicts
         #   The conflicts for the project.
         #
+        # @raise [InvalidMetadata]
+        #   The conflicts list must be an `Array` or `Hash`.
+        #
+        # @todo lets get rid of the type check here and let the #parse method do it
         def conflicts=(conflicts)
-          unless conflicts.kind_of?(Hash)
+          case conflicts
+          when Array, Hash
+            @conflicts.clear
+            conflicts.each do |specifics|
+              @conflicts << Conflict.parse(specifics)
+            end
+          else
             raise(InvalidMetadata, "conflicts must be a Hash")
-          end
-
-          @conflicts.clear
-
-          conflicts.each do |name, specifics|
-            add_conflict(name, specifics)
           end
         end
 
         #
         # Sets the packages this package could (more or less) replace.
         # 
-        # @param [Array, String] replacements
-        #   The replacements for the project.
+        # @param [Array<String>] alternatives
+        #   The alternatives for the project.
         #
         def alternatives=(alternatives)
           unless alternatives.kind_of?(Array)
@@ -189,14 +243,14 @@ module DotRuby
           @alternatives.clear
 
           alternatives.each do |name|
-            add_alternative(name)
+            @alternative << name.to_s
           end
         end
 
         #
-        # Sets the packages this package could (more or less) replace.
+        # Sets the packages this package is intended to usurp.
         # 
-        # @param [Array, String] replacements
+        # @param [Array<String>] replacements
         #   The replacements for the project.
         #
         def replacements=(replacements)
@@ -207,36 +261,7 @@ module DotRuby
           @replacements.clear
 
           replacements.each do |name|
-            add_replacement(name)
-          end
-        end
-
-        #
-        # Sets the requirements of the project. Also commonly refered
-        # to as dependencies.
-        #
-        # @param [Hash{String => String}] requirements
-        #   The dependency names and specifics.
-        #
-        # @raise [InvalidMetadata]
-        #   The requirements must be a `Hash`.
-        #
-        def requirements=(requirements)
-          requirements.clear
-
-          requirements.each do |name, specifics|
-            add_requirement(name, specifics)
-          end
-        end
-
-        #
-        # Binary pacakge dependecies.
-        #
-        def dependencies=(dependencies)
-          dependencies.clear
-
-          dependencies.each do |name, specifics|
-            @dependencies << Dependency.parse(name, specifics)
+            @replacements << name.to_s
           end
         end
 
@@ -259,6 +284,13 @@ module DotRuby
           end
           @extra = extra
         end
+
+      end
+
+      #
+      #
+      #
+      module Utility
 
         #
         # Adds a new requirement.
@@ -509,6 +541,7 @@ module DotRuby
 
       include Attributes
       include Writers
+      include Utility
       include Calculations
       include Aliases
       include Conversion
