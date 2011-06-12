@@ -36,10 +36,10 @@ module DotRuby
       # @param [Integer, nil] build (nil)
       #   The build version number.
       #
-      def initialize(major,minor,patch,build=nil)
-        @major = (major || 0)
-        @minor = (minor || 0)
-        @patch = (patch || 0)
+      def initialize(major=0,minor=0,patch=0,build=nil)
+        @major = major
+        @minor = minor
+        @patch = patch
         @build = build
       end
 
