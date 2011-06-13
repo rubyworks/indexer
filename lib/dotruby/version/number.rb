@@ -86,6 +86,47 @@ module DotRuby
         to_s.to_yaml(io)
       end
 
+      def stable_release?
+        @build.nil?
+      end
+
+      def pre_release?
+        !@build.nil?
+      end
+
+      def ==(other)
+        (@major == other.major) && \
+          (@minor == other.minor) && \
+          (@patch == other.patch) && \
+          (@build == other.build)
+      end
+
+      def <=>(other)
+        if @major > other.major
+          1
+        elsif @major < other.major
+          -1
+        elsif @minor > other.minor
+          1
+        elsif @minor < other.minor
+          -1
+        elsif @patch > other.patch
+          1
+        elsif @patch < other.patch
+          -1
+        elsif (@build && other.build.nil?)
+          -1
+        elsif (@build.nil? && other.build)
+          1
+        elsif @build > other.build
+          1
+        elsif @build < other.build
+          -1
+        else
+          0
+        end
+      end
+
     end
 
   end
