@@ -93,12 +93,12 @@ with the `suite` field. This is somtimes identical to organization.
 
     suite: SpecWorks
 
-### Company / Organization
+### Organization
 
-The `company` (or `organization`?) specifies the name of the company or
-orgnaization which which this package is assocciated.
+The `organization` specifies the name of the company, club or other type
+of organization to which this package is assocciated.
 
-    company: Spec, Inc.
+    organization: Spec, Inc.
 
 ### Copyright
 
@@ -114,38 +114,26 @@ notice. DO NOT include license information in this.
 
 Licenses is a list licenses the package is distributed under. The first
 MUST be the primary license. The names should be the short representations
-the licenses followed by a version number if it applies.
+the licenses with a version number if it applies.
 
     licenses:
       - GPL3
-      - Apache2.0
+      - Apache 2.0
       - MIT
 
 ### Requirements
 
 Requirements are the packages on which this package depends. Often, referred to
-as _dependencies_ we have chosen instead the use the term requirements becuase
-that is what the package actually does with them --it _requires_ them.
+as _dependencies_ we have chosen instead to use the term requirements becuase
+that is what Ruby actually does with them --it _requires_ them. Requirements
+is an array of hashes, composed of name, version, groups, development, engine
+and platform.
 
     requirements:
-      dotruby:
+      - name: dotruby
         version: 1.0.0
-        runtime: false
         groups: [build]
-
-NOTE: If we don't like this design of a "detail hash", and would rather
-a simple version hash, then we will have to have a separate field and
-it would have to use a group designation to determine runtime vs
-development, e.g.
-
-    requirements:
-      facets: 2.9+
-      dotruby: 1.0.0
-
-    requirement_groups:
-      facets: []  # or  [runtime]
-      dotruby: [build]
-
+        development: true
 
 ### Conflicts
 
@@ -155,22 +143,45 @@ in the same process as this package.
     conflicts:
       badmojo: 0+
 
-### Replacements
+### Substitues
 
-Replacements is simply a list of packages that more or less do the same
+Substitues is simply a list of packages that more or less do the same
 thing as this package. A good example is a Markdown parser:
 
-    replacements:
+    substitutes:
       - rdiscount
       - BlueCloth
 
+### Replacements
+
+TODO: Should this be called `replaces` instead?
+
+Replacements is a list of packages that this package essentially usurps.
+For example, the SlimGems pacakge might claim to be a replacement for 
+RubyGems pacakge.
+
+    replacements:
+      - rubygems
+
+### Dependencies
+
+Dependencies akin to requirements, but are system packages that this package
+depends upon. Pacakge managers might use this information to install dependent
+packages via `apt-get` or `yum`, for instance. A good example is, `ruby-libxml`
+which depends on the libXML2 library.
+
+    dependencies:
+      - name: libXML2
+      - version: 1.0+
+
 ### External Requirements
 
-External requirements are arbitrary dependencies outside the scope of
-a package manager.
+TODO: Do we really need this? If it's that important put it in the install_message.
+
+External requirements are arbitrary needs that lie outside the scope of any
+package manager.
 
     external_requirements:
-      - "libXML2 1.0+"
       - "fast graphics card"
 
 ### Resources
@@ -178,13 +189,21 @@ a package manager.
 Resources is a mapping of resource type to universal resource locator (URL).
 
     resources:
-      homepage: http://
-      documentation: http://
+      homepage: http://foo.org
+      documentation: http://foo.org/doc
 
-One important thing to note about resources is that onlt the first 3 to 4
-characters of the type are used to distinguish types. In other words, any
+IMPORTANT! The thing to note about resources is that only the first 3 to 4
+characters of the type are used to distinguish them. In other words, any
 resource type that begins with the letters `doc` is considered a documentation
-link. Likewise for `home` and a few others.
+link. Likewise for `home`. In this way `home` is recognized as the same resource
+as `homepage`.
+
+Recognized types are `home doc api code wiki work`
+
+There are also a few non-conforming types that are considered synonyms.
+
+  `source code` = `code`
+  `development` = `work`
 
 ### Repositories
 
@@ -194,9 +213,7 @@ for the package repository.
     repositories:
       public: http://github.com/fooworks/hello_world.git
 
-### Loadpath
-
-(or `require_paths`?)
+### Load Path
 
 The load_path provides a list of paths within the project that the load system
 should search for scripts.
@@ -204,11 +221,13 @@ should search for scripts.
     load_path:
       - lib
 
-### Message
+By default it's value is take to be `['lib']`.
+
+### Install Message
 
 The post install message.
 
-  message: |
+  install_message: |
     Thanks for installing Hello World!
 
 ### Extra
