@@ -1,8 +1,8 @@
 # .ruby spec
 
-## The Lowdown
+## Introduction
 
-The .ruby file specification...
+The .ruby file specification defines an very explict and detail...
 
 
 ## Fields
@@ -21,28 +21,29 @@ The "unix" name of the package. It must be a single word.
 
 ### Version
 
-The Version must follow (or at very nearly follow) the semver specification
-(http://semver.org/).
+The version SHOULD follow the SemVer specification (http://semver.org/),
+but it MUST be a dot separated string of alphanumeric characters.
 
     version: 1.0.0
 
 ### Codename
 
-The Codename is a arbitraty name given to the particular version.
+The codename is a arbitraty name given to the particular version.
 
     codename: Lucy Loo
 
 ### Title
 
-The title is a single line string.
+The title is a arbitrary single line string, though it usually reflects
+the name field captialized.
 
     title: Hello World
 
 ### Date
 
-Date is the date the .ruby file was generated. For packages of the project
-this will be essentially the date a package was released. The format is
-standard ISO UTC. It can also have an optional HH::MM::SS timestamp.
+Date is the date the .ruby file was generated. Within packages this will
+be effectively the date the package was released. The format is
+standard ISO UTC, and may have an optional HH::MM::SS timestamp.
 
     date: 2011-06-02
 
@@ -69,8 +70,9 @@ Description is a multi-line detailed description of the project.
 
 ### Authors
 
-Authors list the originating authors of a project. They are usually
-the primary copyright holders.
+Authors is a lists the originating authors of a project. They are
+usually the copyright holders. Each entry is a mapping with keys,
+`name`, `email` and `website`.
 
     authors:
       - name: Thomas T. Thomas
@@ -79,7 +81,8 @@ the primary copyright holders.
 
 ### Maintainers
 
-Maintainers are the individuals currently developing a project.
+Maintainers is a list of individuals currently developing a project.
+Each entry is same as with authors.
 
     maintainers:
       - name: Thomas T. Thomas
@@ -141,7 +144,8 @@ Conflicts is a list of packages which have known issues when operating
 in the same process as this package.
 
     conflicts:
-      badmojo: 0+
+      - name: badmojo
+        verison: 0+
 
 ### Substitues
 
@@ -172,7 +176,7 @@ which depends on the libXML2 library.
 
     dependencies:
       - name: libXML2
-      - version: 1.0+
+        version: 1.0+
 
 ### External Requirements
 
@@ -198,7 +202,7 @@ resource type that begins with the letters `doc` is considered a documentation
 link. Likewise for `home`. In this way `home` is recognized as the same resource
 as `homepage`.
 
-Recognized types are `home doc api code wiki work`
+Recognized types are `api dev doc code home irc mail talk wiki work`
 
 There are also a few non-conforming types that are considered synonyms.
 
@@ -215,8 +219,8 @@ for the package repository.
 
 ### Load Path
 
-The load_path provides a list of paths within the project that the load system
-should search for scripts.
+The `load_path` field provides a list of paths within the project that
+the load system must search when loading scripts.
 
     load_path:
       - lib
@@ -225,10 +229,11 @@ By default it's value is take to be `['lib']`.
 
 ### Install Message
 
-The post install message.
+The post install message. This field is used by package managers to inform
+the installer of any important information they may need to know.
 
   install_message: |
-    Thanks for installing Hello World!
+    Hello World is only an example.
 
 ### Extra
 
