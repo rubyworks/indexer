@@ -1,0 +1,25 @@
+#!mast bin lib [A-Z][A-Z]*
+bin/dotruby
+lib/dotruby/base.rb
+lib/dotruby/cli.rb
+lib/dotruby/data.rb
+lib/dotruby/exceptions/exception.rb
+lib/dotruby/exceptions/invalid_metadata.rb
+lib/dotruby/exceptions/invalid_version.rb
+lib/dotruby/hash_like.rb
+lib/dotruby/spec.rb
+lib/dotruby/v0/attributes.rb
+lib/dotruby/v0/canonical.rb
+lib/dotruby/v0/conflict.rb
+lib/dotruby/v0/conventional.rb
+lib/dotruby/v0/dependency.rb
+lib/dotruby/v0/repository.rb
+lib/dotruby/v0/requirement.rb
+lib/dotruby/v0/resources.rb
+lib/dotruby/v0.rb
+lib/dotruby/version/X-version.rb
+lib/dotruby/version/constraint.rb
+lib/dotruby/version/number.rb
+lib/dotruby.rb
+README.md
+DOTRUBY.md
