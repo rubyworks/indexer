@@ -1,8 +1,8 @@
-# .ruby spec
+# The .ruby Specification
 
 ## Introduction
 
-The .ruby file specification defines an very explict and detail...
+The .ruby specification defines an very explict and detailed ...
 
 
 ## Fields
@@ -129,23 +129,34 @@ the licenses with a version number if it applies.
 Requirements are the packages on which this package depends. Often, referred to
 as _dependencies_ we have chosen instead to use the term requirements becuase
 that is what Ruby actually does with them --it _requires_ them. Requirements
-is an array of hashes, composed of name, version, groups, development, engine
-and platform.
+is an array of hashes, composed of `name`, `version`, `group`, `development`,
+`repository`, `engine` and `platform` and `optional`.
 
     requirements:
       - name: dotruby
-        version: 1.0.0
-        groups: [build]
+        version:
+          - 1.0.0
+        group: [build]
         development: true
+        optional: false
+        engine:
+          - ruby 1.9+
+        platform:
+          - "x86_64-linux
+        repository:
+          scm: git
+          url: http://github.com/dotruby/dotruby.git
 
 ### Conflicts
 
 Conflicts is a list of packages which have known issues when operating 
-in the same process as this package.
+in the same process as this package. It consists of a list of mappings
+for `name` and `version`.
 
     conflicts:
       - name: badmojo
-        verison: 0+
+        verison:
+          - 0+
 
 ### Substitues
 
@@ -172,11 +183,13 @@ RubyGems pacakge.
 Dependencies akin to requirements, but are system packages that this package
 depends upon. Pacakge managers might use this information to install dependent
 packages via `apt-get` or `yum`, for instance. A good example is, `ruby-libxml`
-which depends on the libXML2 library.
+which depends on the libXML2 library. Each entry has the same format as
+entries for `requirements`.
 
     dependencies:
       - name: libXML2
         version: 1.0+
+        development: false
 
 ### External Requirements
 
@@ -206,8 +219,8 @@ Recognized types are `api dev doc code home irc mail talk wiki work`
 
 There are also a few non-conforming types that are considered synonyms.
 
-  `source code` = `code`
-  `development` = `work`
+* `source code` = `code`
+* `development` = `work`
 
 ### Repositories
 
