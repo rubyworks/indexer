@@ -30,7 +30,7 @@ Likewise, we can verify this by trying to assign each name.
     spec = DotRuby::Spec.new
 
     @names.each do |name|
-      expect DotRuby::InvalidMetadata do
+      expect DotRuby::ValidationError do
         spec.name = name
       end
     end

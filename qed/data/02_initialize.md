@@ -17,9 +17,10 @@ In addition, certain attributes will have default values.
     data.replacements.should == []
     data.authors.should      == []
     data.maintainers.should  == []
+    data.requirements.should == []
+    data.dependencies.should == []
+    data.conflicts.should    == []
 
-    data.requirements.should == {}
-    data.conflicts.should    == {}
     data.resources.should    == {}
     data.repositories.should == {}
     data.extra.should        == {}
@@ -40,7 +41,7 @@ Entries passed to the initializer are assigned via Data's setters
 and are validated upon assignment, so no invalid values can get into the
 object's state, e.g.
 
-    expect DotRuby::InvalidMetadata do
+    expect DotRuby::ValidationError do
       DotRuby::Data.new(:name=>1)
     end
 

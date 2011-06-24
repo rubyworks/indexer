@@ -21,90 +21,93 @@ module DotRuby
       # TODO: Should each field get it's own validation method, e.g. validate_name().
       module Validation
 
-        # Canonical uses time library to validate date-time fields.
-        require 'time'
-
-        # Regular expression to limit date-time fields to ISO 8601 (Zulu).
-        # TODO: support full standard
-        RE_DATE_TIME = /^\d\d\d\d-\d\d-\d\d(\s+\d\d:\d\d:\d\d)?$/
-
         # Project's _packaging name_ must be a string without spaces
         # using only `[a-zA-Z0-9_-]`.
         def name=(value)
-          validate_word(:name, value)
+          Valid.name!(value, :name)
           super(value)
         end
 
         #
         def version=(value)
-          validate_string(:version, value)
-          case value
-          when /^\D/
-            raise(InvalidMetadata, "version must start with numer -- #{value}")
-          when /[^.A-Za-z0-9]/
-            raise(InvalidMetadata, "version contains invalid characters -- #{value}")
-          end
+          Valid.version_string!(value, :version)
           super(value)
         end
 
         # Date must be a UTC formated string, time is optional.
         def date=(value)
-          validate_date(:date, value)
+          Valid.utc_date!(value, :date)
           super(value)
         end
 
         # Title of package must be a single-line string.
         def title=(value)
-          validate_single_line(:title, value)
+          Valid.oneline!(value, :title)
           super(value)
         end
 
         # Summary must be a single-line string.
         def summary=(value)
-          validate_single_line(:summary, value)
+          Valid.oneline!(value, :summary)
           super(value)
         end
 
         # Description must be string.
         def description=(value)
-          validate_string(:description, value)
+          Valid.string!(value, :description)
           super(value)
         end
 
         # Codename must a single-line string.
         def codename=(value)
-          validate_single_line(:codename, value)
+          Valid.oneline!(value, :codename)
           super(value)
         end
 
         # Loadpath must be an Array of valid pathnames or a String of pathnames
         # separated by colons or semi-colons.
         def load_path=(value)
-          validate_array(:load_path, value)
+          Valid.array!(value, :load_path)
+          value.each_with_index{ |path, i| Valid.path!(path, "load_path #{i}") }
           super(value)
         end
 
         # Requirements must be a list of package references.
         def requirements=(value)
-          validate_package_references(:requirements, value)
+          Valid.array!(value, :requirements)
+          value.each_with_index do |r, i|
+            Valid.hash!(r, "requirements #{i}")
+          end
+          super(value)
+        end
+
+        # Dependencies must be a list of package references.
+        def dependencies=(value)
+          Valid.array!(value, :dependencies)
+          value.each_with_index do |r, i|
+            Valid.hash!(r, "dependencies #{i}")
+          end
           super(value)
         end
 
         # List of packages with which this project cannot function.
         def conflicts=(value)
-          validate_package_references(:conflicts, value)
+          Valid.array!(value, :conflicts)
+          value.each_with_index do |c, i|
+            Valid.hash!(c, "conflicts #{i}")
+          end
           super(value)
         end
 
         #
         def alternatives=(value)
-          validate_array(:alternatives, value)
+          Valid.array!(value, :alternatives)
           super(value)
         end
 
         # List of packages for which this package serves as a replacement.
         def replacements=(value)
-          validate_array(:replacements, value)
+          Valid.array!(value, :replacements)
           super(value)
         end
 
@@ -116,92 +119,104 @@ module DotRuby
           super(value)
         end
 
-  # TODO: Company or Organization or both?
+# TODO: Company or Organization or both?
 
         # Company must be a single line string.
         def company=(value)
-          validate_single_line(:company, value)
+          Valid.oneline!(value, :company)
           super(value)
         end
 
+# TODO: Maybe organization should be a hash with `name` and `url`?
+
         # Organization must be a single line string.
         def organization=(value)
-          validate_single_line(:organization, value)
+          Valid.oneline!(value, :organization)
           super(value)
         end     
 
         # The creation date must be a valide UTC formatted date.
         def created=(value)
-          validate_date(:created, value)
+          Valid.utc_date!(value, :created)
           super(value)
         end
 
         # List of license, e.g. 'Apache 2.0'.
         def licenses=(value)
-          validate_array(:licenses, value)
+          Valid.array!(value, :licenses)
           super(value)
         end
 
-        # Authors must an array of `name <email>` strings or hashes in the
-        # form of `{name: ..., email: ..., :website ... }`.
+        # Authors must an array of hashes in the form of `{name: ..., email: ..., :website ... }`.
         def authors=(value)
-          validate_array(:authors, value)
+          Valid.array!(value, :authors)
           super(value)
         end
 
-        # Maintainers must an array of `name <email>` strings or hashes in the
-        # form of `{name: ..., email: ..., :website ..., roles: [...] }`.
+        # Maintainers must an array of hashes in the form
+        # of `{name: ..., email: ..., :website ..., roles: [...] }`.
         def maintainers=(value)
-          validate_array(:maintainers, value)
+          Valid.array!(value, :maintainers)
           super(value)
         end
 
         # Resources  must be a mapping of <code>name => URL</code>.
         def resources=(value)
-          validate_hash(:resources, value)
-          value.each do |name, url|
-            validate_url("resources - #{name}", url)
+          Valid.hash!(value, :resources)
+          value.each do |id, url|
+            Valid.url!(url, "resources #{id}")
           end
           super(value)
         end
 
         # Repositores must be a mapping of <code>name => URL</code>.
         def repositories=(value)
-          validate_hash(:repositories, value)
-          value.each do |name, url|
-            validate_url("repositories - #{name}", url)
+          Valid.hash! value, :repositories
+          value.each do |id, data|
+            Valid.hash! data, "repositories #{id}"
+            Valid.url!  data['url'], "repositories #{id}"
           end
-          super(value)
+          super value
         end
 
         # The post-installation message must be a String.
         def message=(value)
-          validate_string(:message, value)
+          Valid.string!(value, :message)
           super(value)
         end
 
         # Copyright must be a string.
         def copyright=(value)
-          validate_string(:copyright, value)
+          Valid.string!(value, :copyright)
           super(value)
         end
+
+        # Post installation message.
+        def install_message=(value)
+          Valid.string!(value)
+          super(value)
+        end
+
+# TODO: How to handle project toplevel namespace?
 
         # Namespace must be a single line string.
         def namespace=(value)
-          validate_single_line(:namespace, value)
-          #raise InvalidMetadata unless /^(class|module)/ =~ value
+          Valid.oneline!(value, :namespace)
+          #raise ValidationError unless /^(class|module)/ =~ value
           super(value)
         end
 
+# TODO: SCM ?
+
         # SCM must be a word.
         def scm=(value)
-          validate_word(value)
+          Valid.word!(value, :scm)
           super(value)
         end
 
         #
         def extra=(value)
-          validate_hash(:extra, value)
+          Valid.hash!(value, :extra)
           super(value)
         end
 
@@ -216,64 +231,12 @@ module DotRuby
 
       private
 
-# TODO: move these to Valid utility module?
-
-        def validate_string(field, string)
-          unless String === string
-            raise(InvalidMetadata, "#{field} must be a string")
-          end
-        end
-
-        def validate_single_line(field, string)
-          validate_string(field, string)
-          if string.index("\n")
-            raise(InvalidMetadata, "#{field} must have only one line")
-          end
-        end
-
-        def validate_word(field, word)
-          validate_string(field, word)
-          raise(InvalidMetadata, "#{field} must start with letter -- #{word}") if /^[A-Za-z]/ !~ word
-          raise(InvalidMetadata, "#{field} must end with a letter or number -- #{word}") if /[A-Za-z0-9]$/ !~ word
-          raise(InvalidMetadata, "#{field} must be a world -- #{word}") if /[^A-Za-z0-9_-]/ =~ word
-        end
-
-        def validate_array(field, array)
-          unless Array === array
-            raise(InvalidMetadata, "#{field} must be an array")
-          end
-        end
-
-        def validate_hash(field, hash)
-          unless Hash === hash
-            raise(InvalidMetadata, "#{field} must be a Hash")
-          end
-        end
-
-        def validate_date(field, date)
-          validate_string(field, date)
-          unless RE_DATE_TIME =~ date
-            raise(InvalidMetadata, "#{field} must be a UTC formatted date string")
-          end
-          begin
-            Time.parse(date)
-          rescue
-            raise(InvalidMetadata, "#{field} must be a UTC formatted date string")
-          end
-        end
-     
-        def validate_package_references(field, references)
-          unless Array === references
-            raise(InvalidMetadata, "#{field} must be a hash")
-          end
-          # TODO: valid version and type
-        end
-
-        def validate_url(field, url)
-          unless /^(\w+)\:\/\/\S+$/ =~ url
-            raise(InvalidMetadata, "#{field} must be a URL")
-          end
-        end
+        #def validate_package_references(field, references)
+        #  unless Array === references
+        #    raise(InvalidMetadata, "#{field} must be a hash")
+        #  end
+        #  # TODO: valid version and type
+        #end
 
       protected
 

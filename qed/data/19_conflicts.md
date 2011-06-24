@@ -8,10 +8,10 @@ constraints.
 
     data = DotRuby::Data.new
 
-    data.conflicts = {
-       'bad_robot' => '>=1.0',
-       'evil' => '0+'
-    }
+    data.conflicts = [
+      { 'name' => 'bad_robot', 'version' => ['>=1.0'] },
+      { 'name' => 'evil', 'version' => ['0+'] }
+    ]
 
 The `conflicts` field can only by assigned such a Hash.
 

@@ -30,7 +30,7 @@ Likewise, we can verify this by trying to assign each name.
     data = DotRuby::Data.new
 
     @names.each do |name|
-      expect DotRuby::InvalidMetadata do
+      expect DotRuby::ValidationError do
         data.name = name
       end
     end

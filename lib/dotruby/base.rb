@@ -46,6 +46,16 @@ module DotRuby
       raise("could not locate the #{FILE_NAME} file")
     end
 
+    private
+
+    #
+    def validate(value, field, *types)
+      types.each do |type|
+        Valid.send(type, value, field)
+      end
+      return value
+    end
+
   end
 
 end

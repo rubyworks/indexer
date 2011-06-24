@@ -9,7 +9,7 @@ purposes and the like.
 
 The `title` value MUST have only one lione of text.
 
-    expect DotRuby::InvalidMetadata do
+    expect DotRuby::ValidationError do
       data.title = "Foo\nBar"
     end
 

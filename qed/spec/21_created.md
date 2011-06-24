@@ -21,7 +21,7 @@ String values with invalid datetimes will raise an error, as will other
 type of objects.
 
     check "invalid date" do |d|
-      ! DotRuby::InvalidMetadata.raised? do
+      ! DotRuby::ValidationError.raised? do
         spec.created = d
       end
     end

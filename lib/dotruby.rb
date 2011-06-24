@@ -18,13 +18,14 @@ end
 
 require 'yaml'
 
-require 'dotruby/exceptions/invalid_metadata'
-require 'dotruby/exceptions/invalid_version'
-
+require 'dotruby/exception'
 require 'dotruby/valid'
 require 'dotruby/hash_like'
+
 require 'dotruby/data'
 require 'dotruby/spec'
+
+require 'dotruby/version/exception'
 require 'dotruby/version/number'
 require 'dotruby/version/constraint'
 

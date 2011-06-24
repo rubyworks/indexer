@@ -8,7 +8,7 @@ The `summary` field is used to breifly describe a project.
 
 The `summary` value MUST have only one line of text.
 
-    expect DotRuby::InvalidMetadata do
+    expect DotRuby::ValidationError do
       data.summary = "not\none\nline"
     end
 

@@ -1,11 +1,11 @@
 ## Data#repositories
 
-The `repositories` field holds a list of repository URLs indexed by type.
+The `repositories` field holds a list of repository URLs indexed by an id.
 
     data = DotRuby::Data.new
 
     data.repositories = {
-      'public' => 'https://github.com/foostuff/foo.git'
+      'public' => {'url' => 'https://github.com/foostuff/foo.git' }
     }
 
 The field MUST be a Hash.

@@ -7,7 +7,7 @@ When '`(((\w+)))` field (((is|holds)))' do |name, _|
     begin
       data.send("#{name}=", value)
       true
-    rescue DotRuby::InvalidMetadata
+    rescue DotRuby::ValidationError
       false
     end
   end

@@ -9,7 +9,7 @@ purposes and the like.
 
 The `title` value MUST have only one line of text.
 
-    expect DotRuby::InvalidMetadata do
+    expect DotRuby::ValidationError do
       spec.title = "Foo\nBar"
     end
 

@@ -11,27 +11,27 @@ The format of the field is an array.
 
     spec = DotRuby::Spec.new
 
-    data.replacements = ['gash']
+    spec.replacements = ['gash']
 
 The Spec class allows any object that responds to #to_ary to be
 assinged.
 
-    o = Object.new do
-      def to_ary
-        ['gash']
-      end
+    o = Object.new
+
+    def o.to_ary
+      ['gash']
     end
 
     spec.replacements = o
 
 But the elements must be String, or respond to `#to_str`.
 
-    TODO: write this demonstration
+    # TODO: write this demonstration
 
 The `replacements` field cannote be assigned anyting else.
 
     check "invalid date" do |d|
-      ! DotRuby::InvalidMetadata.raised? do
+      ! DotRuby::ValidationError.raised? do
         spec.replacements = d
       end
     end

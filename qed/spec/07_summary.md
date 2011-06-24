@@ -6,16 +6,17 @@ The `summary` field is used to breifly describe a project.
 
     spec.summary = "Convenient Way to Say Hello"
 
-The `summary` value MUST have only one line of text.
+The `summary` value will have all newline and multiple space characters
+removed.
 
-    expect DotRuby::InvalidMetaspec do
-      spec.summary = "not\none\nline"
+    spec.summary = "not\none\t  line"
+    spec.summary.assert == "not one line"
+
+The summary can be assigned only object's that responds to #to_str.
+
+    expect DotRuby::ValidationError do
+      spec.summary = :even_a_symbol
     end
-
-The summary can be assigned with any object that responds to #to_s.
-
-    spec.summary = :even_a_symbol
-
 
 TODO: Should a summary have a size limit?
 

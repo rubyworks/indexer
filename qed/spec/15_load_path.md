@@ -11,25 +11,29 @@ The `load_path` value MUST be an Array of String.
 
 Or any object that responds to `#to_ary`.
 
-    o = Object.new do
-      def to_ary
-        ['lib', 'ext']]
-      end
+    o = Object.new
+
+    def o.to_ary
+      ['lib', 'ext']
     end
 
     spec.load_path = o
 
+It can also take a string path.
+
+    spec.load_path = "foo/path"
+    spec.load_path.assert == ["foo/path"]
+
 Any other object will cause an error.
 
-    check "invalid date" do |d|
-      ! DotRuby::InvalidMetadata.raised? do
+    check "invalid load_path" do |d|
+      ! DotRuby::ValidationError.raised? do
         spec.load_path = d
       end
     end
 
     no 100
     no :symbol
-    no "string"
     no Object.new
 
 The elements must also be valid path strings.

@@ -35,8 +35,9 @@ module DotRuby
         #   The new name of the project.
         #
         def name=(name)
-          sanitized_name = name.to_s.downcase.sub(/\W/, '')
-          @name = Valid.name!(sanitized_name)
+          name = name.to_s if Symbol === name
+          Valid.name!(name, :name)
+          @name  = name.to_str.downcase
           @title = @name.capitalize unless @title  # TODO: use #titlecase
           @name
         end
@@ -45,13 +46,23 @@ module DotRuby
         # single space character.
         #
         def title=(title)
-          @title = title.to_str.sub(/\s+/, ' ')
+          Valid.oneline!(title, :title)
+          @title = title.to_str.gsub(/\s+/, ' ')
+        end
+
+        # Codename
+        #
+        def codename=(codename)
+          codename = codename.to_s if Symbol === codename
+          Valid.oneline!(codename, :codename)
+          @codename = codename.to_str
         end
 
         # Summary is sanitized to only have one line of text.
         #
         def summary=(summary)
-          @summary = summary.to_s.sub("\n", ' ')
+          Valid.string!(summary, :summary)
+          @summary = summary.to_str.gsub(/\s+/, ' ')
         end
 
         #
@@ -60,7 +71,7 @@ module DotRuby
         # @param [Hash<Integer>, String] version
         #   The version from the metadata file.
         #
-        # @raise [InvalidMetadata]
+        # @raise [ValidationError]
         #   The version must either be a `String` or a `Hash`.
         #
         def version=(version)
@@ -77,38 +88,45 @@ module DotRuby
           when String
             @version = Version::Number.parse(version.to_s)
           else
-            raise(InvalidMetadata,"version must be a Hash or a String")
+            raise(ValidationError,"version must be a Hash or a String")
           end
         end
 
         #
         # Sets the production date of the project.
         #
-        # @param [String] date
+        # @param [String,Date,Time,DateTime] date
         #   The production date this version.
         #
         def date=(date)
-          @date = case date
-                  when String
-                    Date.parse(date)
-                  else
-                    date
-                  end
+          @date = \
+            case date
+            when String
+              Date.parse(date)
+            when Date, Time, DateTime
+              date
+            else
+              raise ValidationError, "invalid date for `date' - #{date.inspect}"
+            end
         end
 
         #
         # Sets the creation date of the project.
         #
-        # @param [String] date
+        # @param [String,Date,Time,DateTime] date
         #   The creation date of this project.
         #
         def created=(date)
-          @date = case date
-                  when String
-                    Date.parse(date)
-                  else
-                    date
-                  end
+          @created = \
+            case date
+            when String
+             Valid.utc_date!(date)
+             Date.parse(date)
+            when Date, Time, DateTime
+             date
+            else
+             raise ValidationError, "invalid date for `created' - #{date.inspect}"
+            end
         end
 
         #
@@ -126,9 +144,9 @@ module DotRuby
         def licenses=(licenses)
           @licenses = (
             list = [licenses].flatten
-            list.map!{ |x| x.to_str }
+            list.map!{ |s| Valid.string!(s); s.to_str }
             warn "Duplicate licenses listed" if list != list.uniq
-            list
+            list.uniq
           )
         end
 
@@ -161,7 +179,7 @@ module DotRuby
         # @todo if an entry is just a string convert it to a hash.
         def maintainers=(maintainers)
           @maintainers = (
-            list = case manitainers
+            list = case maintainers
                    when Array
                      maintainers.map{ |m| Person.parse(m) }
                    else
@@ -178,11 +196,19 @@ module DotRuby
         # @param [Array<String>, String] paths
         #   The require-paths or a glob-pattern.
         #
+        #--
+        # TODO: should we warn if directory does not exist?
+        #++
         def load_path=(paths)
-          @load_path = each_path(paths).to_a
+          @load_path = case
+            when Valid.array?(paths)
+              paths.to_ary.map{ |path| Valid.path!(path); path }.flatten
+            when Valid.path?(paths)
+              [paths]
+            else
+              Valid.raise_invalid('path', paths, :load_path)
+            end
         end
-
-# CONSIDER: Rename #install_message to #notes or #release_notes?
 
         #
         # Sets the post-install message of the project.
@@ -194,12 +220,14 @@ module DotRuby
         #   The new post-installation message.
         #
         def install_message=(message)
-          @install_message = case message
-                             when Array
-                               message.join($/)
-                             else
-                               message.to_s
-                             end
+          @install_message = \
+            case message
+            when Array
+              message.join($/)
+            else
+              Valid.string!(message)
+              message.to_str
+            end
         end
 
         #
@@ -209,7 +237,7 @@ module DotRuby
         # @param [Array<Hash>, Hash{String=>Hash}, Hash{String=>String}] requirements
         #   The requirement details.
         #
-        # @raise [InvalidMetadata]
+        # @raise [ValidationError]
         #   The requirements must be an `Array` or `Hash`.
         #
         def requirements=(requirements)
@@ -220,7 +248,7 @@ module DotRuby
               @requirements << Requirement.parse(specifics)
             end
           else
-            raise(InvalidMetadata,"requirements must be an Array or Hash")
+            raise(ValidationError,"requirements must be an Array or Hash")
           end
         end
 
@@ -230,7 +258,7 @@ module DotRuby
         # @param [Array<Hash>, Hash{String=>Hash}, Hash{String=>String}] requirements
         #   The dependency details.
         #
-        # @raise [InvalidMetadata]
+        # @raise [ValidationError]
         #   The dependencies must be an `Array` or `Hash`.
         #
         def dependencies=(dependencies)
@@ -241,7 +269,7 @@ module DotRuby
               @dependencies << Dependency.parse(specifics)
             end
           else
-            raise(InvalidMetadata,"dependencies must be an Array or Hash")
+            raise(ValidationError,"dependencies must be an Array or Hash")
           end
         end
 
@@ -252,7 +280,7 @@ module DotRuby
         # @param [Array<Hash>, Hash{String=>String}] conflicts
         #   The conflicts for the project.
         #
-        # @raise [InvalidMetadata]
+        # @raise [ValidationError]
         #   The conflicts list must be an `Array` or `Hash`.
         #
         # @todo lets get rid of the type check here and let the #parse method do it
@@ -264,7 +292,7 @@ module DotRuby
               @conflicts << Conflict.parse(specifics)
             end
           else
-            raise(InvalidMetadata, "conflicts must be an Array or Hash")
+            raise(ValidationError, "conflicts must be an Array or Hash")
           end
         end
 
@@ -275,14 +303,12 @@ module DotRuby
         #   The alternatives for the project.
         #
         def alternatives=(alternatives)
-          unless alternatives.kind_of?(Array)
-            raise(InvalidMetadata, "alternatives must be an Array")
-          end
+          Valid.array!(alternatives, :alternatives)
 
           @alternatives.clear
 
-          alternatives.each do |name|
-            @alternative << name.to_s
+          alternatives.to_ary.each do |name|
+            @alternatives << name.to_s
           end
         end
 
@@ -293,13 +319,11 @@ module DotRuby
         #   The replacements for the project.
         #
         def replacements=(replacements)
-          unless replacements.kind_of?(Array)
-            raise(InvalidMetadata, "replacements must be a Array")
-          end
+          Valid.array!(replacements, :replacements)
 
           @replacements.clear
 
-          replacements.each do |name|
+          replacements.to_ary.each do |name|
             @replacements << name.to_s
           end
         end
@@ -312,13 +336,14 @@ module DotRuby
         #
         def repositories=(repositories)
           case repositories
-          when Array, Hash
+          when Hash, Array
             @repositories.clear
             repositories.each do |specifics|
-              @repositories << Repository.parse(specifics)
+              repo = Repository.parse(specifics)
+              @repositories[repo.id] = repo
             end
           else
-            raise(InvalidMetadata, "repositories must be an Array or Hash")
+            raise(ValidationError, "repositories must be an Array or Hash")
           end
         end
 
@@ -337,7 +362,7 @@ module DotRuby
         #
         def extra=(extra)
           unless extra.kind_of?(Hash)
-            raise(InvalidMetadata, "extra must be a Hash")
+            raise(ValidationError, "extra must be a Hash")
           end
           @extra = extra
         end
@@ -408,7 +433,13 @@ module DotRuby
           replacements << name.to_s
         end
 
-        # A specification is not valid without a name and verison.
+        #
+        #
+        def add_repository(id, url, scm=nil)
+          @repositories << Repository.parse(:id=>id, :url=>url, :scm=>scm)
+        end
+
+        # A specification is not valid without a name and version.
         #
         # @return [Boolean] valid specification?
         def valid?
@@ -424,16 +455,18 @@ module DotRuby
         #
         def initialize_attributes
           @authors               = []
-          @external_requirements = []
+          #@external_requirements = []
           @licenses              = []
           @maintainers           = []
           @replacements          = []
+          @alternatives          = []
+          @requirements          = []
+          @dependencies          = []
+          @conflicts             = []
 
-          @conflicts             = {}
-          @extra                 = {}
           @repositories          = {}
-          @requirements          = {}
           @resources             = {}
+          @extra                 = {}
 
           @load_path             = ['lib']
 
@@ -458,8 +491,10 @@ module DotRuby
           case paths
           when Array
             paths.each(&block)
+          when String
+            Dir.glob(paths,&block)  # TODO: should we be going this?
           else
-            glob(paths,&block)
+            raise(ValidationError, "invalid path")
           end
         end
 

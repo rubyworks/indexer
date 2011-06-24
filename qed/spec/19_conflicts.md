@@ -16,7 +16,7 @@ constraints.
 The `conflicts` field can only by assigned such a Hash.
 
     check "invalid date" do |d|
-      ! DotRuby::InvalidMetadata.raised? do
+      ! DotRuby::ValidationError.raised? do
         spec.conflicts = d
       end
     end

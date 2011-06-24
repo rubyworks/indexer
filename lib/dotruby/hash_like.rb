@@ -16,9 +16,9 @@ module DotRuby
     #   The key is not known.
     #
     def [](key)
-      unless respond_to?(key)
-        raise(InvalidMetadata,"unknown attribute: #{key.inspect}")
-      end
+      #unless respond_to?(key)
+      #  raise(ValidationError,"unknown attribute: #{key.inspect}")
+      #end
 
       send(key)
     end
@@ -42,10 +42,14 @@ module DotRuby
       setter = "#{key}="
 
       unless respond_to?(setter)
-        raise(InvalidMetadata,"unknown attribute: #{key.inspect}")
+        raise(ValidationError,"unknown attribute: #{key.inspect}")
       end
 
-      send(setter, value)      
+      #begin
+        send(setter, value)      
+      #rescue StandardError
+      #  raise(ValidationError,"invalid assignment: #{key.inspect}")
+      #end
     end
 
     #

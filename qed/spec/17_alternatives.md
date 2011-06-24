@@ -12,22 +12,22 @@ The format of the field is an array.
 The Spec class allows any object that responds to #to_ary to be
 assinged.
 
-    o = Object.new do
-      def to_ary
-        ['BlueCloth', 'rdiscount']
-      end
+    o = Object.new
+
+    def o.to_ary
+      ['BlueCloth', 'rdiscount']
     end
 
     spec.alternatives = o
 
 But the elements must be String, or respond to `#to_str`.
 
-    TODO: write this demonstration
+    # TODO: write this demonstration
 
 The `alternatives` field cannot accept anything else.
 
-    check "invalid date" do |d|
-      ! DotRuby::InvalidMetadata.raised? do
+    check "invalid alternative" do |d|
+      ! DotRuby::ValidationError.raised? do
         spec.alternatives = d
       end
     end

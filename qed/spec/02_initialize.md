@@ -17,9 +17,10 @@ In addition, certain attributes will have default values.
     spec.replacements.should == []
     spec.authors.should      == []
     spec.maintainers.should  == []
+    spec.requirements.should == []
+    spec.dependencies.should == []
+    spec.conflicts.should    == []
 
-    spec.requirements.should == {}
-    spec.conflicts.should    == {}
     spec.resources.should    == {}
     spec.repositories.should == {}
     spec.extra.should        == {}
@@ -40,7 +41,7 @@ Entries passed to the initializer are assigned via Spec's setters
 and are validated upon assignment, so no invalid values can get into the
 object's state, e.g.
 
-    expect DotRuby::InvalidMetadata do
+    expect DotRuby::ValidationError do
       DotRuby::Spec.new(:name=>1)
     end
 

@@ -69,6 +69,14 @@ module DotRuby
       end
 
       #
+      attr :team
+
+      # TODO: validate team
+      def team=(team)
+        @team = team
+      end
+
+      #
       def to_h
         {'name'=>name, 'email'=>email, 'website'=>website}
       end

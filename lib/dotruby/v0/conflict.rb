@@ -72,7 +72,7 @@ module DotRuby
       # Set the version constraint.
       #
       def version=(version)
-        @version = Version::Contraint.parse(verison)
+        @version = Version::Constraint.parse(version)
       end
 
     end
