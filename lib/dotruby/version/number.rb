@@ -95,6 +95,9 @@ module DotRuby
       end
 
       def ==(other)
+        unless self.class === other 
+          other = self.class.parse(other)
+        end
         (@major == other.major) && \
           (@minor == other.minor) && \
           (@patch == other.patch) && \
