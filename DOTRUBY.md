@@ -225,10 +225,12 @@ There are also a few non-conforming types that are considered synonyms.
 ### Repositories
 
 Repositories is a mapping of repository type to universal resource locator
-for the package repository.
+for the package repository and scm type.
 
     repositories:
-      public: http://github.com/fooworks/hello_world.git
+      public:
+        url: http://github.com/fooworks/hello_world.git
+        scm: git
 
 ### Load Path
 
