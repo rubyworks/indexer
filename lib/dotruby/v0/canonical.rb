@@ -216,6 +216,8 @@ module DotRuby
 
       private
 
+# TODO: move these to Valid utility module?
+
         def validate_string(field, string)
           unless String === string
             raise(InvalidMetadata, "#{field} must be a string")

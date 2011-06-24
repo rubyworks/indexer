@@ -9,17 +9,19 @@ module DotRuby
     module Conventional
 
       # Conventional module requires Attributes module and 
-      # all the modelling classes.
+      # all the modeling classes.
       if RUBY_VERSION > '1.9'
         require_relative 'attributes'
         require_relative 'requirement'
         require_relative 'dependency'
         require_relative 'conflict'
+        require_relative 'person'
       else
         require 'dotruby/v0/attributes'
         require 'dotruby/v0/requirement'
         require 'dotruby/v0/dependency'
         require 'dotruby/v0/conflict'
+        require 'dotruby/v0/person'
       end
 
       #
@@ -33,7 +35,23 @@ module DotRuby
         #   The new name of the project.
         #
         def name=(name)
-          @name = name.to_s.downcase.sub(/\W/, '') # or validate?
+          sanitized_name = name.to_s.downcase.sub(/\W/, '')
+          @name = Valid.name!(sanitized_name)
+          @title = @name.capitalize unless @title  # TODO: use #titlecase
+          @name
+        end
+
+        # Title is sanitized so that all white space is reduced to a
+        # single space character.
+        #
+        def title=(title)
+          @title = title.to_str.sub(/\s+/, ' ')
+        end
+
+        # Summary is sanitized to only have one line of text.
+        #
+        def summary=(summary)
+          @summary = summary.to_s.sub("\n", ' ')
         end
 
         #
@@ -94,13 +112,24 @@ module DotRuby
         end
 
         #
-        # Sets the license(s) of the project.
+        # Sets the license(s) of the project. License entries SHOULD be well
+        # recognized short-hand names such as "GPL3" and "Apache 2.0". Licenses
+        # should be in order of significance. The first license given is taken
+        # to be the project's primary license.
         #
-        # @param [Array, String] license
+        #    spec.licenses = "MIT"
+        #    spec.licenses = ["GPL3", "Apache 2.0"]
+        #
+        # @param [Array<String>, String] licenses
         #   The license(s) of the project.
         #
         def licenses=(licenses)
-          @licenses = [licenses].flatten
+          @licenses = (
+            list = [licenses].flatten
+            list.map!{ |x| x.to_str }
+            warn "Duplicate licenses listed" if list != list.uniq
+            list
+          )
         end
 
         #
@@ -111,12 +140,16 @@ module DotRuby
         #
         # @todo if an entry is just a string convert it to a hash.
         def authors=(authors)
-          @authors = case authors
-                     when Array
-                       authors
-                     else
-                       [authors]
-                     end
+          @authors = (
+            list = case authors
+                   when Array
+                     authors.map{ |a| Person.parse(a) }
+                   else
+                     [Person.parse(authors)]
+                   end
+            warn "Duplicate authors listed" if list != list.uniq
+            list
+          )
         end
 
         #
@@ -127,12 +160,16 @@ module DotRuby
         #
         # @todo if an entry is just a string convert it to a hash.
         def maintainers=(maintainers)
-          @maintainers = case manitainers
-                         when Array
-                           maintainers
-                         else
-                           [maintainers]
-                         end
+          @maintainers = (
+            list = case manitainers
+                   when Array
+                     maintainers.map{ |m| Person.parse(m) }
+                   else
+                     [Person.parse(maintainers)]
+                   end
+            warn "Duplicate maintainers listed" if list != list.uniq
+            list
+          )           
         end
 
         #
@@ -144,6 +181,8 @@ module DotRuby
         def load_path=(paths)
           @load_path = each_path(paths).to_a
         end
+
+# CONSIDER: Rename #install_message to #notes or #release_notes?
 
         #
         # Sets the post-install message of the project.
@@ -181,7 +220,7 @@ module DotRuby
               @requirements << Requirement.parse(specifics)
             end
           else
-            raise(InvalidMetadata,"dependencies must be an Array or Hash")
+            raise(InvalidMetadata,"requirements must be an Array or Hash")
           end
         end
 
@@ -225,7 +264,7 @@ module DotRuby
               @conflicts << Conflict.parse(specifics)
             end
           else
-            raise(InvalidMetadata, "conflicts must be a Hash")
+            raise(InvalidMetadata, "conflicts must be an Array or Hash")
           end
         end
 
@@ -237,7 +276,7 @@ module DotRuby
         #
         def alternatives=(alternatives)
           unless alternatives.kind_of?(Array)
-            raise(InvalidMetadata, "alternatives must be a Array")
+            raise(InvalidMetadata, "alternatives must be an Array")
           end
 
           @alternatives.clear
@@ -262,6 +301,24 @@ module DotRuby
 
           replacements.each do |name|
             @replacements << name.to_s
+          end
+        end
+
+        #
+        # Sets the repostiories this project has.
+        # 
+        # @param [Array<String>, Hash] repositories
+        #   The repositories for the project.
+        #
+        def repositories=(repositories)
+          case repositories
+          when Array, Hash
+            @repositories.clear
+            repositories.each do |specifics|
+              @repositories << Repository.parse(specifics)
+            end
+          else
+            raise(InvalidMetadata, "repositories must be an Array or Hash")
           end
         end
 
@@ -351,6 +408,15 @@ module DotRuby
           replacements << name.to_s
         end
 
+        # A specification is not valid without a name and verison.
+        #
+        # @return [Boolean] valid specification?
+        def valid?
+          return false unless name
+          return false unless version
+          true
+        end
+
       protected
 
         #
@@ -387,8 +453,6 @@ module DotRuby
         #
         # @yieldparam [String] path
         #   An individual path.
-        #
-        # @ since 0.1.3
         #
         def each_path(paths,&block)
           case paths
@@ -513,7 +577,7 @@ module DotRuby
         # Convert convenience form of metadata to canonical form.
         #
         def to_data
-          Data.new(data)
+          Data.new(to_h)
         end
 
         #
