@@ -143,8 +143,9 @@ module DotRuby
         #
         def licenses=(licenses)
           @licenses = (
-            list = [licenses].flatten
-            list.map!{ |s| Valid.string!(s); s.to_str }
+            list = Array(licenses).flatten.map do |license|
+                     Valid.string!(license); license.to_str 
+                   end
             warn "Duplicate licenses listed" if list != list.uniq
             list.uniq
           )
@@ -159,11 +160,8 @@ module DotRuby
         # @todo if an entry is just a string convert it to a hash.
         def authors=(authors)
           @authors = (
-            list = case authors
-                   when Array
-                     authors.map{ |a| Person.parse(a) }
-                   else
-                     [Person.parse(authors)]
+            list = Array(authors).map do |a|
+                     Person.parse(a)
                    end
             warn "Duplicate authors listed" if list != list.uniq
             list
@@ -179,11 +177,8 @@ module DotRuby
         # @todo if an entry is just a string convert it to a hash.
         def maintainers=(maintainers)
           @maintainers = (
-            list = case maintainers
-                   when Array
-                     maintainers.map{ |m| Person.parse(m) }
-                   else
-                     [Person.parse(maintainers)]
+            list = Array(maintainers).map do |m|
+                     Person.parse(m)
                    end
             warn "Duplicate maintainers listed" if list != list.uniq
             list
@@ -200,13 +195,10 @@ module DotRuby
         # TODO: should we warn if directory does not exist?
         #++
         def load_path=(paths)
-          @load_path = case
-            when Valid.array?(paths)
-              paths.to_ary.map{ |path| Valid.path!(path); path }.flatten
-            when Valid.path?(paths)
-              [paths]
-            else
-              Valid.raise_invalid('path', paths, :load_path)
+          @load_path = \
+            Array(paths).map do |path|
+              Valid.path!(path)
+              path
             end
         end
 
