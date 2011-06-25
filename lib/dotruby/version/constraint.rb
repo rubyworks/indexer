@@ -57,6 +57,34 @@ module DotRuby
       # [name, vers]
       #end
 
+    public
+
+      # Parses a string constraint returning the operation as a lambda.
+      def self.constraint_lambda(constraint)
+        op, val = *parse_constraint(constraint)
+        lambda{ |t| t.send(op, val) }
+      end
+
+      # Parses a string constraint returning the operator and value.
+      def self.parse_constraint(constraint)
+        constraint = constraint.strip
+        #re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\d+)*)$}
+        re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\w+)*)$}
+        if md = re.match(constraint)
+          if op = md[1]
+            op = '=~' if op == '~>'
+            op = '==' if op == '='
+            val = new(md[2].split(/\W+/))
+          else
+            op = '=='
+            val = new(constraint.split(/\W+/))
+          end
+        else
+          raise ArgumentError, "invalid constraint '#{constraint}'"
+        end
+        return op, val
+      end
+
     end
 
   end
