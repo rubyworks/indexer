@@ -1,0 +1,177 @@
+---
+type: map
+mapping:
+  revision
+    type:      int
+    required:  true
+  name:
+    type:      str
+    pattern:   /^\w+$/  # package name
+    required:  true
+  version:
+    type:      str
+    pattern:   /^\d(\.\w+)*/
+    required:  true
+  codename:
+    type:      str
+    pattern:   /[^\n]/  # no newline
+  title
+    type:      str
+    pattern:   /[^\n]/  # no newline
+  date:
+    type:      str
+    pattern:   /^\d{4}-\d{2}-\d{2}(\d{2}){0,3}$/  # utc date
+  created:
+    type:      str
+    pattern:   /^\d{4}-\d{2}-\d{2}(\d{2}){0,3}$/  # utc date
+  summary:
+    type:      str
+    pattern:   /[^\n]/  # no newline
+  description:
+    type:      str
+  authors:
+    type:      seq
+    sequence:
+      - type:      map
+        mapping:
+          name:
+            type:      str
+          email:
+            type:      str
+            pattern:   /@/
+          url:
+            type:      str
+          role:
+            type:      seq
+  suite:
+    type:     str
+    pattern:  /[^\n]/  # no newline
+  organization:
+    type:     str
+    pattern:  /[^\n]/  # no newline
+  copyright:
+    type:     seq
+    sequence:
+      - type:      map
+        mapping:
+          holder:
+            type:      str
+            pattern:   /@/
+          year:
+            type:      str
+            pattern:   /^\d{4}([-,]^\d{4})?$/
+          license:
+            type:      str
+            pattern:   /@/
+  requirements: &requirements
+    type:     seq
+    sequence:
+      - type:      map
+        mapping:
+          name:
+            type:      str
+            pattern:  /[^\n]/  # no newline
+          version:
+            type:      seq
+            sequence:
+              - type:      str
+                pattern:   /^\d(\.\w+)*/
+          group:
+            type:      seq
+            sequence:
+              - type:      str
+                pattern:   /[^\n]/ # no newline
+          development:
+            type:      bool
+          optional:
+            type:      bool
+          engine:
+            type:      seq
+            sequence:
+              - type:      map
+                mapping:
+                  name:
+                    type:      str
+                    pattern:   /[^\n]/ # no newline
+                  version:
+                    type:      str
+                    pattern:   /^\d/
+          platform:
+            type:      seq
+            sequence:
+              - type:      str
+                pattern:   /[^\n]/ # no newline
+          repository:
+            - type:      map
+              mapping:
+                url:
+                  type:      str
+                  pattern:   /[^\n]/ # url
+                scm:
+                  type:      str
+                  pattern:   /[^\n]/ # no newline
+  dependencies: *requirements
+  conflicts:
+    type:     seq
+    sequence:
+      - type:      map
+        mapping:
+          name:
+            type:      str
+            pattern:   /^\w+$/  # package name
+          version:
+            type:      seq
+            sequence:
+              - type:      str
+                pattern:  /[^\n]/  # version constraint
+  substitues:
+    type:      seq
+    sequence:
+      - type:      str
+        pattern:   /^\w+$/  # package name
+  replaces:
+    type:      seq
+    sequence:
+      - type:      str
+        pattern:   /^\w+$/  # package name
+
+  resources:
+    type:      seq
+    sequence:
+      - type:      map
+        mapping:
+          id:
+            type:      str
+            pattern:   /[^\n]/ # no newline
+          url:
+            type:      str
+            pattern:   //  # url
+            required:  true
+  repositories:
+    type:      seq
+    sequence:
+      - type:      map
+        mapping:
+          id:
+            type:      str
+            pattern:   /[^\n]/ # no newline
+          url:
+            type:      str
+            pattern:   //  # url
+            required:  true
+          scm:
+            type:      str
+            pattern:   /^\w$/  # word
+  load_path:
+    type:      seq
+    sequence:
+      - type:      str
+        pattern:   /\S/  # path
+    default: [lib]
+  install_message:
+    type:      str
+  extra:
+    type:      map
+
+
+
