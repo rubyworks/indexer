@@ -70,29 +70,24 @@ Description is a multi-line detailed description of the project.
 
 ### Authors
 
-Authors is a lists the originating authors of a project. They are
-usually the copyright holders. Each entry is a mapping with keys,
-`name`, `email` and `website`.
+Authors is a list of individuals responsible for the development of 
+the project. Each entry is a mapping with keys, `name`, `email`,
+`website` and `roles`.
 
     authors:
-      - name: Thomas T. Thomas
-        email: tommy@tommy.com
+      - name:    Thomas T. Thomas
+        email:   tommy@tommy.com
         website: http://tommy.net
-
-### Maintainers
-
-Maintainers is a list of individuals currently developing a project.
-Each entry is same as with authors.
-
-    maintainers:
-      - name: Thomas T. Thomas
-        email: tommy@tommy.com
-        website: http://tommy.net
+        role:    [ developer, founder ]
+      - name:    James J. James, Jr.
+        email:   jimmy@jimmy.com
+        website: http://jimmy.net
+        role:    [ QA ]
 
 ### Suite
 
 The package belongs to a suite of packages, then it can be designated
-with the `suite` field. This is somtimes identical to organization.
+with the `suite` field.
 
     suite: SpecWorks
 
@@ -103,26 +98,22 @@ of organization to which this package is assocciated.
 
     organization: Spec, Inc.
 
-### Copyright
+### Copyrights
 
-The Copyright is an abribtrate string containing the projects copyright
-notice. DO NOT include license information in this.
+The Copyrights field is a list of copyrights with licensing. Each entry
+has `yesr`, `holder` and `license` fields. Entries should be in the order
+of signifficance. The first MUST be the primary license.
 
-    copyright: |
-      (c) 2011 Thomas T. Thomas
-      (c) 2010 James J. James, Jr.
+    copyrights:
+      - holder: Thomas T. Thomas
+        year: 2011
+        license: GPL-3.0
+      - holder: James J. James, Jr.
+        year: 2010
+        license: Apache-2.0
 
-
-### Licenses
-
-Licenses is a list licenses the package is distributed under. The first
-MUST be the primary license. The names should be the short representations
-the licenses with a version number if it applies.
-
-    licenses:
-      - GPL3
-      - Apache 2.0
-      - MIT
+License entries MUST use the SPDX standard codes (http://spdx.org/licenses/)
+when possible.
 
 ### Requirements
 
@@ -130,7 +121,7 @@ Requirements are the packages on which this package depends. Often, referred to
 as _dependencies_ we have chosen instead to use the term requirements becuase
 that is what Ruby actually does with them --it _requires_ them. Requirements
 is an array of hashes, composed of `name`, `version`, `group`, `development`,
-`repository`, `engine` and `platform` and `optional`.
+`repository`, `engine`, `platform` and `optional`.
 
     requirements:
       - name: dotruby
@@ -142,7 +133,7 @@ is an array of hashes, composed of `name`, `version`, `group`, `development`,
         engine:
           - ruby 1.9+
         platform:
-          - "x86_64-linux
+          - x86_64-linux
         repository:
           scm: git
           url: http://github.com/dotruby/dotruby.git
@@ -191,33 +182,29 @@ entries for `requirements`.
         version: 1.0+
         development: false
 
-### External Requirements
-
-TODO: Do we really need this? If it's that important put it in the install_message.
-
-External requirements are arbitrary needs that lie outside the scope of any
-package manager.
-
-    external_requirements:
-      - "fast graphics card"
+The development flag serves an additional purpose for a dependency,in that
+it also indicates that development packages need to be available, such
+as in our exmple `libxml2-dev` for Debian.
 
 ### Resources
 
-Resources is a mapping of resource type to universal resource locator (URL).
+Resources is a sequence of resource id and universal resource locator (URL).
 
     resources:
-      homepage: http://foo.org
-      documentation: http://foo.org/doc
+      - id:  homepage
+        url: http://foo.org
+      - id:  documentation
+        url: http://foo.org/doc
 
 IMPORTANT! The thing to note about resources is that only the first 3 to 4
-characters of the type are used to distinguish them. In other words, any
-resource type that begins with the letters `doc` is considered a documentation
+characters of the identifier are used to distinguish them. In other words, any
+resource id that begins with the letters `doc` is considered a documentation
 link. Likewise for `home`. In this way `home` is recognized as the same resource
 as `homepage`.
 
-Recognized types are `api dev doc code home irc mail talk wiki work`
+Common recognized types are `api dev doc code home irc mail talk wiki work`
 
-There are also a few non-conforming types that are considered synonyms.
+There are also a few long-term ids that are considered synonyms too.
 
 * `source code` = `code`
 * `development` = `work`
@@ -228,7 +215,7 @@ Repositories is a mapping of repository type to universal resource locator
 for the package repository and scm type.
 
     repositories:
-      public:
+      - id: public
         url: http://github.com/fooworks/hello_world.git
         scm: git
 
@@ -247,8 +234,8 @@ By default it's value is take to be `['lib']`.
 The post install message. This field is used by package managers to inform
 the installer of any important information they may need to know.
 
-  install_message: |
-    Hello World is only an example.
+    install_message: |
+      Hello World is only an example.
 
 ### Extra
 
