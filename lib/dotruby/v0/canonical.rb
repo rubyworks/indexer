@@ -141,22 +141,16 @@ module DotRuby
           super(value)
         end
 
-        # List of license, e.g. 'Apache 2.0'.
-        def licenses=(value)
-          Valid.array!(value, :licenses)
+        # Set sequence of copyrights mappings.
+        def copyrights=(value)
+          Valid.hash!(value, :copyrights)  # TODO: plural or no?
           super(value)
         end
 
-        # Authors must an array of hashes in the form of `{name: ..., email: ..., :website ... }`.
+        # Authors must an array of hashes in the form
+        # of `{name: ..., email: ..., :website ..., roles: [...] }`.
         def authors=(value)
           Valid.array!(value, :authors)
-          super(value)
-        end
-
-        # Maintainers must an array of hashes in the form
-        # of `{name: ..., email: ..., :website ..., roles: [...] }`.
-        def maintainers=(value)
-          Valid.array!(value, :maintainers)
           super(value)
         end
 
@@ -182,12 +176,6 @@ module DotRuby
         # The post-installation message must be a String.
         def message=(value)
           Valid.string!(value, :message)
-          super(value)
-        end
-
-        # Copyright must be a string.
-        def copyright=(value)
-          Valid.string!(value, :copyright)
           super(value)
         end
 
