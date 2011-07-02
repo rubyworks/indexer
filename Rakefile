@@ -14,3 +14,8 @@ task :test do
   sh "qed -Ilib qed/"
 end
 
+desc "coverage report"
+task :cov do
+  sh "qed --simplecov -Ilib qed/"
+end
+
