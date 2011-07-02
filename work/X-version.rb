@@ -39,6 +39,13 @@ module POM
         new(args)
       end
 
+      #
+      def self.parse_string(version_string)
+        new version_string.split('.').map do |s|
+          /^\d+$/ =~ s ? s.to_i : s.to_s 
+        end
+      end
+
       # Create a new VersionNumber.
       #
       # version - a String, Hash or Array repsenting the version number
