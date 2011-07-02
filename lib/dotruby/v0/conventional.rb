@@ -8,6 +8,8 @@ module DotRuby
     # and additional convenience methods.
     module Conventional
 
+      include Attributes
+   
       # Conventional module requires Attributes module and 
       # all the modeling classes.
       if RUBY_VERSION > '1.9'
@@ -146,7 +148,7 @@ module DotRuby
       # @param [Array<Hash,String,Array>]
       #   The copyrights and licenses of the project.
       #
-      def copyrigts=(copyrights)
+      def copyrights=(copyrights)
         @copyrights = \
           case copyrights
           when Array
@@ -156,12 +158,19 @@ module DotRuby
                 copyright
               when String
                 # TODO: improve copyright string parsing
-                c = copyright.sub(/copyright/i,'').sub(/\(c\)/,'').strip
-                y, h, l = c.split(/\s+/)
+                c = copyright
+                c.sub(/copyright/i,'').sub(/\(c\)/i,'').strip
+                /(\d\d\d\d)/ =~ c
+                y = $1
+                c = c.sub(y.to_s,'').strip
+                /(\(.*?\))/ =~ c
+                l = $1[1..-2]
+                c = c.sub($1.to_s,'').strip
+                h = c
                 { 'year'=>h, 'hodler'=>h, 'license'=>l }
               when Array
                 c = copyright
-                { 'year'=>c[0], 'hodler'=>c[1], 'license'=>c[2] } ]
+                { 'year'=>c[0], 'hodler'=>c[1], 'license'=>c[2] }
               else
                 raise(ValidationError, "copyright a String, Hash or Array")
               end
@@ -607,7 +616,7 @@ module DotRuby
         def initialize_attributes
           @authors               = []
           #@external_requirements = []
-          @licenses              = []
+          @copyrights            = []
           @maintainers           = []
           @replacements          = []
           @alternatives          = []
