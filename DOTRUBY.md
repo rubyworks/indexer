@@ -72,7 +72,7 @@ Description is a multi-line detailed description of the project.
 
 Authors is a list of individuals responsible for the development of 
 the project. Each entry is a mapping with keys, `name`, `email`,
-`website` and `roles`.
+`website` and `role`.
 
     authors:
       - name:    Thomas T. Thomas
@@ -83,6 +83,10 @@ the project. Each entry is a mapping with keys, `name`, `email`,
         email:   jimmy@jimmy.com
         website: http://jimmy.net
         role:    [ QA ]
+
+Authors should be given in order of contact. In other words the first
+person on the list is most likely to be the person to contact about
+the project. Roles also help people select appropriate contacts.
 
 ### Suite
 
@@ -138,6 +142,23 @@ is an array of hashes, composed of `name`, `version`, `group`, `development`,
           scm: git
           url: http://github.com/dotruby/dotruby.git
 
+### Dependencies
+
+Dependencies akin to requirements, but are system packages that this package
+depends upon. Pacakge managers might use this information to install dependent
+packages via `apt-get` or `yum`, for instance. A good example is, `ruby-libxml`
+which depends on the libXML2 library. Each entry has the same format as
+entries for `requirements`.
+
+    dependencies:
+      - name: libXML2
+        version: 1.0+
+        development: false
+
+The development flag serves an additional purpose for a dependency,in that
+it also indicates that development packages need to be available, such
+as in our exmple `libxml2-dev` for Debian.
+
 ### Conflicts
 
 Conflicts is a list of packages which have known issues when operating 
@@ -168,23 +189,6 @@ RubyGems pacakge.
 
     replacements:
       - rubygems
-
-### Dependencies
-
-Dependencies akin to requirements, but are system packages that this package
-depends upon. Pacakge managers might use this information to install dependent
-packages via `apt-get` or `yum`, for instance. A good example is, `ruby-libxml`
-which depends on the libXML2 library. Each entry has the same format as
-entries for `requirements`.
-
-    dependencies:
-      - name: libXML2
-        version: 1.0+
-        development: false
-
-The development flag serves an additional purpose for a dependency,in that
-it also indicates that development packages need to be available, such
-as in our exmple `libxml2-dev` for Debian.
 
 ### Resources
 
