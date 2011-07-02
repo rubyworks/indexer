@@ -27,15 +27,12 @@ module DotRuby
       # The project description
       attr_accessor :description
 
-      # The licenses of the project
-      attr_accessor :licenses
+      # The copyrights and licenses of the project.
+      attr_accessor :copyrights
 
       # The authors of the project
+      # The first author should be the primary contact.
       attr_accessor :authors
-
-      # The current maintainers of the project
-      # The first maintainer should be the primary contact.
-      attr_accessor :maintainers
 
       # The resource locators for the project
       attr_accessor :resources
@@ -48,6 +45,12 @@ module DotRuby
 
       # The directories to search within the project when requiring files
       attr_accessor :load_path  # :loadpath or :require_paths ?
+
+      # List of language engine/version family supported.
+      attr_accessor :engines
+
+      # List of platforms supported.
+      attr_accessor :platforms
 
       # The names of the executable scripts
       # NOTE: Do not need, executable should alwasy by in bin/, right?
@@ -98,9 +101,6 @@ module DotRuby
       #
       # @todo Do we need both company and ogranziation?
       attr_accessor :company
-
-      # Copyright notice for the project.
-      attr_accessor :copyright
 
       # Any user-defined extraneous metadata.
       attr_accessor :extra

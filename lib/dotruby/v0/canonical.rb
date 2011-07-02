@@ -72,6 +72,18 @@ module DotRuby
           super(value)
         end
 
+        # List of language engine/version family supported.
+        def engines=(value)
+          Valid.array!(value)
+          super(value)
+        end
+
+        # List of platforms supported.
+        def platforms=(value)
+          Valid.array!(value)
+          super(value)          
+        end
+
         # Requirements must be a list of package references.
         def requirements=(value)
           Valid.array!(value, :requirements)

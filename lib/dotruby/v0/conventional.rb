@@ -202,6 +202,22 @@ module DotRuby
           end
       end
 
+      # List of language engine/version family supported.
+      def engines=(value)
+        @engines = (
+          Valid.array!(value)
+          value
+        )
+      end
+
+      # List of platforms supported.
+      def platforms=(value)
+        @platform = (
+          Valid.array!(value)
+          value
+        )
+      end
+
       #
       # Sets the post-install message of the project.
       #
