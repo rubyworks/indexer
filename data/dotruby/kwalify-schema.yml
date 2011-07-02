@@ -56,13 +56,13 @@ mapping:
         mapping:
           holder:
             type:      str
-            pattern:   /@/
+            pattern:   /[^\n]/  # no newline
           year:
             type:      str
             pattern:   /^\d{4}([-,]^\d{4})?$/
           license:
             type:      str
-            pattern:   /@/
+            pattern:   /[^\n]/  # no newline
   requirements: &requirements
     type:     seq
     sequence:
@@ -172,6 +172,4 @@ mapping:
     type:      str
   extra:
     type:      map
-
-
 
