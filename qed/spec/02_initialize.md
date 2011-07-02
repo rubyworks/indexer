@@ -13,10 +13,9 @@ In this case the revision number will be set to the latest available.
 
 In addition, certain attributes will have default values.
 
-    spec.licenses.should     == []
+    spec.copyrights.should   == []
     spec.replacements.should == []
     spec.authors.should      == []
-    spec.maintainers.should  == []
     spec.requirements.should == []
     spec.dependencies.should == []
     spec.conflicts.should    == []

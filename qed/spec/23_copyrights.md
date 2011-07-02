@@ -1,22 +1,35 @@
 ## Spec#copyright
 
-The `copyright` field is a free-form string desingated for used
-to provide a copyright notice.
+The `copyrights` field is a list of copyright and licens information.
 
-    spec = DotRuby::Data.new
+    spec = DotRuby::Spec.new
+
+The copyright list is canonically a mapping.
+
+    spec.copyrights = [
+      { 'year'    => '2010',
+        'holder'  => 'T. Bone Willy',
+        'license' => 'MIT'
+      },
+      { 'year'    => '2011',
+        'holder'  => 'J. Horn Silly',
+        'license' => 'GPL-3.0'
+      }
+    ]
+
+The copyrights can also be given as strings.
+
+    spec.copyrights = [
+      "Copyright (c) 2010 T. Bone Willy (MIT)",
+      "Copyright (c) 2010 J. Horn Silly (GPL-3.0)"
+    ]
+
+Or as a single string, for which there is a singular alias.
 
     spec.copyright = "Copyright (c) 2010 T. Bone Willy"
 
-The copyright string can have multiple lines.
+But it can't be any other value.
 
-    spec.copyright = %{
-      Copyright (c) 2010 T. Bone Willy
-      Copyright (c) 2010 J. Horn Silly
-    }
-
-But it can only be a string.
-
-    no []
     no 100
     no :symbol
     no Object.new

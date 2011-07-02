@@ -13,7 +13,7 @@ In this case the revision number will be set to the latest available.
 
 In addition, certain attributes will have default values.
 
-    data.licenses.should     == []
+    data.copyrights.should   == []
     data.replacements.should == []
     data.authors.should      == []
     data.maintainers.should  == []
