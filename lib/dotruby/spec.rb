@@ -12,7 +12,7 @@ module DotRuby
     #
     #
     def initialize_model
-      extend DotRuby.v(@revision)::Conventional
+      extend DotRuby::V[@revision]::Conventional
     end
 
     # Save `.ruby` file.
