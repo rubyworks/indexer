@@ -18,14 +18,14 @@ end
 
 require 'yaml'
 
-require 'dotruby/exception'
+require 'dotruby/exceptions'
 require 'dotruby/valid'
 require 'dotruby/hash_like'
 
 require 'dotruby/data'
 require 'dotruby/spec'
 
-require 'dotruby/version/exception'
+require 'dotruby/version/exceptions'
 require 'dotruby/version/number'
 require 'dotruby/version/constraint'
 
