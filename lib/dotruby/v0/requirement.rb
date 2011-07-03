@@ -1,3 +1,10 @@
+# The Requirement class requires Repository.
+if RUBY_VERSION > '1.9'
+  require_relative 'repository'
+else
+  require 'dotruby/v0/repository'
+end
+
 module DotRuby
   module V0
     # Requirement class.
@@ -5,13 +12,6 @@ module DotRuby
     # QUESTION: Does Requirement really need to handle multiple version constraints?
     # Currently this only supports one version constraint.
     class Requirement
-
-      # The Requirement class requires Repository.
-      if RUBY_VERSION > '1.9'
-        require_relative 'repository'
-      else
-        require 'dotruby/v0/repository'
-      end
 
       # Parse `data` into a Requirement instance.
       #

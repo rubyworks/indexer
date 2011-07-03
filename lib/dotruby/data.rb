@@ -1,7 +1,7 @@
-module DotRuby
+# Data class subclasses Base class.
+require 'dotruby/base'
 
-  # Data class subclasses Base class.
-  require 'dotruby/base'
+module DotRuby
 
   # The Data class models the strict *canonical* specification of
   # the `.ruby` file format. It is a one-to-one mapping with no method aliases

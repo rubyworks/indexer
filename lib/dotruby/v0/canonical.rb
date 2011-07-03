@@ -1,3 +1,10 @@
+# Canonical module requires Attributes module.
+if RUBY_VERSION > '1.9'
+  require_relative 'attributes'
+else
+  require 'dotruby/v0/attributes'
+end
+
 module DotRuby
 
   module V0
@@ -9,13 +16,6 @@ module DotRuby
 
       include Attributes
    
-      # Canonical module requires Attributes module.
-      if RUBY_VERSION > '1.9'
-        require_relative 'attributes'
-      else
-        require 'dotruby/v0/attributes'
-      end
-
       # Project's _packaging name_ must be a string without spaces
       # using only `[a-zA-Z0-9_-]`.
       def name=(value)

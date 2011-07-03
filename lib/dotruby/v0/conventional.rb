@@ -1,3 +1,19 @@
+# Conventional module requires Attributes module and 
+# all the modeling classes.
+if RUBY_VERSION > '1.9'
+  require_relative 'attributes'
+  require_relative 'requirement'
+  require_relative 'dependency'
+  require_relative 'conflict'
+  require_relative 'person'
+else
+  require 'dotruby/v0/attributes'
+  require 'dotruby/v0/requirement'
+  require 'dotruby/v0/dependency'
+  require 'dotruby/v0/conflict'
+  require 'dotruby/v0/person'
+end
+
 module DotRuby
 
   # First revision of dotruby specification.
@@ -10,22 +26,6 @@ module DotRuby
 
       include Attributes
    
-      # Conventional module requires Attributes module and 
-      # all the modeling classes.
-      if RUBY_VERSION > '1.9'
-        require_relative 'attributes'
-        require_relative 'requirement'
-        require_relative 'dependency'
-        require_relative 'conflict'
-        require_relative 'person'
-      else
-        require 'dotruby/v0/attributes'
-        require 'dotruby/v0/requirement'
-        require 'dotruby/v0/dependency'
-        require 'dotruby/v0/conflict'
-        require 'dotruby/v0/person'
-      end
-
       # -- Writers ------------------------------------------------------------
 
       # Sets the name of the project.

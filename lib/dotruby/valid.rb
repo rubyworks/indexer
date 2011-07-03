@@ -1,11 +1,11 @@
+# Uses time library to validate date-time fields.
+require 'time'
+
 module DotRuby
 
   # Validation functions.
   module Valid
     extend self
-
-    # Uses time library to validate date-time fields.
-    require 'time'
 
     # Valid name regular expression.
     NAME = /^[A-Za-z][A-Za-z0-9_-]*[A-Za-z0-9]$/ 

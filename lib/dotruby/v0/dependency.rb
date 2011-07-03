@@ -1,3 +1,10 @@
+# The Dependency class requires Repository.
+if RUBY_VERSION > '1.9'
+  require_relative 'repository'
+else
+  require 'dotruby/v0/repository'
+end
+
 module DotRuby
   module V0
     # Dependency class is essentially the same as {Requirement}, but
@@ -10,13 +17,6 @@ module DotRuby
     # additional information --but as of yet that's not the case.
     #++
     class Dependency
-
-      # The Dependency class requires Repository.
-      if RUBY_VERSION > '1.9'
-        require_relative 'repository'
-      else
-        require 'dotruby/v0/repository'
-      end
 
       # Parse `data` into a Dependency instance.
       #

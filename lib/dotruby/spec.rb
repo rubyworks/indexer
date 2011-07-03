@@ -1,8 +1,7 @@
+# Spec class subclasses Base class.
+require 'dotruby/base'
+
 module DotRuby
-
-  # Spec class subclasses Base class.
-  require 'dotruby/base'
-
   # Spec the specification generalized for the convenience of developers.
   # It offers method aliases and models various parts of the specification 
   # with useful classes.
