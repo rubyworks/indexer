@@ -25,7 +25,7 @@ module DotRuby
         when Hash
           parse_hash(data)
         else
-          raise(InvalidMetadata, "requirement")
+          raise(ValidationError, "requirement")
         end
       end
 
@@ -40,19 +40,39 @@ module DotRuby
 
       #
       #
-      def self.parse_string(data)
-        name, version, *groups = data.split(/\s+/)
-        ## remove parenthesis
-        groups.first.sub!(/^\(/, '')
-        groups.last.chomp!(')')
-        ## new instance
-        new(name, :version=>version, :groups=>groups)
+      def self.parse_string(string)
+        case string.strip
+        when /^(\w.*?)\s+(.*?)\s*\((.*?)\)$/
+          name    = $1
+          version = $2
+          groups  = $3
+        when /^(\w.*?)\s+(.*?)$/
+          name    = $1
+          version = $2
+          groups  = nil
+        when /^(\w.*?)$/
+          name    = $1
+          version = nil
+          groups  = nil
+        else
+          raise(ValidationError, "requirement")
+        end
+
+        version = nil                       if version.to_s.strip.empty?
+        groups = groups.split(/\s+/)        if groups
+
+        specifics = {}
+        specifics['version']     = version  if version
+        specifics['groups']      = groups   if groups
+        specifics['development'] = true     if groups
+
+        new(name, specifics)
       end
 
       #
       #
       #
-      def self.parse_array(data)
+      def self.parse_array(array)
         name, data = *array
         case data
         when Hash
@@ -60,7 +80,7 @@ module DotRuby
         when String
           parse_string(name + " " + data)
         else
-          raise(InvalidMetadata, "requirement")
+          raise(ValidationError, "requirement")
         end
       end
 
