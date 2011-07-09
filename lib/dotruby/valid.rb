@@ -17,7 +17,7 @@ module DotRuby
     EMAIL = /^\S+\@\S+$/
 
     # FIXME: Regular expression to limit date-time fields to ISO 8601 (Zulu).
-    UTC_DATE = /^\d\d\d\d-\d\d-\d\d(\s+\d\d:\d\d:\d\d)?$/
+    DATE = /^\d\d\d\d-\d\d-\d\d(\s+\d\d:\d\d:\d\d)?$/
 
     #
     def name?(name)
@@ -28,9 +28,10 @@ module DotRuby
     def name!(name, field=nil)
       string!(name, field)
       raise_invalid("name", name, field) unless name?(name)
+      return name
     end
 
-    #
+    # TODO: Or uri ?
     def url?(url)
       URL =~ url
     end
@@ -38,6 +39,7 @@ module DotRuby
     #
     def url!(url, field=nil)
       raise_invalid("URL", url, field) unless url?(url)
+      return url
     end
 
     #
@@ -50,7 +52,7 @@ module DotRuby
       unless email?(email)
         raise_invalid("email address", email, field)
       end
-      email
+      return email
     end
 
     #
@@ -63,7 +65,7 @@ module DotRuby
       unless oneline?(string)
         raise_invalid("one line string", string, field)
       end
-      string
+      return string
     end
 
     #
@@ -76,6 +78,7 @@ module DotRuby
       unless string?(string)
         raise_invalid("string", string, field)
       end
+      return string
     end
 
     # TODO: Should we bother with #to_ary?
@@ -88,6 +91,7 @@ module DotRuby
       unless array?(array)
         raise_invalid("array", array, field)
       end
+      return array
     end
 
     #
@@ -100,6 +104,7 @@ module DotRuby
       unless hash?(hash)
         raise_invalid("hash", hash, field)
       end
+      return hash
     end
 
     #
@@ -112,11 +117,16 @@ module DotRuby
     end
 
     #
+    #--
+    # TODO: Do we really need to be so detailed about the error?
+    # Doing so prevent us from using #word? here.
+    #++
     def word!(word, field=nil)
       string!(word, field)
       raise_invalid_message("#{field} must start with a letter -- #{word}") if /^[A-Za-z]/ !~ word
       raise_invalid_message("#{field} must end with a letter or number -- #{word}") if /[A-Za-z0-9]$/ !~ word
       raise_invalid_message("#{field} must be a word -- #{word}") if /[^A-Za-z0-9_-]/ =~ word
+      return word
     end
 
     #
@@ -124,10 +134,10 @@ module DotRuby
     #  /^\d+$/ =~ integer
     #end
 
-    #
+    # TODO: This is probably the wrong name for iso8601
     def utc_date?(date)
       return false unless string?(date)
-      return false unless UTC_DATE =~ date
+      return false unless DATE =~ date
       begin
         Time.parse(date)
       rescue
@@ -136,13 +146,31 @@ module DotRuby
       true
     end
 
-    #
+    # TODO: This is probably the wrong name for iso8601
     def utc_date!(date, field=nil)
       unless utc_date?(date)
-        raise_invalid("UTC formatted date", date, field)
+        raise_invalid("ISO 8601 formatted date", date, field)
       end
+      return date
     end
- 
+
+    # Four digit year.
+    def copyright_year?(year)
+      year = year.to_s
+      return true if /^\d\d\d\d$/ =~ year
+      return true if /^\d\d\d\d\-\d\d\d\d$/ =~ year
+      return true if /^\d\d\d\d(\,\d\d\d\d)+$/ =~ year
+      false
+    end
+
+    # Four digit year.
+    def copyright_year!(year, field=nil)
+      unless copyright_year?(year)
+        raise_invalid("copyright year", year, field)
+      end
+      return year
+    end
+
     #
     def version_string?(string)
       return false unless string?(string)
@@ -160,6 +188,7 @@ module DotRuby
       when /[^.A-Za-z0-9]/
         raise_invalid_message("#{field} contains invalid characters - #{value.inspect}")
       end
+      return value
     end
 
     # FIXME: better validation fpr path
@@ -173,8 +202,8 @@ module DotRuby
       unless path?(path)
         raise_invalid("path", path, field)
       end
+      return path
     end
-
 
     # 
     def raise_invalid(type, value, field=nil)
