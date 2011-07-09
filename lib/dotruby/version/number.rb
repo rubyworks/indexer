@@ -227,15 +227,18 @@ module DotRuby
 
       # Compare versions.
       def <=>(other)
-        [@tuple.size, other.size].min.times do |i|
-          cmp = @tuple[i] <=> other[i]
-          if cmp.nil?
-            return  1 if String == @tuple[i]
-            return -1 if String == other[i]
+        [@tuple.size, other.size].max.times do |i|
+          p1, p2 = (@tuple[i] || 0), (other[i] || 0)
+          # this is bit tricky, basically a string < integer.
+          if p1.class != p2.class
+            cmp = p2.to_s <=> p1.to_s
+          else
+            cmp = p1 <=> p2
           end
           return cmp unless cmp == 0
         end
-        (@tuple.size <=> other.size) * -1
+        #(@tuple.size <=> other.size) * -1
+        return 0
       end
 
       # For pessimistic constraint (like '~>' in gems).
