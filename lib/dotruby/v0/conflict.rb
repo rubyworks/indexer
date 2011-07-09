@@ -17,7 +17,7 @@ module DotRuby
         when Hash
           parse_hash(data)
         else
-          raise(InvalidMetadata, "Conflict")  # or ArgumentError ?
+          raise(ValidationError, "Conflict")
         end
       end
 

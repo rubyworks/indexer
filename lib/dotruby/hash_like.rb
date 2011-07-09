@@ -12,12 +12,15 @@ module DotRuby
     # @return [Object]
     #   The value associated with the key.
     #
-    # @raise [InvalidMetadata]
+    # @raise [ArgumentError]
     #   The key is not known.
     #
+    #--
+    # TODO: If key does exist, should it return nil?
+    #++
     def [](key)
       #unless respond_to?(key)
-      #  raise(ValidationError,"unknown attribute: #{key.inspect}")
+      #  raise(ArgumentError,"unknown attribute: #{key.inspect}")
       #end
 
       send(key)
@@ -35,14 +38,17 @@ module DotRuby
     # @return [Object]
     #   The newly set value.
     #
-    # @raise [InvalidMetadata]
+    # @raise [ArgumentError]
     #   The key is not known.
     #
+    #--
+    # TODO: If key does exist, should it automatically create a singleton method for it?
+    #++
     def []=(key, value)
       setter = "#{key}="
 
       unless respond_to?(setter)
-        raise(ValidationError,"unknown attribute: #{key.inspect}")
+        raise(ArgumentError, "unknown attribute: #{key.inspect}")
       end
 
       #begin
@@ -84,10 +90,11 @@ module DotRuby
     #
     # Converts the Hash-like object to YAML.
     #
-    # @param [IO] io
-    #   The stream to write the YAML to.
+    # @param [Hash] opts
+    #   Options used by YAML.
     #
-    def to_yaml(io)
+    # TODO: Should we have #to_yaml in here?
+    def to_yaml(io={})
       to_h.to_yaml(io)
     end
 

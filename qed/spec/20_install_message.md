@@ -9,7 +9,11 @@ The `install_message` fields SHOULD not be used to convey unimportant
 and trival statements. You do not need to thank people for installing
 your software in the install message!
 
-The `install_message` field can only contain a string.
+The `install_message` field can only contain a string, but in the Spec
+call can be assembled form an array of strings as well.
+
+    ok "Be sure to run `$foo bar`"
+    ok ["Be sure to run", "`$foo bar`."]
 
     no 100
     no :symbol

@@ -71,7 +71,7 @@ module DotRuby
       s = ["Copyright (c)"]
       s << year if year
       s << holder
-      s << "(#{lecense})" if license
+      s << "(#{license})" if license
       s.join(' ') + ". All Rights Reserved."
     end
 

@@ -13,9 +13,23 @@ constraints.
        'evil' => '0+'
     }
 
+The conflicts fields also accepts an array of strings.
+
+    spec.conflicts = [
+      'bad_robot >=1.0',
+      'evil 0+'
+    ]
+
+Or an array of hash entries.
+
+    spec.conflicts = [
+      {:name => 'bad_robot', :version => '>=1.0'},
+      {:name => 'evil', :version => '0+' }
+    ]
+
 The `conflicts` field can only by assigned such a Hash.
 
-    check "invalid date" do |d|
+    check "invalid conflict" do |d|
       ! DotRuby::ValidationError.raised? do
         spec.conflicts = d
       end

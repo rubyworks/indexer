@@ -347,6 +347,15 @@ module DotRuby
         end
       end
 
+      # Resources map <code>name => URL</code>.
+      #
+      # @param [Hash] resources
+      #   An indexed list of resources.
+      #
+      def resources=(resources)
+        @resources = Resources.new(resources)
+      end
+
       # Set the orgnaization to which the project belongs.
       #
       # @param [String] organization
@@ -497,11 +506,7 @@ module DotRuby
       #   The primary copyright for the project.
       #
       def copyright
-        if c = @copyrights.first
-          "Copyright (c) %s %s" % c.values_at('year', 'holder') #, 'license')
-        else
-          ''
-        end
+        @copyrights.join("\n")
       end
 
       #

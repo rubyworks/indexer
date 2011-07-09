@@ -61,9 +61,33 @@ But it can't be any other value.
     no :symbol
     no Object.new
 
-The field has no other restrictions, but as a matter of proper use it SHOULD
-not contain license disclamers --that is the domain of a README, COPYING or
-a similar file.
+Each copyright entry can be convert to a standard copyright _stamp_ using
+the `#to_s` method.
+
+    spec.copyrights = [
+      ["2010", "T. Bone Willy", "BSD-2-Clause"],
+      ["2011", "J. Horn Silly", "GPL-3.0"]
+    ]
+
+    stamp = spec.copyrights.first.to_s
+
+    stamp  #=> "Copyright (c) 2010 T. Bone Willy (BSD-2-Clause). All Rights Reserved."
+
+The singular method #copyright will output a complete copyright statement.
+
+    statement = spec.copyright
+
+    statement.should = \
+      "Copyright (c) 2010 T. Bone Willy (BSD-2-Clause). All Rights Reserved.\n" +
+      "Copyright (c) 2011 J. Horn Silly (GPL-3.0). All Rights Reserved."
+
+A canonical hash can be produced using #to_h.
+
+    spec.copyrights[0].to_h.should == {
+      'year'    => '2010',
+      'holder'  => 'T. Bone Willy',
+      'license' => 'BSD-2-Clause'
+    }
 
 The usecase for this field is to output a copyright notice for a command
 line `--version` inquery, or on a pop-up About window.

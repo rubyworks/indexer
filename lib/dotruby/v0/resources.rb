@@ -118,12 +118,12 @@ module DotRuby
 
       # Convert to Hash by duplicating the underlying
       # hash table.
-      def to_h
+      def to_hash
         @table.dup
       end
 
-      #
-      def to_data
+      # Convert table to hash with string keys.
+      def to_h
         h = {}
         to_h.each do |k,v|
           h[k.to_s] = v
