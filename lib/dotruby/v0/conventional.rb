@@ -597,8 +597,7 @@ module DotRuby
         # to should to_h be a shollow to_h?
       end
 
-      #
-      #
+      # FIXME: This needs to generate the canonical form.
       #
       def to_data
         data = {}
@@ -608,18 +607,15 @@ module DotRuby
           data[name] = send(name)
         end
 
-        data['date']    = date.strftime('%Y-%m-%d') if date
-        data['created'] = date.strftime('%Y-%m-%d') if created
+        data['version']      = version.to_s
 
-        data['requirements'] = requirements.map do |r|
-          r.to_h
-        end
+        data['date']         = date.strftime('%Y-%m-%d') if date
+        data['created']      = date.strftime('%Y-%m-%d') if created
 
+        data['authors']      = authors.map{ |a| a.to_h }
+        data['requirements'] = requirements.map{ |r| r.to_h }
         data['replacements'] = replacements.to_a
-
-        data['conflicts'] = conflicts.inject({}) do |h, (k,v)|
-          h[k] = v.to_h
-        end
+        data['conflicts']    = conflicts.map{ |c| c.to_h }
 
         data
       end

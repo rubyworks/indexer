@@ -63,6 +63,8 @@ module DotRuby
 
       #
       def initialize(settings)
+        @role = []
+
         settings.each do |field, value|
           send("#{field}=", value)
         end
@@ -122,7 +124,12 @@ module DotRuby
 
       #
       def to_h
-        {'name'=>name, 'email'=>email, 'website'=>website, 'role'=>role}
+        h = {}
+        h['name']    = name 
+        h['email']   = email   if email
+        h['website'] = website if website
+        h['role']    = role
+        h
       end
 
       # CONSIDE: Only name has to be equal?

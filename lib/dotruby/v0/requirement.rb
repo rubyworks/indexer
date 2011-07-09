@@ -186,6 +186,16 @@ module DotRuby
       alias :repo :repository
       alias :repo= :repository=
 
+      # Convert to canonical hash.
+      def to_h
+        h = {}
+        h['name']       = name
+        h['version']    = version
+        h['groups']     = groups
+        h['repository'] = repository.to_h if repository
+        h
+      end
+
     end
   end
 end
