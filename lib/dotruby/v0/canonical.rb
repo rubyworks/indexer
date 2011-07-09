@@ -122,7 +122,7 @@ module DotRuby
 
       # Suite must be a single line string.
       def suite=(value)
-        validate_single_line(:suite, value)
+        Valid.oneline!(value, :suite)
         super(value)
       end
 
@@ -185,12 +185,6 @@ module DotRuby
       end
 
       # The post-installation message must be a String.
-      def message=(value)
-        Valid.string!(value, :message)
-        super(value)
-      end
-
-      # Post installation message.
       def install_message=(value)
         Valid.string!(value)
         super(value)

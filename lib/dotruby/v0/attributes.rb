@@ -27,6 +27,9 @@ module DotRuby
       # The project description
       attr_accessor :description
 
+      # The suite to which the project belongs.
+      attr_accessor :suite
+
       # The copyrights and licenses of the project.
       attr_accessor :copyrights
 

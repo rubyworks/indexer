@@ -219,16 +219,18 @@ module DotRuby
       # List of language engine/version family supported.
       def engines=(value)
         @engines = (
-          Valid.array!(value)
-          value
+          a = [value].flatten
+          a.each{ |x| Valid.oneline!(x) }
+          a
         )
       end
 
       # List of platforms supported.
       def platforms=(value)
         @platform = (
-          Valid.array!(value)
-          value
+          a = [value].flatten
+          a.each{ |x| Valid.oneline!(x) }
+          a
         )
       end
 
@@ -328,6 +330,12 @@ module DotRuby
         replacements.to_ary.each do |name|
           @replacements << name.to_s
         end
+      end
+
+      # Suite must be a single line string.
+      def suite=(value)
+        Valid.oneline!(value, :suite)
+        @suite = value
       end
 
       #
@@ -574,7 +582,7 @@ module DotRuby
       end
 
       #
-      #
+      # RubyGems term for #load_path.
       #
       def require_paths=(value)
         self.load_path = value
@@ -585,6 +593,20 @@ module DotRuby
       #
       def replaces=(value)
         self.replacements = value
+      end
+
+      #
+      # Alternate singular form of #engines.
+      #
+      def engine=(value)
+        self.engines = value
+      end
+
+      #
+      # Alternate singular form of #platforms.
+      #
+      def platform=(value)
+        self.platforms = value
       end
 
       # -- Conversion ---------------------------------------------------------
