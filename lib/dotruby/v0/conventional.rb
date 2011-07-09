@@ -6,12 +6,14 @@ if RUBY_VERSION > '1.9'
   require_relative 'dependency'
   require_relative 'conflict'
   require_relative 'author'
+  require_relative 'copyright'
 else
   require 'dotruby/v0/attributes'
   require 'dotruby/v0/requirement'
   require 'dotruby/v0/dependency'
   require 'dotruby/v0/conflict'
   require 'dotruby/v0/author'
+  require 'dotruby/v0/copyright'
 end
 
 module DotRuby
@@ -153,36 +155,24 @@ module DotRuby
         @copyrights = \
           case copyrights
           when String
-            self.copyrights = [copyrights]
+            [Copyright.parse(copyrights)]
+          when Hash
+            [Copyright.parse(copyrights)]
           when Array
             copyrights.map do |copyright|
-              case copyright
-              when Hash
-                copyright
-              when String
-                # TODO: improve copyright string parsing
-                c = copyright
-                c.sub(/copyright/i,'').sub(/\(c\)/i,'').strip
-                /(\d\d\d\d)/ =~ c
-                y = $1
-                c = c.sub(y.to_s,'').strip
-                /(\(.*?\))/ =~ c
-                l = $1[1..-2]
-                c = c.sub($1.to_s,'').strip
-                h = c
-                { 'year'=>h, 'holder'=>h, 'license'=>l }
-              when Array
-                c = copyright
-                { 'year'=>c[0], 'holder'=>c[1], 'license'=>c[2] }
-              else
-                raise(ValidationError, "copyright must be a String, Hash or Array")
-              end
+              Copyright.parse(copyright)
             end
-          when Hash
-            [copyrights]
           else
             raise(ValidationError, "copyright must be a String, Hash or Array")
           end
+      end
+
+      #
+      # Singular form of `#copyrights=`. This is similar to `#copyrights=`
+      # but expects the parameter to represent only one copyright.
+      #
+      def copyright=(copyright)
+        @copyrights = [Copyright.parse(copyright)]
       end
 
       # Set the authors of the project.
@@ -567,12 +557,6 @@ module DotRuby
       end
 
       # -- Aliases ------------------------------------------------------------
-
-      #
-      # Singular alias for #copyrights=.
-      def copyright=(value)
-         self.copyrights = value
-      end
 
       #
       #
