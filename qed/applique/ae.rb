@@ -1,2 +1,2 @@
 require 'ae/should'
-require 'ae/ok'
+require 'ae/ok'  # or check?
