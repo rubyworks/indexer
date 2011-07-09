@@ -21,8 +21,12 @@ module DotRuby
   end
 
   #
-  def self.load(file=nil)
-    Spec.find(file)
+  def self.load(path=Dir.pwd)
+    if File.file?(path)
+      Spec.read(path)
+    else
+      Spec.find(path)
+    end
   end
 
 end

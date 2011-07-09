@@ -592,14 +592,15 @@ module DotRuby
       #
       # Convert convenience form of metadata to canonical form.
       #
-      def to_data
-        Data.new(to_h)
+      def to_h
+        # TODO: should this be the same as to_data? which makes hashes all the way down,
+        # to should to_h be a shollow to_h?
       end
 
       #
       #
       #
-      def to_h
+      def to_data
         data = {}
 
         instance_variables.each do |iv|
@@ -630,9 +631,7 @@ module DotRuby
         #
         def initialize_attributes
           @authors               = []
-          #@external_requirements = []
           @copyrights            = []
-          @maintainers           = []
           @replacements          = []
           @alternatives          = []
           @requirements          = []
@@ -644,8 +643,6 @@ module DotRuby
           @extra                 = {}
 
           @load_path             = ['lib']
-
-          #@files = []
         end
 
     end

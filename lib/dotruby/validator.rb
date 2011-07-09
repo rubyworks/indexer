@@ -1,4 +1,4 @@
-# Data class subclasses Base class.
+# Validator class subclasses Base class.
 require 'dotruby/base'
 
 module DotRuby
@@ -15,7 +15,6 @@ module DotRuby
       extend DotRuby::V[@revision]::Canonical
     end
 
-=begin
     # Read `.ruby` from file.
     #
     # @param [String] file
@@ -25,6 +24,7 @@ module DotRuby
       new(YAML.load_file(file))
     end
 
+=begin
     # Find project root and read `.ruby` file.
     #
     # @param [String] from

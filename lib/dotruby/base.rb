@@ -1,6 +1,6 @@
 module DotRuby
 
-  # Base class for Data and Spec classes.
+  # Base class for Validator and Spec classes.
   class Base
     include HashLike
 
@@ -41,10 +41,14 @@ module DotRuby
     #   The `.ruby` file could not be located.
     #
     def self.root(from=Dir.pwd)
-      Dir.ascend(from) do |path|
+      path = File.expand_path(from)
+      while path != '/'
         if File.file?(File.join(path,FILE_NAME))
           return path
+        else
+          path = File.dirname(path)
         end
+        raise DotRuby::Exception, "No .ruby file found."
       end
 
       raise("could not locate the #{FILE_NAME} file")

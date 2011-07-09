@@ -70,7 +70,7 @@ module DotRuby
         @name = name.to_s
 
         specifics.each do |key, value|
-          send("#{}=", value)
+          send("#{key}=", value)
         end
       end
 
