@@ -36,7 +36,8 @@ entry can be a string in the format of `name [constraint] [(group...)]`.
 
     spec.requirements = [
       'foo >= 1.0',
-      'bar 1.1~ (doc)'
+      'bar 1.1~ (doc)',
+      'baz'
     ]
 
 In the case of a string, if any group is given, the requirement is taken to
