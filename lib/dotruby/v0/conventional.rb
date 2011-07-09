@@ -5,13 +5,13 @@ if RUBY_VERSION > '1.9'
   require_relative 'requirement'
   require_relative 'dependency'
   require_relative 'conflict'
-  require_relative 'person'
+  require_relative 'author'
 else
   require 'dotruby/v0/attributes'
   require 'dotruby/v0/requirement'
   require 'dotruby/v0/dependency'
   require 'dotruby/v0/conflict'
-  require 'dotruby/v0/person'
+  require 'dotruby/v0/author'
 end
 
 module DotRuby
@@ -78,14 +78,15 @@ module DotRuby
         when Version::Number
           @version = version
         when Hash
-          major = version['major']
-          minor = version['minor']
-          patch = version['patch']
-          build = version['build']
-
+          major = version['major'] || version[:major]
+          minor = version['minor'] || version[:minor]
+          patch = version['patch'] || version[:patch]
+          build = version['build'] || version[:build]
           @version = Version::Number.new(major,minor,patch,build)
         when String
           @version = Version::Number.parse(version.to_s)
+        when Array
+          @version = Version::Number.new(*version)
         else
           raise(ValidationError,"version must be a Hash or a String")
         end
@@ -151,6 +152,8 @@ module DotRuby
       def copyrights=(copyrights)
         @copyrights = \
           case copyrights
+          when String
+            self.copyrights = [copyrights]
           when Array
             copyrights.map do |copyright|
               case copyright
@@ -167,16 +170,18 @@ module DotRuby
                 l = $1[1..-2]
                 c = c.sub($1.to_s,'').strip
                 h = c
-                { 'year'=>h, 'hodler'=>h, 'license'=>l }
+                { 'year'=>h, 'holder'=>h, 'license'=>l }
               when Array
                 c = copyright
-                { 'year'=>c[0], 'hodler'=>c[1], 'license'=>c[2] }
+                { 'year'=>c[0], 'holder'=>c[1], 'license'=>c[2] }
               else
-                raise(ValidationError, "copyright a String, Hash or Array")
+                raise(ValidationError, "copyright must be a String, Hash or Array")
               end
             end
           when Hash
             [copyrights]
+          else
+            raise(ValidationError, "copyright must be a String, Hash or Array")
           end
       end
 
@@ -188,7 +193,7 @@ module DotRuby
       def authors=(authors)
         @authors = (
           list = Array(authors).map do |a|
-                   Person.parse(a)
+                   Author.parse(a)
                  end
           warn "Duplicate authors listed" if list != list.uniq
           list
@@ -225,26 +230,6 @@ module DotRuby
           Valid.array!(value)
           value
         )
-      end
-
-      #
-      # Sets the post-install message of the project.
-      #
-      # @param [Array, String] message
-      #   The post-installation message.
-      #
-      # @return [String]
-      #   The new post-installation message.
-      #
-      def install_message=(message)
-        @install_message = \
-          case message
-          when Array
-            message.join($/)
-          else
-            Valid.string!(message)
-            message.to_str
-          end
       end
 
       #
@@ -362,6 +347,36 @@ module DotRuby
         else
           raise(ValidationError, "repositories must be an Array or Hash")
         end
+      end
+
+      # Set the orgnaization to which the project belongs.
+      #
+      # @param [String] organization
+      #   The name of the organization.
+      #
+      def organization=(organization)
+        Valid.oneline!(organization)
+        @organization = organization
+      end
+
+      #
+      # Sets the post-install message of the project.
+      #
+      # @param [Array, String] message
+      #   The post-installation message.
+      #
+      # @return [String]
+      #   The new post-installation message.
+      #
+      def install_message=(message)
+        @install_message = \
+          case message
+          when Array
+            message.join($/)
+          else
+            Valid.string!(message)
+            message.to_str
+          end
       end
 
       # Set extraneous developer-defined metdata.

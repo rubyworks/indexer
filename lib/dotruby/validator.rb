@@ -3,31 +3,19 @@ require 'dotruby/base'
 
 module DotRuby
 
-  # The Data class models the strict *canonical* specification of
+  # The Validator class models the strict *canonical* specification of
   # the `.ruby` file format. It is a one-to-one mapping with no method aliases
-  # or other conveniences. The class is primarily intended for internal use.
-  # Developers will typically use the Spec class, which is designed for
-  # convenience.
+  # or other conveniences. The class is used internally by the Spec to load
+  # `.ruby` files.
   #
-  class Data < Base
+  class Validator < Base
 
     #
     def initialize_model
       extend DotRuby::V[@revision]::Canonical
     end
 
-    # Save `.ruby` file.
-    #
-    # @param [String] file
-    #   The file name in which to save the metadata as YAML.
-    #
-    def save!(file=FILE_NAME)
-      File.open(file, 'w') do |f|
-        #f << to_h.to_yaml
-        to_yaml(f)
-      end
-    end
-
+=begin
     # Read `.ruby` from file.
     #
     # @param [String] file
@@ -45,6 +33,14 @@ module DotRuby
     def self.find(from=Dir.pwd)
       read(File.join(root(from),FILE_NAME))
     end
+
+    # Convert to Spec.
+    #
+    #
+    def to_spec
+      Spec.new(to_h)
+    end
+=end
 
   end
 

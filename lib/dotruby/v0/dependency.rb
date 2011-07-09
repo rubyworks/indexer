@@ -8,7 +8,7 @@ end
 module DotRuby
   module V0
     # Dependency class is essentially the same as {Requirement}, but
-    # a dependecny represents a binary package requirement, that would
+    # a dependency represents a binary package requirement that would
     # need to be installed using a operating systems own package management
     # system, or installed manually.
     #--

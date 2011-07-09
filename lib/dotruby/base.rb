@@ -16,6 +16,10 @@ module DotRuby
     end
 
     # New instance.
+    #
+    # @param [Hash] data
+    #   The metadata to populate the instance.
+    #
     def initialize(data={})
       self.revision = data.delete('revision') || data.delete(:revision) || CURRENT_REVISION
 

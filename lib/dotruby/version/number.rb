@@ -26,7 +26,7 @@ module DotRuby
         points.map! do |point|
           sane_point(point)
         end
-        @tuple = points.flatten
+        @tuple = points.flatten.compact
       end
 
       # Shortcut for creating a new verison number
@@ -425,9 +425,12 @@ module DotRuby
           point
         when /^\d+$/
           point.to_i
+        when /^(\d+)(\w+)(\d+)$/
+          @crush = true
+          [$1.to_i, $2, $3.to_i]
         when /^(\w+)(\d+)$/
           @crush = true
-          [$1, $2]
+          [$1, $2.to_i]
         else
           point
         end

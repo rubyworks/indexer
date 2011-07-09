@@ -148,9 +148,12 @@ module DotRuby
         super(value)
       end
 
+# TODO: plural or no?
+
       # Set sequence of copyrights mappings.
       def copyrights=(value)
-        Valid.hash!(value, :copyrights)  # TODO: plural or no?
+        Valid.array!(value, :copyrights)
+        value.each{ |h| Valid.hash!(h, :copyrights) }
         super(value)
       end
 
@@ -158,6 +161,7 @@ module DotRuby
       # of `{name: ..., email: ..., :website ..., roles: [...] }`.
       def authors=(value)
         Valid.array!(value, :authors)
+        value.each{ |h| Valid.hash!(h, :authors) }
         super(value)
       end
 
@@ -244,6 +248,7 @@ module DotRuby
         @replacements          = []
         @conflicts             = []
         @requirements          = []
+        @dependencies          = []
 
         @repositories          = {}
         @resources             = {}

@@ -6,11 +6,15 @@ module DotRuby
     #
     # The class also recognizes common entry names and aliases,
     # which can be accessed via method calls.
-    # 
+    #--
     # TODO: Consider if this should instead be an associative array
     # of [type, url]. Could there not be more than one URL for
     # a given type?
     #
+    # TODO: Resource aliases are probably the trickiest part of this
+    # specification. It's hard to judge what exactly they should be.
+    # Perhaps there should bo no aliases?
+    #++
     class Resources
       include Enumerable
 
@@ -64,7 +68,9 @@ module DotRuby
 
       #
       def []=(key, url)
-        raise ArgumentError, "Not a valid URL - `#{url}' for `#{key}'" unless URL =~ url
+        unless Valid.url?(url)
+          raise ArgumentError, "Not a valid URL - `#{url}' for `#{key}'"
+        end
         @table[key_index(key)] = url
       end
 
@@ -86,14 +92,14 @@ module DotRuby
       # User discussion forum.
       attr_accessor :forum
 
+      # Location of support forum.
+      attr_accessor :support
+
       # Mailing list email or web address to online version.
       attr_accessor :mail, :email, :mailinglist
 
       # Location of issue tracker.
       attr_accessor :bugs, :issues
-
-      # Location of support forum.
-      attr_accessor :support
 
       # Location of documentation.
       attr_accessor :docs, :documentation, :doc

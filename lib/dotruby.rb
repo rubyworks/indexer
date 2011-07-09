@@ -19,6 +19,12 @@ module DotRuby
 
     hash[key] = const_get(module_name)
   end
+
+  #
+  def self.load(file=nil)
+    Spec.find(file)
+  end
+
 end
 
 require 'yaml'
@@ -27,7 +33,7 @@ require 'dotruby/exceptions'
 require 'dotruby/valid'
 require 'dotruby/hash_like'
 
-require 'dotruby/data'
+require 'dotruby/validator'
 require 'dotruby/spec'
 
 require 'dotruby/version/exceptions'

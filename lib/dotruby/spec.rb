@@ -2,14 +2,18 @@
 require 'dotruby/base'
 
 module DotRuby
-  # Spec the specification generalized for the convenience of developers.
+
+  # The Specification generalized for the convenience of developers.
   # It offers method aliases and models various parts of the specification 
   # with useful classes.
   #
+  # TODO: Rename to `Specification`? And "alias" as `Spec`? Or is
+  # `Metadata` a better name for this? Most users will just use
+  # `DotRuby.load()` anyway.
   class Spec < Base
 
-    #
-    #
+    # Extend the Spec class with {Conventional}. This module is the 
+    # the essence of Spec, giving it all it's convenient characteristics.
     #
     def initialize_model
       extend DotRuby::V[@revision]::Conventional
@@ -30,7 +34,7 @@ module DotRuby
     #   The file name from which to read the YAML metadata.
     #
     def self.read(file)
-      Data.read(file).to_spec
+      new Data.read(file).to_h
     end
 
     # Find project root and read `.ruby` file.
@@ -38,23 +42,8 @@ module DotRuby
     # @param [String] from
     #   The directory from which to start the upward search.
     #
-    def self.find(dir=Dir.pwd)
-      Data.find(dir).to_spec
-    end
-
-    # Find project root by looking upward for a `.ruby` file.
-    #
-    # @param [String] from
-    #   The directory from which to start the upward search.
-    #
-    # @return [String]
-    #   The path to the `.ruby` file.
-    #
-    # @raise []
-    #   The `.ruby` file could not be located.
-    #
-    def self.root(from=Dir.pwd)
-      Data.root(dir)
+    def self.find(from=Dir.pwd)
+      read(File.join(root(from),FILE_NAME))
     end
 
   end
