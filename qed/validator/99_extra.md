@@ -1,4 +1,4 @@
-## Data#extra
+## Validator#extra
 
 The `extra` field is used to store extraneous information that
 a project developer may want to provide in the `.ruby` that is
@@ -9,7 +9,7 @@ much at all, but is made available for the rare case.
 
 The `extra` field is simply a Hash.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.extra.should == {}
 

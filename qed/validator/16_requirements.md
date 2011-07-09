@@ -1,4 +1,4 @@
-## Data#requirements
+## Validator#requirements
 
 The `requirements` field is a list of packages which are required
 to use this application/library.
@@ -22,7 +22,7 @@ fields is:
 
 Only `name` and `version` are required sub-fields.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.requirements = [
       {'name'=>'foo', 'version'=>'1.0+'},

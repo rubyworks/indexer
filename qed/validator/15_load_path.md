@@ -1,4 +1,4 @@
-## Data#load_path
+## Validator#load_path
 
 The `load_path` field is the means by which a developer instructs
 Ruby's load system of the locations within the project to look for
@@ -15,6 +15,6 @@ The `load_path` value MUST be an Array of String.
 
 By default the value is ['lib']
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
     data.load_path.should = ['lib']
 

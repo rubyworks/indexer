@@ -1,4 +1,4 @@
-## Data#install_message
+## Validator#install_message
 
 The `install_message` field holds the <i>post install message</i>,
 which is displayed after a package is installed to provide users

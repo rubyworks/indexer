@@ -1,11 +1,11 @@
-## Data#copyright
+## Validator#copyright
 
 The `copyrights` field is a sequence of mappings providing the copyright
 and license information.
 
 License values SHOULD be identifiers from SPDX.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.copyrights = [
       { 'year'    => '2010',

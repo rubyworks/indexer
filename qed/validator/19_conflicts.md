@@ -1,4 +1,4 @@
-## Data#conflicts
+## Validator#conflicts
 
 The `conflicts` field holds a list of packages with which the project is
 known not to be compatible.
@@ -6,7 +6,7 @@ known not to be compatible.
 The format of the field is a mapping to package names indexing version
 constraints.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.conflicts = [
       { 'name' => 'bad_robot', 'version' => ['>=1.0'] },

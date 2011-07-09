@@ -34,7 +34,7 @@ hash to the initializer.
     spec = DotRuby::Spec.new(:name=>'foo', :version=>'0.1.2')
 
     spec.name.should == 'foo'
-    spec.version.should == '0.1.2'
+    spec.version.to_s.should == '0.1.2'
 
 Entries passed to the initializer are assigned via Spec's setters
 and are validated upon assignment, so no invalid values can get into the

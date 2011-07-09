@@ -1,11 +1,11 @@
-## Data#alternatives
+## Validator#alternatives
 
 The `alternatives` field holds a list of other packages with which this
 package can act as a substitue and vice-versa.
 
 The format of the field is an array.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.alternatives = ['BlueCloth','rdiscount']
 

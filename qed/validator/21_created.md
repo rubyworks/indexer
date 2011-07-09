@@ -1,4 +1,4 @@
-## Data#created
+## Validator#created
 
 The `created` field is the date the project was started. This field
 must be a string that comforms to the ISO UTC timstamp standard.

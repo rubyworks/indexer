@@ -3,7 +3,7 @@
 # @todo best match for this?
 When '`(((\w+)))` field (((is|holds)))' do |name, _|
   check "#{name} setting invalid" do |value|
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
     begin
       data.send("#{name}=", value)
       true

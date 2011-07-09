@@ -1,4 +1,4 @@
-## Data#date
+## Validator#date
 
 The `date` field is the date the .ruby file was last edited, or if
 part of a package when the package was built. This field

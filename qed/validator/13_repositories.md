@@ -1,8 +1,8 @@
-## Data#repositories
+## Validator#repositories
 
 The `repositories` field holds a list of repository URLs indexed by an id.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.repositories = {
       'public' => {'url' => 'https://github.com/foostuff/foo.git' }

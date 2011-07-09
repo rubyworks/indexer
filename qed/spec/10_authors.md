@@ -41,5 +41,14 @@ It can even handle combination of the above.
       ['John Delight <dlite@mail.com>', 'http://foo.org']
     ]
 
-NOTE: Have I made this too flexible?
+    spec.authors[0].name.assert  == 'Bob Williams'
+    spec.authors[0].email.assert == 'bob@mail.com'
+
+    spec.authors[1].name.assert  == 'Coco Chappel'
+    spec.authors[1].email.assert == 'coco@mail.com'
+
+    spec.authors[2].name.assert    == 'John Delight'
+    spec.authors[2].email.assert   == 'dlite@mail.com'
+    spec.authors[2].website.assert == 'http://foo.org'
+
 

@@ -1,8 +1,8 @@
-## Data#summary
+## Validator#summary
 
 The `summary` field is used to breifly describe a project.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.summary = "Convenient Way to Say Hello"
 

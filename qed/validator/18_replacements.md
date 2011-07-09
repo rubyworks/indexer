@@ -1,4 +1,4 @@
-## Data#replacements
+## Validator#replacements
 
 The `replacements` field holds a list of packages for which this package
 is a natural successor. This is useful to other. An good example is 
@@ -9,7 +9,7 @@ of succession.
 
 The format of the field is an array.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.replacements = ['BlueCloth','rdiscount']
 

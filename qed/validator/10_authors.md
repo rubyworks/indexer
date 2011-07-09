@@ -1,8 +1,8 @@
-# Data#authors
+# Validator#authors
 
 The `authors` field holds a list of orginating authors.
 
-    data = DotRuby::Data.new
+    data = DotRuby::Validator.new
 
     data.authors = [
       { 'name'  => 'Bob Sawyer',
