@@ -603,14 +603,10 @@ module DotRuby
       #
       # Convert convenience form of metadata to canonical form.
       #
-      def to_h
-        # TODO: should this be the same as to_data? which makes hashes all the way down,
-        # to should to_h be a shollow to_h?
-      end
-
+      #--
       # FIXME: This needs to generate the canonical form.
-      #
-      def to_data
+      #++
+      def to_h
         data = {}
 
         instance_variables.each do |iv|
