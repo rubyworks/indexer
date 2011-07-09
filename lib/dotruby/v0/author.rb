@@ -1,30 +1,55 @@
 module DotRuby
   module V0
-    # Person class is used to model Authors and Maintainers.
+    # Author class is used to model Authors and Maintainers.
     #
-    class Person
+    # TODO: Should person have an `orgranization` field. If so
+    # is it a map with `name` and `website` fields?
+    #
+    # TODO: Should we have `team` field?
+    class Author
 
-      # Parse `entry` and create Person object.
+      # Parse `entry` and create Author object.
       def self.parse(entry)
         case entry
-        when Person
+        when Author
           entry
         when String
           parse_string(entry)
         when Array
-          case entry.size
-          when 3
-            new(:name=>entry[0],:email=>entry[1],:website=>entry[3])
-          when 2
-            new(:name=>entry[0],:email=>entry[1])
-          when 1
-            parse_string(entry[0])
-          else
-            raise ArgumentError
-          end
+          parse_array(entry)
+          #case entry.size
+          #when 3
+          #  new(:name=>entry[0],:email=>entry[1],:website=>entry[2])
+          #when 2
+          #  new(:name=>entry[0],:email=>entry[1])
+          #when 1
+          #  parse_string(entry[0])
+          #else
+          #  raise ArgumentError
+          #end
         when Hash
           new(entry)
         end
+      end
+
+      #
+      def self.parse_array(array)
+        data = {}
+        array.each do |value|
+          v = value.strip
+          case v
+          when /^(.*?)\s*\<(.*?@.*?)\>/
+            data[:name]  = $1 unless $1.empty?
+            data[:email] = $2
+          when /^(http|https)\:/
+            data[:website] = v
+          when /\@/
+            data[:email] = v
+          else
+            data[:name] = v
+          end
+        end
+        new(data)
       end
 
       #
@@ -49,7 +74,8 @@ module DotRuby
 
       #
       def name=(name)
-        @name = name.to_str
+        Valid.oneline!(name, :name)
+        @name = name
       end
 
       #
@@ -57,7 +83,8 @@ module DotRuby
 
       #
       def email=(email)
-        @email = Valid.email!(email)
+        Valid.email!(email, :email)
+        @email = email
       end
 
       #
@@ -65,7 +92,8 @@ module DotRuby
 
       #
       def website=(website)
-        @website = Valid.url!(website)
+        Valid.url!(website, :website)
+        @website = website
       end
 
       #
@@ -76,14 +104,30 @@ module DotRuby
         @team = team
       end
 
+      # List of roles the person plays in the project.
+      # This can be any string or array of strings.
+      attr :role
+
+      #
+      def role=(role)
+        @role = (
+          r = [role].flatten
+          r.each{ |x| Valid.oneline?(x) }
+          r
+        )
+      end
+
+      alias :roles  :role
+      alias :roles= :role=
+
       #
       def to_h
-        {'name'=>name, 'email'=>email, 'website'=>website}
+        {'name'=>name, 'email'=>email, 'website'=>website, 'role'=>role}
       end
 
       # CONSIDE: Only name has to be equal?
       def ==(other)
-        return false unless Person === other
+        return false unless Author === other
         return false unless name == other.name
         return true
       end
