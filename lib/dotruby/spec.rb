@@ -25,7 +25,8 @@ module DotRuby
     #   The file name in which to save the metadata as YAML.
     #
     def save!(file='.ruby')
-      to_data.save!(file)
+      v = Validator.new(to_h)
+      v.save!(file)
     end
 
     # Read `.ruby` from file.

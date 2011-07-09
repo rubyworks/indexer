@@ -24,6 +24,15 @@ module DotRuby
       new(YAML.load_file(file))
     end
 
+    # By saving via the Validator, we help ensure only the canoncial
+    # form even makes it to disk.
+    #
+    def save!(file)
+      File.open(file, 'w') do |f|
+        f << to_h.to_yaml
+      end
+    end
+
 =begin
     # Find project root and read `.ruby` file.
     #
