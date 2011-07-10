@@ -2,7 +2,7 @@
 
 The `codename` field is used to name the specific version.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
     data.codename = "Lazy Louse"
 
 The `codename` value MUST have only one lone of text.

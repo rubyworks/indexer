@@ -2,7 +2,7 @@
 
 The `summary` field is used to breifly describe a project.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
     data.summary = "Convenient Way to Say Hello"
 

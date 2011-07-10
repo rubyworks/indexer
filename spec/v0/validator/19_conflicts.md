@@ -6,7 +6,7 @@ known not to be compatible.
 The format of the field is a mapping to package names indexing version
 constraints.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
     data.conflicts = [
       { 'name' => 'bad_robot', 'version' => ['>=1.0'] },

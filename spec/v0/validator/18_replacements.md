@@ -9,7 +9,7 @@ of succession.
 
 The format of the field is an array.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
     data.replacements = ['BlueCloth','rdiscount']
 

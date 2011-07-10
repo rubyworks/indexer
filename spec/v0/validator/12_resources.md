@@ -2,7 +2,7 @@
 
 The `resources` field holds a list of URLs index by type.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
     data.resources = {
       'home' => 'http://foo.org',

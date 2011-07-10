@@ -5,7 +5,7 @@ and license information.
 
 License values SHOULD be identifiers from SPDX.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
     data.copyrights = [
       { 'year'    => '2010',

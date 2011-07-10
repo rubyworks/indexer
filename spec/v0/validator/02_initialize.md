@@ -5,11 +5,9 @@
 A bare Validator object can be created by passing no arguments
 to the initializer.
 
-    data = DotRuby::Validator.new
+    data = Validator.new(:revision=>0)
 
-In this case the revision number will be set to the latest available.
-
-    data.revision.should == DotRuby::CURRENT_REVISION
+    data.revision.should == 0
 
 In addition, certain attributes will have default values.
 
@@ -31,7 +29,7 @@ In addition, certain attributes will have default values.
 A Validator object can be created with initial values by passing a data
 hash to the initializer.
 
-    data = DotRuby::Validator.new(:name=>'foo', :version=>'0.1.2')
+    data = Validator.new(:name=>'foo', :version=>'0.1.2')
 
     data.name.should == 'foo'
     data.version.should == '0.1.2'
@@ -41,7 +39,7 @@ and are validated upon assignment, so no invalid values can get into the
 object's state, e.g.
 
     expect DotRuby::ValidationError do
-      DotRuby::Validator.new(:name=>1)
+      Validator.new(:name=>1)
     end
 
 ### Initial Validity 
@@ -50,7 +48,7 @@ The only way for a Validator object to be in an invalid state is
 by the creation of an instance without providing a `name` and `version`.
 Both name and version are required for a specification to be valid.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
     data.refute.valid?
 

@@ -15,6 +15,6 @@ The `load_path` value MUST be an Array of String.
 
 By default the value is ['lib']
 
-    data = DotRuby::Validator.new
+    data = Validator.new
     data.load_path.should = ['lib']
 

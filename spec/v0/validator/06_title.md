@@ -3,7 +3,7 @@
 The `title` field is used in lue of the `name` for documentation
 purposes and the like.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
     data.title = "Tom's Hello World Program"
 

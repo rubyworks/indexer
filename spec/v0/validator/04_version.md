@@ -7,7 +7,7 @@ numbering policies. As long as the version number (which is actually a string)
 starts with a numeric digit and consists of a series of dot and/or dash separated
 alphanumeric "point values", then .ruby can work with it.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
 Here are examples of valid version numbers.
 

@@ -1,12 +1,12 @@
-## Validator#dependencies
+## Validator#requirements
 
-The `dependencies` field is a list of *binary* packages which are required
+The `requirements` field is a list of packages which are required
 to use this application/library.
 
-The field value is an Array of Hashes. The format of the `dependencies`
+The field value is an Array of Hashes. The format of the `requirements`
 fields is:
 
-    dependencies:
+    requirements:
       - name: foo
         version: 1.0+
         development: false
@@ -22,9 +22,9 @@ fields is:
 
 Only `name` and `version` are required sub-fields.
 
-    data = DotRuby::Validator.new
+    data = Validator.new
 
-    data.dependencies = [
+    data.requirements = [
       {'name'=>'foo', 'version'=>'1.0+'},
       {'name'=>'foo', 'version'=>'1.0+', 'development'=>true, 'group'=>['doc']}
     ]
