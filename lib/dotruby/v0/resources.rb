@@ -68,7 +68,7 @@ module DotRuby
 
       #
       def []=(key, url)
-        unless Valid.url?(url)
+        unless Valid.url?(url) or Valid.irc?(url)
           raise ArgumentError, "Not a valid URL - `#{url}' for `#{key}'"
         end
         @table[key_index(key)] = url

@@ -4,8 +4,8 @@ module DotRuby
   class Base
     include HashLike
 
-    # Default file name of `.ruby` file. It is obviously `.ruby` ;-)
-    FILE_NAME = '.ruby'
+    ## Default file name of `.ruby` file. It is obviously `.ruby` ;-)
+    #FILE_NAME = '.ruby'
 
     # DotRuby uses a strict revision system.
     attr :revision
@@ -21,37 +21,9 @@ module DotRuby
     #   The metadata to populate the instance.
     #
     def initialize(data={})
-      self.revision = data.delete('revision') || data.delete(:revision) || CURRENT_REVISION
-
-      initialize_model
       initialize_attributes
 
       merge!(data)
-    end
-
-    # Find project root by looking upward for a `.ruby` file.
-    #
-    # @param [String] from
-    #   The directory from which to start the upward search.
-    #
-    # @return [String]
-    #   The path to the `.ruby` file.
-    #
-    # @raise []
-    #   The `.ruby` file could not be located.
-    #
-    def self.root(from=Dir.pwd)
-      path = File.expand_path(from)
-      while path != '/'
-        if File.file?(File.join(path,FILE_NAME))
-          return path
-        else
-          path = File.dirname(path)
-        end
-        raise DotRuby::Exception, "No .ruby file found."
-      end
-
-      raise("could not locate the #{FILE_NAME} file")
     end
 
     private

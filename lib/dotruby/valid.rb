@@ -13,6 +13,9 @@ module DotRuby
     # Valid URL regular expression.
     URL = /^(\w+)\:\/\/\S+$/
 
+    # Valid IRC channel.
+    IRC = /^\#\w+$/
+
     # FIXME: Valid email address regular expression.
     EMAIL = /^\S+\@\S+$/
 
@@ -40,6 +43,17 @@ module DotRuby
     def url!(url, field=nil)
       raise_invalid("URL", url, field) unless url?(url)
       return url
+    end
+
+    # TODO: Or uri ?
+    def irc?(irc)
+      IRC =~ irc
+    end
+
+    #
+    def irc!(irc, field=nil)
+      raise_invalid("IRC", irc, field) unless irc?(irc)
+      return irc
     end
 
     #

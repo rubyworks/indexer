@@ -40,7 +40,6 @@ require 'dotruby/hash_like'
 require 'dotruby/model'
 #require 'dotruby/factories'
 
-require 'dotruby/validator'
 require 'dotruby/spec'
 
 require 'dotruby/version/exceptions'

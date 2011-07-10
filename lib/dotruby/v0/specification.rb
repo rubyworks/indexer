@@ -1,6 +1,7 @@
-# Conventional module requires Attributes module and 
-# all the modeling classes.
+# Specification requires Attributes module and all the modeling classes.
 if RUBY_VERSION > '1.9'
+  require_relative '../base'
+  require_relative 'validator'
   require_relative 'attributes'
   require_relative 'requirement'
   require_relative 'dependency'
@@ -8,6 +9,8 @@ if RUBY_VERSION > '1.9'
   require_relative 'author'
   require_relative 'copyright'
 else
+  require 'dotruby/base'
+  require 'dotruby/v0/validator'
   require 'dotruby/v0/attributes'
   require 'dotruby/v0/requirement'
   require 'dotruby/v0/dependency'
@@ -21,13 +24,28 @@ module DotRuby
   # First revision of dotruby specification.
   module V0
 
-    # Conventional mixin is equvialent to the Canonical 
-    # mixin but provides a more liberal interface
-    # and additional convenience methods.
-    module Conventional
+    # The Specification generalized for the convenience of developers.
+    # It offers method aliases and models various parts of the specification 
+    # with useful classes.
+    #
+    # TODO: Is `Metadata` a better name for this? Most users will just use
+    # `DotRuby.load()` anyway.
+    class Specification < Base
 
       include Attributes
+
+      # -- IO Methods ------------------------------------------------------
    
+      # Save `.ruby` file.
+      #
+      # @param [String] file
+      #   The file name in which to save the metadata as YAML.
+      #
+      def save!(file='.ruby')
+        v = Validator.new(to_h)
+        v.save!(file)
+      end
+
       # -- Writers ------------------------------------------------------------
 
       # Sets the name of the project.

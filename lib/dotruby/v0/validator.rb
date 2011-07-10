@@ -1,7 +1,8 @@
-# Canonical module requires Attributes module.
 if RUBY_VERSION > '1.9'
+  require_relative '../base'
   require_relative 'attributes'
 else
+  require 'dotruby/base'
   require 'dotruby/v0/attributes'
 end
 
@@ -9,13 +10,28 @@ module DotRuby
 
   module V0
 
-    # The Canonical module defines explict setters for {Metadata}'s attributes.
-    # These setters follow strict validation rules specific to reading and
-    # writing of `.ruby` YAML formatted files.
-    module Canonical
+    # The Validator class models the strict *canonical* specification of
+    # the `.ruby` file format. It is a one-to-one mapping with no method
+    # aliases or other conveniences. The class is used internally to load
+    # and save `.ruby` files.
+    #
+    class Validator < Base
 
       include Attributes
+
+      # -- IO Methods ------------------------------------------------------
    
+      # By saving via the Validator, we help ensure only the canoncial
+      # form even makes it to disk.
+      #
+      def save!(file)
+        File.open(file, 'w') do |f|
+          f << to_h.to_yaml
+        end
+      end
+
+      # -- Writers ------------------------------------------------------------
+
       # Project's _packaging name_ must be a string without spaces
       # using only `[a-zA-Z0-9_-]`.
       def name=(value)

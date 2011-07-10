@@ -1,32 +1,25 @@
-# Spec class subclasses Base class.
-require 'dotruby/base'
-
 module DotRuby
 
-  # The Specification generalized for the convenience of developers.
-  # It offers method aliases and models various parts of the specification 
-  # with useful classes.
-  #
   # TODO: Rename to `Specification`? And "alias" as `Spec`? Or is
   # `Metadata` a better name for this? Most users will just use
   # `DotRuby.load()` anyway.
-  class Spec < Base
+  module Spec
 
-    # Extend the Spec class with {Conventional}. This module is the 
-    # the essence of Spec, giving it all it's convenient characteristics.
-    #
-    def initialize_model
-      extend DotRuby::V[@revision]::Conventional
-    end
+    # Default file name of `.ruby` file. It is obviously `.ruby` ;-)
+    FILE_NAME = '.ruby'
 
-    # Save `.ruby` file.
+    # Revision factory return a versioned instance of Specification.
     #
-    # @param [String] file
-    #   The file name in which to save the metadata as YAML.
+    # @param [Hash] data
+    #   The metadata to populate the instance.
     #
-    def save!(file='.ruby')
-      v = Validator.new(to_h)
-      v.save!(file)
+    def self.new(data={})
+      revision = data['revision'] || data[:revision]
+      unless revision
+        revison          = CURRENT_REVISION
+        data['revision'] = CURRENT_REVISION
+      end
+      V[revision]::Specification.new(data)
     end
 
     # Read `.ruby` from file.
@@ -35,7 +28,15 @@ module DotRuby
     #   The file name from which to read the YAML metadata.
     #
     def self.read(file)
-      new Validator.read(file).to_h
+      data     = YAML.load_file(file)
+      revision = data['revision'] || data[:revision]
+      unless revision
+        # TODO: raise error instead ?
+        revison          = CURRENT_REVISION
+        data['revision'] = CURRENT_REVISION
+      end
+      data     = V[revision]::Canonical.new(data).to_h
+      V[revision]::Specification.new(data)
     end
 
     # Find project root and read `.ruby` file.
@@ -44,7 +45,33 @@ module DotRuby
     #   The directory from which to start the upward search.
     #
     def self.find(from=Dir.pwd)
-      read(File.join(root(from),FILE_NAME))
+      file = File.join(root(from),FILE_NAME)
+      read(file)
+    end
+
+    # Find project root by looking upward for a `.ruby` file.
+    #
+    # @param [String] from
+    #   The directory from which to start the upward search.
+    #
+    # @return [String]
+    #   The path to the `.ruby` file.
+    #
+    # @raise []
+    #   The `.ruby` file could not be located.
+    #
+    def self.root(from=Dir.pwd)
+      path = File.expand_path(from)
+      while path != '/'
+        if File.file?(File.join(path,FILE_NAME))
+          return path
+        else
+          path = File.dirname(path)
+        end
+        raise DotRuby::Exception, "No .ruby file found."
+      end
+
+      raise("could not locate the #{FILE_NAME} file")
     end
 
   end

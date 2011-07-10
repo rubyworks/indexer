@@ -2,10 +2,10 @@ module DotRuby
   module V0
     # Author class is used to model Authors and Maintainers.
     #
-    # TODO: Should person have an `orgranization` field. If so
+    # TODO: Should Author have an `orgranization` field. If so
     # is it a map with `name` and `website` fields?
     #
-    # TODO: Should we have `team` field?
+    # TODO: Should we have `team` field (think Github)?
     class Author < Model
 
       # Parse `entry` and create Author object.
@@ -17,16 +17,6 @@ module DotRuby
           parse_string(entry)
         when Array
           parse_array(entry)
-          #case entry.size
-          #when 3
-          #  new(:name=>entry[0],:email=>entry[1],:website=>entry[2])
-          #when 2
-          #  new(:name=>entry[0],:email=>entry[1])
-          #when 1
-          #  parse_string(entry[0])
-          #else
-          #  raise ArgumentError
-          #end
         when Hash
           new(entry)
         end
