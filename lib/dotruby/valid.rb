@@ -227,4 +227,9 @@ module DotRuby
 
   end
 
+  # Use this error for all validation errors when reading a spec.
+  class ValidationError < ArgumentError
+    include Error
+  end
+
 end

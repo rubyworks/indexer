@@ -33,7 +33,7 @@ end
 
 require 'yaml'
 
-require 'dotruby/exceptions'
+require 'dotruby/error'
 require 'dotruby/valid'
 require 'dotruby/hash_like'
 
