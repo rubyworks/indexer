@@ -47,9 +47,11 @@ module DotRuby
     def []=(key, value)
       setter = "#{key}="
 
-      unless respond_to?(setter)
-        raise(ArgumentError, "unknown attribute: #{key.inspect}")
-      end
+      #unless respond_to?(setter)
+      #  #error = ArgumentError.new("unknown attribute: #{key.inspect}")
+      #  #error.extend Error
+      #  #raise(error)
+      #end
 
       #begin
         send(setter, value)      

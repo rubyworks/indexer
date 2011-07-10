@@ -6,7 +6,7 @@ module DotRuby
     # is it a map with `name` and `website` fields?
     #
     # TODO: Should we have `team` field?
-    class Author
+    class Author < Model
 
       # Parse `entry` and create Author object.
       def self.parse(entry)

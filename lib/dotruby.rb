@@ -37,9 +37,15 @@ require 'dotruby/error'
 require 'dotruby/valid'
 require 'dotruby/hash_like'
 
+require 'dotruby/model'
+#require 'dotruby/factories'
+
 require 'dotruby/validator'
 require 'dotruby/spec'
 
 require 'dotruby/version/exceptions'
 require 'dotruby/version/number'
 require 'dotruby/version/constraint'
+
+require 'dotruby/v0' # CURRENT_REVISION
+

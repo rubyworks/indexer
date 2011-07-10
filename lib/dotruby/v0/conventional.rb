@@ -22,7 +22,7 @@ module DotRuby
   module V0
 
     # Conventional mixin is equvialent to the Canonical 
-    # mixin but provides a versu liberal interface
+    # mixin but provides a more liberal interface
     # and additional convenience methods.
     module Conventional
 
