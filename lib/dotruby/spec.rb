@@ -35,7 +35,7 @@ module DotRuby
         revison          = CURRENT_REVISION
         data['revision'] = CURRENT_REVISION
       end
-      data     = V[revision]::Canonical.new(data).to_h
+      data     = V[revision]::Validator.new(data).to_h
       V[revision]::Specification.new(data)
     end
 
@@ -68,7 +68,7 @@ module DotRuby
         else
           path = File.dirname(path)
         end
-        raise DotRuby::Exception, "No .ruby file found."
+        raise DotRuby::Error, "No .ruby file found."
       end
 
       raise("could not locate the #{FILE_NAME} file")
