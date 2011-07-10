@@ -35,11 +35,11 @@ module DotRuby
         end
       end
 
-      # Verison number.
-      attr :number
-
       # Constraint operator.
       attr :operator
+
+      # Verison number.
+      attr :number
 
       #
       def to_s
@@ -52,8 +52,8 @@ module DotRuby
       # TODO: Better name Constraint#to_s2.
       #++
       def to_gem_version
-        op = '~>' if operator == '=~'
-        "%s %s" % [operator, number]
+        op = (operator == '=~' ? '~>' : operator)
+        "%s %s" % [op, number]
       end
 
       #
@@ -104,28 +104,13 @@ module DotRuby
 
       # Parses a string constraint returning the operation as a lambda.
       def self.constraint_lambda(constraint)
-        op, val = *parse_constraint(constraint)
-        lambda{ |t| t.send(op, val) }
+        new(constraint).to_proc
       end
 
       # Parses a string constraint returning the operator and value.
       def self.parse_constraint(constraint)
-        constraint = constraint.strip
-        #re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\d+)*)$}
-        re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\w+)*)$}
-        if md = re.match(constraint)
-          if op = md[1]
-            op = '=~' if op == '~>'
-            op = '==' if op == '='
-            val = new(md[2].split(/\W+/))
-          else
-            op = '=='
-            val = new(constraint.split(/\W+/))
-          end
-        else
-          raise ArgumentError, "invalid constraint '#{constraint}'"
-        end
-        return op, val
+        c = new(constraint)
+        return c.operator, c.number
       end
 
     end
