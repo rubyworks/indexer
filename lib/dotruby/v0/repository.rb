@@ -17,13 +17,13 @@ module DotRuby
       def self.parse(data)
         case data
         when String
-          new('url'=>data)
+          new('uri'=>data)
         when Array
           h, d = {}, data.dup  # TODO: data.rekey(&:to_s)
           h.update(d.pop) while Hash === d.last
-          h['id']  = d.shift unless d.empty?
-          h['url'] = d.shift unless d.empty?
-          h['scm'] = d.shift unless d.empty?
+          h['name'] = d.shift unless d.empty?
+          h['uri']  = d.shift unless d.empty?
+          h['scm']  = d.shift unless d.empty?
           new(h)
         when Hash
           new(data)
@@ -40,35 +40,38 @@ module DotRuby
           send("#{field}=", value)
         end
 
-        self.scm = infer_scm(url) unless scm
+        self.scm = infer_scm(uri) unless scm
       end
 
       #
-      # The id of the repository.
+      # A name that can be used to identify the purpose of a
+      # particular repository.
       #
-      attr_reader :id
+      attr_reader :name
 
       #
-      # Set the repositoru id. This can be any one line description but
-      # it generally should be a brief one-word indictor such as "public",
-      # "master", "expiremental", etc.
+      # Set the repository name. This can be any one line description but
+      # it generally should be a brief one-word indictor such as "origin"
+      # "upstream", "experimental", "joes-fork", etc.
       #
-      def id=(id)
-        Valid.oneline!(id)
-        @id = id.to_str
+      def name=(name)
+        Valid.oneline!(name)  # should be word!
+        @name = name.to_str
       end
 
       #
-      # The repository's public URL.
+      # The repository's URI.
       #
-      attr_reader :url
+      attr_reader :uri
 
       #
-      # Set repository URL>
+      # Set repository URI
       #
-      def url=(url)
-        Valid.url!(url)
-        @url = url.to_s
+      def uri=(uri)
+        Valid.oneline!(uri)
+        #Valid.uri!(uri)  # TODO: any other limitations?
+        @scm = infer_scm(uri)
+        @uri = uri
       end
 
       #
@@ -93,17 +96,28 @@ module DotRuby
         @scm = scm.to_str.downcase
       end
 
+      #
+      def to_h
+        h = {}
+        h['uri']  = uri
+        h['scm']  = scm  if scm
+        h['name'] = name if name
+        h
+      end
+
       private
 
       #
-      def infer_scm(url)
-        case url
+      def infer_scm(uri)
+        case uri
         when /^git:/, /\.git$/
           'git'
         when /^hg:/, /\.hg$/
           'hg'
         when /^svn:/
           'svn'
+        when /darcs/
+          'darcs'
         else
           nil
         end
