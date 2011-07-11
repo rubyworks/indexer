@@ -27,6 +27,23 @@ The copyrights can also be given as strings.
 Or as a single string, for which there is a singular alias.
 
     spec.copyright = "Copyright (c) 2010 T. Bone Willy"
+    spec.copyrights.first.year.should == '2010'
+
+But the plural method also can handle this form, even if it reads
+a bit oddly.
+
+    spec.copyrights = "Copyright (c) 2010 T. Bone Willy"
+    spec.copyrights.first.year.should == '2010'
+
+A single hash can be passed as well.
+
+    spec.copyrights = {
+      'year'    => '2010',
+      'holder'  => 'T. Bone Willy',
+      'license' => 'MIT'
+    }
+    spec.copyrights.first.year.should == '2010'
+    spec.copyrights.first.license.should == 'MIT'
 
 It can also be given as an array of three element arrays.
 

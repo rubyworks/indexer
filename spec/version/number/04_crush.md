@@ -1,4 +1,4 @@
-### Version::Number#crush?
+## Version::Number#crush?
 
 A version can be represented as a string in one of two ways --either
 as a strict point seprated tuple or *crushed* where string segements

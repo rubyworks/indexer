@@ -9,11 +9,11 @@ Given a Spec instance.
 We can save the Spec to disk in canonical form using
 the `#save!` method.
 
-    spec.save!('ruby.yml')
+    spec.save!('save.yml')
 
 We can us `#read` to ensure it saved as we expected.
 
-    spec = DotRuby::Spec.read('ruby.yml')
+    spec = DotRuby::Spec.read('save.yml')
 
 And we can verify it was read.
 
