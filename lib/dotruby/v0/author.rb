@@ -2,7 +2,7 @@ module DotRuby
   module V0
     # Author class is used to model Authors and Maintainers.
     #
-    # TODO: Should Author have an `orgranization` field. If so
+    # TODO: Should Author have an `organization` field. If so
     # is it a map with `name` and `website` fields?
     #
     # TODO: Should we have `team` field (think Github)?
@@ -98,19 +98,19 @@ module DotRuby
 
       # List of roles the person plays in the project.
       # This can be any string or array of strings.
-      attr :role
+      attr :roles
 
       #
-      def role=(role)
-        @role = (
+      def roles=(role)
+        @roles = (
           r = [role].flatten
           r.each{ |x| Valid.oneline?(x) }
           r
         )
       end
 
-      alias :roles  :role
-      alias :roles= :role=
+      alias :role  :roles
+      alias :role= :roles=
 
       #
       def to_h
@@ -118,7 +118,7 @@ module DotRuby
         h['name']    = name 
         h['email']   = email   if email
         h['website'] = website if website
-        h['role']    = role
+        h['roles']   = role    if not roles.empty?
         h
       end
 

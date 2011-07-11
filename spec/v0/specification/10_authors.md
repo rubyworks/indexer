@@ -12,7 +12,7 @@ The Spec class allows, of course, the canonical format.
       },
       { 'name'  => 'John Delight',
         'email' => 'dlite@mail.com',
-        'role'  => ['QA']
+        'roles' => ['QA']
       }
     ]
 
