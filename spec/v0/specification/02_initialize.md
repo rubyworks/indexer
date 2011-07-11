@@ -19,9 +19,9 @@ In addition, certain attributes will have default values.
     spec.requirements.should == []
     spec.dependencies.should == []
     spec.conflicts.should    == []
+    spec.repositories.should == []
 
     spec.resources.should    == {}
-    spec.repositories.should == {}
     spec.extra.should        == {}
 
     spec.load_path.should    == ['lib']

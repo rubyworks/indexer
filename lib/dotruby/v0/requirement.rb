@@ -87,7 +87,8 @@ module DotRuby
       # Create new instance of Requirement.
       #
       def initialize(name, specifics={})
-        @name = name.to_s
+        @name   = name.to_s
+        @groups = []
 
         specifics.each do |key, value|
           send("#{key}=", value)
@@ -199,7 +200,7 @@ module DotRuby
       # Set the public repository resource in which the requirement
       # source code can be found.
       #
-      def repository=(repo)
+      def repository=(repository)
         @repository = Repository.parse(repository)
       end
 
@@ -210,8 +211,8 @@ module DotRuby
       def to_h
         h = {}
         h['name']       = name
-        h['version']    = version
-        h['groups']     = groups
+        h['version']    = version.to_s    if version
+        h['groups']     = groups          if not groups.empty?
         h['repository'] = repository.to_h if repository
         h
       end

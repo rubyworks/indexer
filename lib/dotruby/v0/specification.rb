@@ -357,8 +357,7 @@ module DotRuby
         when Hash, Array
           @repositories.clear
           repositories.each do |specifics|
-            repo = Repository.parse(specifics)
-            @repositories[repo.id] = repo
+            @repositories << Repository.parse(specifics)
           end
         else
           raise(ValidationError, "repositories must be an Array or Hash")
@@ -655,8 +654,10 @@ module DotRuby
 
         data['authors']      = authors.map{ |a| a.to_h }
         data['requirements'] = requirements.map{ |r| r.to_h }
-        data['replacements'] = replacements.to_a
         data['conflicts']    = conflicts.map{ |c| c.to_h }
+        data['repositories'] = repositories.map{ |r| r.to_h }
+
+        data['replacements'] = replacements.to_a
 
         data
       end
@@ -674,8 +675,8 @@ module DotRuby
           @requirements          = []
           @dependencies          = []
           @conflicts             = []
+          @repositories          = []
 
-          @repositories          = {}
           @resources             = {}
           @extra                 = {}
 

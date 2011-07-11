@@ -192,10 +192,13 @@ module DotRuby
 
       # Repositores must be a mapping of <code>name => URL</code>.
       def repositories=(value)
-        Valid.hash! value, :repositories
-        value.each do |id, data|
-          Valid.hash! data, "repositories #{id}"
-          Valid.url!  data['url'], "repositories #{id}"
+        Valid.array! value, :repositories
+        value.each_with_index do |data, index|
+          Valid.hash! data, "repositories #{index}"
+          #Valid.uri!  data['uri'], "repositories ##{index}"
+          Valid.oneline! data['uri'], "repositories ##{index}"
+          Valid.oneline! data['id'],  "repositories ##{index}" if data['id']
+          Valid.word!    data['scm'], "repositories ##{index}" if data['scm']
         end
         super value
       end

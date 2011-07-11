@@ -18,7 +18,6 @@ module DotRuby
     # class becuase a OS package managers MIGHT require some additional
     # information --but as of yet that's not the case.
     class Dependency < Requirement
-
     end
 
   end

@@ -4,9 +4,12 @@ The `repositories` field holds a list of repository URLs indexed by an id.
 
     data = Validator.new
 
-    data.repositories = {
-      'public' => {'url' => 'https://github.com/foostuff/foo.git' }
-    }
+    data.repositories = [
+      {
+        'id' => 'main',
+        'uri' => 'https://github.com/foostuff/foo.git'
+      }
+    ]
 
 The field MUST be a Hash.
 

@@ -12,10 +12,7 @@
 
     x[:a].should == 1
 
-If a reader attribute doesn't exist it will raise
-an error.
+If a reader attribute doesn't exist it will return `nil`.
 
-    expect NoMethodError do
-      x[:q]
-    end
+    x[:q].assert.nil?
 
