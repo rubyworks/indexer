@@ -9,7 +9,7 @@ much at all, but is made available for the rare case.
 
 The `extra` field is simply a Hash.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
     spec.extra.should == {}
 

@@ -4,7 +4,7 @@ The Spec class can hande
 The `version` field follows closely to the SemVer[http://semiver.org] standard.
 
     check "version validation error" do |v, r|
-      spec = DotRuby::Spec.new
+      spec = Specification.new
       spec.version = v
       spec.version.to_a.should == r
     end

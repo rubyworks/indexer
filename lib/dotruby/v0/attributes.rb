@@ -6,8 +6,8 @@ module DotRuby
     # The Attributes module defines all of the accepted metadata fields.
     module Attributes
 
-      # The revision of .ruby specification
-      #attr_accessor :revision
+      # The revision of .ruby specification.
+      def revision ; 0 ; end
 
       # The name of the project
       attr_accessor :name

@@ -2,7 +2,7 @@
 
 The `summary` field is used to breifly describe a project.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
     spec.summary = "Convenient Way to Say Hello"
 

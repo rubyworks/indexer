@@ -6,7 +6,7 @@ If given, only matching platforms can make use of it.
 The `platform` field MUST be an array of strings with only a single line of text
 that match valid value of RUBY_PLATFORM.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
     spec.platforms = ['x86_64-linux']
 

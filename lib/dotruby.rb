@@ -7,6 +7,7 @@ module DotRuby
   # @return [Hash{Integer => Module}]
   #   The Hash of DotRuby revisions and their modules.
   #
+  # TODO: Or a capitalized method?
   V = Hash.new do |hash,key|
     revision = key.to_i
     require "dotruby/v#{revision}"

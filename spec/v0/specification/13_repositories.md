@@ -2,7 +2,7 @@
 
 The `repositories` field holds a list of repository URLs indexed by an id.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
     spec.repositories = [
       {

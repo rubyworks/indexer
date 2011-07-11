@@ -2,7 +2,7 @@
 
 The `resources` field holds a list of URLs index by type.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
     spec.resources = {
       'home' => 'http://foo.org',

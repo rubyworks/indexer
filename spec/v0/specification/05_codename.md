@@ -2,7 +2,7 @@
 
 The `codename` field is used to name the specific version.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
     spec.codename = "Lazy Louse"
 
 The `codename` value MUST have only one lone of text.

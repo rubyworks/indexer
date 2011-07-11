@@ -1,15 +1,15 @@
-## Spec#initialize
+## Specification#initialize
 
 ### Bare Instance
 
-An bare Spec object can be created by passing no arguments
-to the initializer.
+A Specification object can be created using the typical `#new` class method.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
-In this case the revision number will be set to the latest available.
+As we are testing revision 0, and have included the `V0` module into the 
+testing namespace, we can see that the revision is set to `0`.
 
-    spec.revision.should == DotRuby::CURRENT_REVISION
+    spec.revision.should == 0
 
 In addition, certain attributes will have default values.
 
@@ -31,7 +31,7 @@ In addition, certain attributes will have default values.
 A Spec object can be created with initial values by passing a spec
 hash to the initializer.
 
-    spec = DotRuby::Spec.new(:name=>'foo', :version=>'0.1.2')
+    spec = Specification.new(:name=>'foo', :version=>'0.1.2')
 
     spec.name.should == 'foo'
     spec.version.to_s.should == '0.1.2'
@@ -41,14 +41,14 @@ and are validated upon assignment, so no invalid values can get into the
 object's state, e.g.
 
     expect DotRuby::ValidationError do
-      DotRuby::Spec.new(:name=>1)
+      Specification.new(:name=>1)
     end
 
 ### Spec Block
 
 Spec can also take a block which is yeilded on `self`.
 
-    spec = DotRuby::Spec.new do |spec|
+    spec = Specification.new do |spec|
       spec.name    = 'foo'
       spec.version = '0.1.2'
     end
@@ -60,7 +60,7 @@ The only way for a Spec object to be in an invalid state is
 by the creation of an instance without providing a `name` and `version`.
 Both name and version are required for a specification to be valid.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
     spec.refute.valid?
 

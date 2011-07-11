@@ -4,7 +4,7 @@ The `authors` field holds a list of orginating authors.
 
 The Spec class allows, of course, the canonical format.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
     spec.authors = [
       { 'name'  => 'Bob Williams',

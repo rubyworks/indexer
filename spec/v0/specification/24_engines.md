@@ -6,7 +6,7 @@ the project/package. If given, only matching Rubies can make use of it.
 The `engines` field MUST be an array of strings with only a single line of text
 in the format of `"<name> [<version-constraint>]"`.
 
-    spec = DotRuby::Spec.new
+    spec = Specification.new
 
     spec.engines = ['mri 1.8.7+', 'jruby']
 
