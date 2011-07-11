@@ -35,8 +35,8 @@ module DotRuby
         revison          = CURRENT_REVISION
         data['revision'] = CURRENT_REVISION
       end
-      data     = V[revision]::Validator.new(data).to_h
-      V[revision]::Specification.new(data)
+      valid_data = V[revision]::Validator.new(data).to_h
+      V[revision]::Specification.new(valid_data)
     end
 
     # Find project root and read `.ruby` file.
@@ -47,6 +47,23 @@ module DotRuby
     def self.find(from=Dir.pwd)
       file = File.join(root(from),FILE_NAME)
       read(file)
+    end
+
+    # Unlike #read, the #load method does not hold the
+    # input data to the strict canonical spec.
+    #
+    # @param [String] file
+    #   The file name from which to read the YAML metadata.
+    #
+    def self.load(file)
+      data     = YAML.load_file(file)
+      revision = data['revision'] || data[:revision]
+      unless revision
+        # TODO: raise error instead ?
+        revison          = CURRENT_REVISION
+        data['revision'] = CURRENT_REVISION
+      end
+      V[revision]::Specification.new(data)
     end
 
     # Find project root by looking upward for a `.ruby` file.
