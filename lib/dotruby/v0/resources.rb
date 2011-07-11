@@ -15,7 +15,7 @@ module DotRuby
     # specification. It's hard to judge what exactly they should be.
     # Perhaps there should bo no aliases?
     #++
-    class Resources
+    class Resources < Model
       include Enumerable
 
       # Valid URL regular expression.
@@ -69,7 +69,7 @@ module DotRuby
       #
       def []=(key, url)
         unless Valid.url?(url) or Valid.irc?(url)
-          raise ArgumentError, "Not a valid URL - `#{url}' for `#{key}'"
+          raise ValidationError, "Not a valid URL - `#{url}' for `#{key}'"
         end
         @table[key_index(key)] = url
       end
@@ -125,7 +125,7 @@ module DotRuby
       # Convert table to hash with string keys.
       def to_h
         h = {}
-        to_h.each do |k,v|
+        @table.each do |k,v|
           h[k.to_s] = v
         end
         return h

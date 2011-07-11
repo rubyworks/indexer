@@ -7,7 +7,7 @@ module DotRuby
     module Attributes
 
       # The revision of .ruby specification
-      attr_accessor :revision
+      #attr_accessor :revision
 
       # The name of the project
       attr_accessor :name

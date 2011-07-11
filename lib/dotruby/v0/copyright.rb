@@ -1,7 +1,7 @@
 module DotRuby
 
   # Copyright class models ...
-  class Copyright
+  class Copyright < Model
 
     # Parse copyright entry.
     #

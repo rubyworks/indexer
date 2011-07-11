@@ -11,7 +11,7 @@ module DotRuby
     #
     # QUESTION: Does Requirement really need to handle multiple version constraints?
     # Currently this only supports one version constraint.
-    class Requirement
+    class Requirement < Model
 
       # Parse `data` into a Requirement instance.
       #

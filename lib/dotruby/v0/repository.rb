@@ -3,7 +3,7 @@ module DotRuby
     # The Repository class models a packages SCM repository location.
     # It consists of two parts, the `scm` type of repository, it's `url`.
     #
-    class Repository
+    class Repository < Model
 
       # Parse `data` returning a new Repository instance.
       #

@@ -3,7 +3,7 @@ module DotRuby
     # The Conflict class models the name and versions of
     # packages that have know incompatibilities.
     #
-    class Conflict
+    class Conflict < Model
 
       # Parse `data` into a Dependency instance.
       #

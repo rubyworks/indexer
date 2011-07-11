@@ -41,7 +41,7 @@ module DotRuby
 
       #
       def version=(value)
-        Valid.version_string!(value, :version)
+        validate(value, :version, :version_string!)
         super(value)
       end
 
