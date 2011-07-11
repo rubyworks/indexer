@@ -205,7 +205,7 @@ module DotRuby
       return value
     end
 
-    # FIXME: better validation fpr path
+    # FIXME: better validation for path
     def path?(path)
       return false unless string?(path)
       return true
