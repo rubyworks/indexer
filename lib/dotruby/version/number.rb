@@ -151,13 +151,25 @@ module DotRuby
       alias_method :stable_release?, :stable?
 
       #
-      def pre_release?
-        build == 'pre'
+      def alpha?
+        s = status.dowcase
+        s == 'alpha' or s == 'a'
+      end
+
+      #
+      def beta?
+        s = status.dowcase
+        s == 'beta' or s == 'b'
+      end
+
+      #
+      def prerelease?
+        status == 'pre'
       end
 
       #
       def release_candidate?
-        build == 'rc'
+        status == 'rc'
       end
 
       # Fetch a sepecific segement by index number.
