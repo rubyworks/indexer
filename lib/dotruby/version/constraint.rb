@@ -56,10 +56,11 @@ module DotRuby
         "%s %s" % [op, number]
       end
 
-      #
+      # Convert constraint to Proc object which can be
+      # used to test a version number.
       def to_proc
-        lambda do |t|
-          n = Version::Number.parse(t)
+        lambda do |v|
+          n = Version::Number.parse(v)
           n.send(operator, number)
         end
       end
@@ -89,7 +90,7 @@ module DotRuby
         else
           raise ArgumentError #constraint.split(/\s+/)
         end
-        return op, Version::Number.new(val)
+        return op, Version::Number.new(*val)
       end
 
       # Parse package entry into name and version constraint.
