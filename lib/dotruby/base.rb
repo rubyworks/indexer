@@ -1,11 +1,8 @@
 module DotRuby
 
-  # Base class for Validator and Spec classes.
+  # Base class for Validator and Specification classes.
   class Base
     include HashLike
-
-    ## Default file name of `.ruby` file. It is obviously `.ruby` ;-)
-    #FILE_NAME = '.ruby'
 
     # DotRuby uses a strict revision system.
     attr :revision
