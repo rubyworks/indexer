@@ -53,12 +53,12 @@ module DotRuby
       #
       def self.parse(version)
         case version
-        when self.class
-          new(*version.tuple)
         when String
           new(*version.split('.'))
+        when Number #self.class
+          new(*version.to_a)
         else
-          new(*version.to_ary)
+          new(*version.to_ary)  #to_a) ?
         end
       end
 
@@ -144,13 +144,20 @@ module DotRuby
       end
 
       #
-      def stable_release?
+      def stable?
         build.nil?
       end
 
+      alias_method :stable_release?, :stable?
+
       #
       def pre_release?
-        !build.nil?
+        build == 'pre'
+      end
+
+      #
+      def release_candidate?
+        build == 'rc'
       end
 
       # Fetch a sepecific segement by index number.
@@ -210,14 +217,17 @@ module DotRuby
       #
       # Converts the version to YAML.
       #
-      # @param [IO] io
-      #   The output stream to write to.
+      # @param [Hash] opts
+      #   Options supporte by YAML.
       #
       # @return [String]
       #   The resulting YAML.
       #
-      def to_yaml(io)
-        to_s.to_yaml(io)
+      #--
+      # TODO: Should this be here?
+      #++
+      def to_yaml(opts={})
+        to_s.to_yaml(opts)
       end
 
       #
