@@ -489,6 +489,8 @@ module DotRuby
         true
       end
 
+# TOTO: What was used for again, load_path ?
+=begin
       #
       # Iterates over the paths.
       #
@@ -513,7 +515,7 @@ module DotRuby
       end
 
       private :each_path
-
+=end
 
       # -- Calculations -------------------------------------------------------
 
@@ -580,6 +582,20 @@ module DotRuby
       end
 
       # -- Aliases ------------------------------------------------------------
+
+      #
+      #
+      # @return [Array] load paths
+      def loadpath
+        @load_path
+      end
+
+      #
+      # RubyGems term for #load_path.
+      #
+      def loadpath=(value)
+        self.load_path = value
+      end
 
       #
       #
