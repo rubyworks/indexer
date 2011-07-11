@@ -19,11 +19,12 @@ module DotRuby
     # TODO: If key does exist, should it return nil?
     #++
     def [](key)
-      #unless respond_to?(key)
-      #  raise(ArgumentError,"unknown attribute: #{key.inspect}")
-      #end
-
-      send(key)
+      if respond_to?(key)
+        send(key)
+      else
+        #raise(ArgumentError,"unknown attribute: #{key.inspect}")
+        nil
+      end
     end
 
     #
@@ -42,7 +43,7 @@ module DotRuby
     #   The key is not known.
     #
     #--
-    # TODO: If key does exist, should it automatically create a singleton method for it?
+    # TODO: If key does not exist, should it automatically create a singleton method for it?
     #++
     def []=(key, value)
       setter = "#{key}="
