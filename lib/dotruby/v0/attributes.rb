@@ -102,28 +102,17 @@ module DotRuby
 
       # The company by which the project is being developed.
       #
-      # @todo Do we need both company and ogranziation?
+      # @todo Do we need both company and oganization?
       attr_accessor :company
+
+# TODO: NOT SURE AT ALL ABOUT THESE
 
       # Any user-defined extraneous metadata.
       attr_accessor :extra
 
-# TODO: NOT SURE AT ALL ABOUT THESE
-
-      # The SCM which the project is currently utilizing.
-      # NOTE: Is this a good idea?
-      attr_accessor :scm
-
       # The toplevel namespace of API, e.g. `module Foo` or `class Bar`.
       # NOTE: how to best handle this?
       attr_accessor :namespace
-
-      # The engines and versions of ruby the project has been tested under.
-      #attr_accessor :engine_check ?
-
-      # The files of the project
-      # Is this neccessary?
-      #attr_accessor :files
 
     end
 

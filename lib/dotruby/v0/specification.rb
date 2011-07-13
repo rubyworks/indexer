@@ -69,14 +69,19 @@ module DotRuby
         @title = title.to_str.gsub(/\s+/, ' ')
       end
 
-      # Codename
       #
-      def codename=(codename)
-        codename = codename.to_s if Symbol === codename
-        Valid.oneline!(codename, :codename)
-        @codename = codename.to_str
+      # The toplevel namespace of API, e.g. `module Foo` or `class Bar`,
+      # would be `"Foo"` or `"Bar"`, repectively.
+      #
+      # @param [String] namespace
+      #   The new toplevel namespace of the project's API.
+      #
+      def namespace=(namespace)
+        Valid.constant!(namespace)
+        @namespace = namespace
       end
 
+      #
       # Summary is sanitized to only have one line of text.
       #
       def summary=(summary)
@@ -87,11 +92,11 @@ module DotRuby
       #
       # Sets the version of the project.
       #
-      # @param [Hash<Integer>, String] version
+      # @param [Hash, String, Array, Version::Number] version
       #   The version from the metadata file.
       #
       # @raise [ValidationError]
-      #   The version must either be a `String` or a `Hash`.
+      #   The version must either be a `String`, `Hash` or `Array`.
       #
       def version=(version)
         case version
@@ -113,10 +118,19 @@ module DotRuby
       end
 
       #
+      # Codename is the name of the particular version.
+      #
+      def codename=(codename)
+        codename = codename.to_s if Symbol === codename
+        Valid.oneline!(codename, :codename)
+        @codename = codename.to_str
+      end
+
+      #
       # Sets the production date of the project.
       #
       # @param [String,Date,Time,DateTime] date
-      #   The production date this version.
+      #   The production date for this version.
       #
       def date=(date)
         @date = \
@@ -340,7 +354,12 @@ module DotRuby
         end
       end
 
+      #
       # Suite must be a single line string.
+      #
+      # @param [String] suite
+      #   The suite to which the project belongs.
+      #
       def suite=(value)
         Valid.oneline!(value, :suite)
         @suite = value
