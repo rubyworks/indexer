@@ -219,6 +219,21 @@ module DotRuby
       return path
     end
 
+    #
+    # TODO: Only allow double colons.
+    def constant?(name)
+      name = name.to_s if Symbol === name
+      /^[A-Z][A-Za-z0-9_:]*/ =~ name
+    end
+
+    #
+    def constant!(name, field=nil)
+      unless contant(name)
+        raise_invalid("constant name", name, field)
+      end
+      return name
+    end
+
     # 
     def raise_invalid(type, value, field=nil)
       case field
