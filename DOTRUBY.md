@@ -72,17 +72,17 @@ Description is a multi-line detailed description of the project.
 
 Authors is a list of individuals responsible for the development of 
 the project. Each entry is a mapping with keys, `name`, `email`,
-`website` and `role`.
+`website` and `roles`.
 
     authors:
       - name:    Thomas T. Thomas
         email:   tommy@tommy.com
         website: http://tommy.net
-        role:    [ developer, founder ]
+        roles:   [ developer, founder ]
       - name:    James J. James, Jr.
         email:   jimmy@jimmy.com
         website: http://jimmy.net
-        role:    [ QA ]
+        roles:   [ QA ]
 
 Authors should be given in order of contact. In other words the first
 person on the list is most likely to be the person to contact about
@@ -124,14 +124,14 @@ when possible.
 Requirements are the packages on which this package depends. Often, referred to
 as _dependencies_ we have chosen instead to use the term requirements becuase
 that is what Ruby actually does with them --it _requires_ them. Requirements
-is an array of hashes, composed of `name`, `version`, `group`, `development`,
+is an array of hashes, composed of `name`, `version`, `groups`, `development`,
 `repository`, `engine`, `platform` and `optional`.
 
     requirements:
       - name: dotruby
         version:
           - 1.0.0
-        group: [build]
+        groups: [build]
         development: true
         optional: false
         engine:
@@ -170,12 +170,12 @@ for `name` and `version`.
         verison:
           - 0+
 
-### Substitues
+### Alternatives
 
-Substitues is simply a list of packages that more or less do the same
+Alternatives is simply a list of packages that more or less do the same
 thing as this package. A good example is a Markdown parser:
 
-    substitutes:
+    alternatives:
       - rdiscount
       - BlueCloth
 
@@ -219,9 +219,9 @@ Repositories is a mapping of repository type to universal resource locator
 for the package repository and scm type.
 
     repositories:
-      - id: public
-        url: http://github.com/fooworks/hello_world.git
-        scm: git
+      - name: origin
+        url : http://github.com/fooworks/hello_world.git
+        scm : git
 
 ### Load Path
 
