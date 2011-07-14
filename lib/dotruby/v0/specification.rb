@@ -559,6 +559,18 @@ module DotRuby
       end
 
       #
+      # TODO: Rename to website?
+      def homepage
+        resources.homepage
+      end
+
+      #
+      # TODO: Rename to website?
+      def homepage=(url)
+        resources.homepage = url
+      end
+
+      #
       # Returns the runtime requirements of the project.
       #
       # @return [Array<Requirement>] runtime requirements.
@@ -666,16 +678,20 @@ module DotRuby
           data[name] = send(name)
         end
 
+        date = self.date || Time.now
+
         data['version']      = version.to_s
 
-        data['date']         = date.strftime('%Y-%m-%d') if date
-        data['created']      = date.strftime('%Y-%m-%d') if created
+        data['date']         = date.strftime('%Y-%m-%d')
+        data['created']      = created.strftime('%Y-%m-%d') if created
 
-        data['authors']      = authors.map{ |a| a.to_h }
-        data['requirements'] = requirements.map{ |r| r.to_h }
-        data['conflicts']    = conflicts.map{ |c| c.to_h }
-        data['repositories'] = repositories.map{ |r| r.to_h }
+        data['authors']      = authors.map      { |x| x.to_h }
+        data['copyrights']   = copyrights.map   { |x| x.to_h }
+        data['requirements'] = requirements.map { |x| x.to_h }
+        data['conflicts']    = conflicts.map    { |x| x.to_h }
+        data['repositories'] = repositories.map { |x| x.to_h }
 
+        data['resources']    = resources.to_h
         data['replacements'] = replacements.to_a
 
         data

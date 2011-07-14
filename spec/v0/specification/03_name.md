@@ -1,4 +1,4 @@
-## Spec#name
+## Specification#name
 
 A valid `name` is a word starting with a letter, ending with a letter or number
 and containing only `a-z`, `A-Z`, `0-9` and `_` or `-` characters.
