@@ -16,8 +16,8 @@ module DotRuby
     # Valid IRC channel.
     IRC = /^\#\w+$/
 
-    # FIXME: Valid email address regular expression.
-    EMAIL = /^\S+\@\S+$/
+    # Regular expression for matching valid email addresses.
+    EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
 
     # FIXME: Regular expression to limit date-time fields to ISO 8601 (Zulu).
     DATE = /^\d\d\d\d-\d\d-\d\d(\s+\d\d:\d\d:\d\d)?$/
