@@ -3,8 +3,19 @@ module DotRuby
   # First revision of dotruby specification.
   module V0
 
+    # Tracks supported attributes.
+    def self.attributes
+      @attributes ||= []
+    end
+
     # The Attributes module defines all of the accepted metadata fields.
     module Attributes
+
+      # Define attribute, plus track it.
+      def self.attr_accessor(name)
+        V0.attributes << name.to_sym
+        super(name)
+      end
 
       # The revision of .ruby specification.
       def revision ; 0 ; end
@@ -100,19 +111,17 @@ module DotRuby
       # The organization by which the project is being developed.
       attr_accessor :organization
 
-      # The company by which the project is being developed.
-      #
-      # @todo Do we need both company and oganization?
-      attr_accessor :company
-
-# TODO: NOT SURE AT ALL ABOUT THESE
+      # The toplevel namespace of API, e.g. `module Foo` or `class Bar`.
+      # NOTE: how to best handle this?
+      attr_accessor :namespace
 
       # Any user-defined extraneous metadata.
       attr_accessor :extra
 
-      # The toplevel namespace of API, e.g. `module Foo` or `class Bar`.
-      # NOTE: how to best handle this?
-      attr_accessor :namespace
+      # The company by which the project is being developed.
+      #
+      # TODO: Do we need both company and organization?
+      #attr_accessor :company
 
     end
 

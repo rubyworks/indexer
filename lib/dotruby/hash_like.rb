@@ -74,6 +74,13 @@ module DotRuby
     end
 
     #
+    #
+    # TODO: This has code smell. What's the problem?
+    def key?(name)
+      V[revision].attributes.include?(name.to_sym)
+    end
+
+    #
     # Convert metadata to a Hash.
     #
     # @return [Hash{String => Object}]
