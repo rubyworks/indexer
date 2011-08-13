@@ -16,17 +16,16 @@ module DotRuby
           holder  = copyright['holder']  || copyright[:holder]
           license = copyright['license'] || copyright[:license]
         when String
-          c = copyright.dup
-          c = c.sub(/(copr\.|copyright)/i,'').sub(/\(c\)/i,'').strip
-          if /^(.*?\d\d\d\d)/ =~ c
-            year = $1
-            c = c.sub(year.to_s,'').strip
+          case copyright
+          when /(\d\d\d\d)\s+(.*?)\s*\((.*?)\)$/
+            year, holder, license = $1, $2, $3
+          when /(\d\d\d\d)\s+(.*?)\s*$/
+            year, holder = $1, $2
+          when /(opyright|\(c\))(.*?)\s*\((.*?)\)$/
+            holder, license = $1, $2
+          when /(opyright|\(c\))(.*?)\s*$/
+            holder = $1
           end
-          if /(\(.*?\))/ =~ c
-            license = $1[1..-2]
-            c = c.sub($1.to_s,'').strip
-          end
-          holder = c
         else
           raise ValidationError, "copyright"
         end
