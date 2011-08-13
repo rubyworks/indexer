@@ -20,6 +20,9 @@ module DotRuby
       # The revision of .ruby specification.
       def revision ; 0 ; end
 
+      # Internal sources for building .ruby file.
+      attr_accessor :source
+
       # The name of the project
       attr_accessor :name
 
