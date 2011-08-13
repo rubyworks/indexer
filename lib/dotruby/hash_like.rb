@@ -19,7 +19,7 @@ module DotRuby
     # TODO: If key does exist, should it return nil?
     #++
     def [](key)
-      if respond_to?(key)
+      if key?(key)
         send(key)
       else
         #raise(ArgumentError,"unknown attribute: #{key.inspect}")
