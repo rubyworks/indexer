@@ -48,6 +48,16 @@ module DotRuby
 
       # -- Writers ------------------------------------------------------------
 
+
+      # Internal sources for building .ruby file.
+      #
+      # @param [String, Array] path(s)
+      #   Paths from which .ruby can extract specification information.
+      #
+      def source=(list)
+        @source = [list].flatten
+      end
+
       # Sets the name of the project.
       #
       # @param [String] name
@@ -560,8 +570,9 @@ module DotRuby
 
       #
       # TODO: Rename to website?
-      def homepage
-        resources.homepage
+      def homepage #(url=nil)
+        #url ? resources.homepage = url : resources.homepage
+        resources.homepage = url
       end
 
       #
@@ -644,8 +655,29 @@ module DotRuby
       #
       # Alternate short name for #replacements.
       #
+      def replaces
+        replacements
+      end
+
+      #
+      # Alternate short name for #replacements.
+      #
       def replaces=(value)
         self.replacements = value
+      end
+
+      #
+      # Alternate short name for #requirements.
+      #
+      def requires
+        requirements
+      end
+
+      #
+      # Alternate short name for #requirements.
+      #
+      def requires=(value)
+        self.requirements = value
       end
 
       #
@@ -703,6 +735,7 @@ module DotRuby
         # Initializes the {Metadata} attributes.
         #
         def initialize_attributes
+          @source                = []
           @authors               = []
           @copyrights            = []
           @replacements          = []

@@ -34,6 +34,8 @@ end
 
 require 'yaml'
 
+require 'dotruby/cli'
+
 require 'dotruby/error'
 require 'dotruby/valid'
 require 'dotruby/hash_like'

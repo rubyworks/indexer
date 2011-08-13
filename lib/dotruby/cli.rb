@@ -1,3 +1,5 @@
+require 'dotruby/builder'
+
 module DotRuby
 
   # Command line interface.
@@ -11,8 +13,7 @@ module DotRuby
       cmd = "dotruby-#{command} " + argv.join(' ') 
       system cmd
     else
-      puts "DotRuby v#{VERSION}"
-      puts COPYRIGHT
+      autobuild
     end
   end
 
