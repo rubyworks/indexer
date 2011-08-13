@@ -53,7 +53,7 @@ module DotRuby
 
       #
       def initialize(settings)
-        @role = []
+        @roles = []
 
         settings.each do |field, value|
           send("#{field}=", value)
@@ -118,7 +118,7 @@ module DotRuby
         h['name']    = name 
         h['email']   = email   if email
         h['website'] = website if website
-        h['roles']   = role    if not roles.empty?
+        h['roles']   = roles   if not roles.empty?
         h
       end
 
