@@ -64,7 +64,10 @@ module DotRuby
         specifics = {}
         specifics['version']     = version  if version
         specifics['groups']      = groups   if groups
-        specifics['development'] = true     if groups
+
+        if groups && !groups.empty? && !groups.include?('runtime')
+          specifics['development'] = true     
+        end
 
         new(name, specifics)
       end
@@ -210,10 +213,11 @@ module DotRuby
       # Convert to canonical hash.
       def to_h
         h = {}
-        h['name']       = name
-        h['version']    = version.to_s    if version
-        h['groups']     = groups          if not groups.empty?
-        h['repository'] = repository.to_h if repository
+        h['name']        = name
+        h['version']     = version.to_s    if version
+        h['groups']      = groups          if not groups.empty?
+        h['development'] = development?    if development?
+        h['repository']  = repository.to_h if repository
         h
       end
 
