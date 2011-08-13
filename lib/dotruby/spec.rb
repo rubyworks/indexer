@@ -85,10 +85,9 @@ module DotRuby
         else
           path = File.dirname(path)
         end
-        raise DotRuby::Error, "No .ruby file found."
+        raise Error.exception(".ruby file not found", Errno::ENOENT)
       end
-
-      raise("could not locate the #{FILE_NAME} file")
+      raise Error.exception("could not locate the #{FILE_NAME} file", Errno::ENOENT)
     end
 
   end
