@@ -21,7 +21,7 @@ In addition, certain attributes will have default values.
     spec.conflicts.should    == []
     spec.repositories.should == []
 
-    spec.resources.should    == {}
+    #spec.resources.should    == {}
     spec.extra.should        == {}
 
     spec.load_path.should    == ['lib']
