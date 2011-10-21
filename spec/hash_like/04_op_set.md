@@ -17,7 +17,7 @@
 If we try to set a non-existent attribute, a ArgumentError will
 be raised.
 
-    expect ArgumentError do
+    expect NoMethodError do
       x[:q] = 9
     end
 
