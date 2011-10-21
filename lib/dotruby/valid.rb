@@ -228,7 +228,7 @@ module DotRuby
 
     #
     def constant!(name, field=nil)
-      unless contant(name)
+      unless constant?(name)
         raise_invalid("constant name", name, field)
       end
       return name
