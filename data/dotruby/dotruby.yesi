@@ -1,0 +1,67 @@
+---
+HEADER-DIVISION:
+  apply-tag: "!http://rubyworks.github.org/dotruby"
+  description:
+    Specification for canonical .ruby files.
+  author: trans <transfire@gmail.com>
+
+TEMPLATE-DIVISION:
+  revision :        PIC ZZ9; TAG !!int; REQ true
+  name     :        PIC AW[29]; REQ true
+  version  :        PIC ZZ9{.ZZ9}[5]; REX semver
+  codename :        PIC X[30]
+  title    :        PIC X[30]
+  date     :        PIC 9999-99-99{_99:99:99}[0,1]
+  created  :        PIC 9999-99-99{_99:99:99}[0,1]
+  summary  :        PIC X[79]
+  description:      PIC X[1000]
+  authors:
+    - name  :       PIC X[30]
+      email :       REX email
+      url   :       REX url
+      roles :
+        -           PIC X[30]
+  suite:            PIC X[30]
+  organization:     PIC X[30]
+  copyrights:
+    - holder  :     PIC X[30]
+      year    :     PIC 9999{-9999}[0,1]
+      license :     PIC W[30]
+  requirements: &r
+    - name:         PIC W[30]
+      version:      REX //
+      groups:
+        -           PIC W[30]
+      development:  TAG !!bool
+      optional:     TAG !!bool
+      engine:
+        - name:     PIC W[30]
+          version:  PIC W[30]
+      platform:
+        -           PIC W[30]
+      repository:
+        name:       PIC W[30]
+        uri:        REX uri
+        scm:        PIC W[15]
+  dependencies: *r
+  conflicts:
+    - name:         PIC W[30]
+      version:      PIC X[30]
+  substitues:
+    -               PIC W[30]
+  replaces:
+    -               PIC W[30]
+  resources:
+    - name:         PIC X[30]
+      uri:          REX uri
+  repositories:
+    - name:         PIC X[30]
+      uri:          REX uri
+      scm:          PIC W[30]
+  load_path:
+    -               REX file; DEF 'lib'
+  install_message:  PIC X[1000]
+  extra: {}
+
+CONSTRAINTS-DIVISION: {}
+

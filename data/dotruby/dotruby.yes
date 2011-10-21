@@ -1,0 +1,172 @@
+---
+revision:
+  type:      int
+  required:  true
+name:
+  type:      str
+  regexp:    /^\w+$/  # package name
+  required:  true
+version:
+  type:      str
+  regexp:    /^\d(\.\w+)*/
+  required:  true
+codename:
+  type:      str
+  regexp:    /[^\n]/  # no newline
+title
+  type:      str
+  regexp:    /[^\n]/  # no newline
+date:
+  type: str
+  pic:  &pic-date 9999-99-99[ 99:99:99]
+created:
+  type: str
+  pic:  &pic-date
+summary:
+  type:   str
+  regexp: /[^\n]/  # no newline
+description:
+  type: str
+authors:
+  type: seq
+  value:
+    type: map
+    mapping:
+      name:
+        type:   str
+      email:
+        type:   str
+        regexp: /@/
+      url:
+        type:   str
+      roles:
+        type:   seq
+suite:
+  type:    str
+  regexp: /[^\n]/  # no newline
+organization:
+  type:    str
+  regexp: /[^\n]/  # no newline
+copyrights:
+  type: seq
+  value:
+    type: map
+    template:
+      holder:
+        type:   str
+        regexp: /[^\n]/  # no newline
+      year:
+        type:   str
+        regexp: /^\d{4}([-,]^\d{4})?$/
+      license:
+        type:   str
+        regexp: /[^\n]/  # no newline
+requirements: &requirements
+  type: seq
+  value:
+    type: map
+    template:
+      name:
+        type:   str
+        regexp: /[^\n]/  # no newline
+      version:
+        type: seq
+        value:
+          type:   str
+          regexp: /^\d(\.\w+)*/
+      groups:
+        type: seq
+        value:
+          type:   str
+          regexp: /[^\n]/ # no newline
+      development:
+        type: bool
+      optional:
+        type: bool
+      engine:
+        type: seq
+        value:
+          type: map
+          template:
+            name:
+              type:   str
+              regexp: /[^\n]/ # no newline
+            version:
+              type:   str
+              regexp: /^\d/
+      platform:
+        type: seq
+        value:
+          type:   str
+          regexp: /[^\n]/ # no newline
+      repository:
+        type: map
+        template:
+          url:
+            type:   str
+            regexp: /[^\n]/ # url
+          scm:
+            type:   str
+            regexp: /[^\n]/ # no newline
+dependencies: *requirements
+conflicts:
+  type: seq
+  value:
+    type: map
+    map:
+      name:
+        type:   str
+        regexp: /^\w+$/  # package name
+      version:
+        type: seq
+        value:
+          type:   str
+          regexp: /[^\n]/  # version constraint
+substitues:
+  type: seq
+  value:
+    type:   str
+    regexp: /^\w+$/  # package name
+replaces:
+  type: seq
+  value:
+    type:   str
+    regexp: /^\w+$/  # package name
+resources:
+  type: seq
+  value:
+    type: map
+    map:
+      name:
+        type:   str
+        regexp: /[^\n]/ # no newline
+      uri:
+        type:   str
+        regexp: /^http/  # url/irc
+        required: true
+repositories:
+  type: seq
+  value:
+    type: map
+    map:
+      name:
+        type:   str
+        regexp: /[^\n]/ # no newline
+      url:
+        type: str
+        regexp: //  # url
+        required:  true
+      scm:
+        type:   str
+        regexp: /^\w$/  # word
+load_path:
+  type: seq
+  value:
+    type:   str
+    regexp: /\S/  # path
+  default: [lib]
+install_message:
+  type: str
+extra:
+  type: map
+
