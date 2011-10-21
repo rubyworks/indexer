@@ -38,7 +38,6 @@ require 'dotruby/cli'
 
 require 'dotruby/error'
 require 'dotruby/valid'
-require 'dotruby/hash_like'
 
 require 'dotruby/model'
 #require 'dotruby/factories'

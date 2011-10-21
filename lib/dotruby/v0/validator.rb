@@ -256,19 +256,20 @@ module DotRuby
       # Initializes the {Metadata} attributes.
       #
       def initialize_attributes
-        @authors               = []
-        @copyrights            = []
-        @replacements          = []
-        @conflicts             = []
-        @requirements          = []
-        @dependencies          = []
-
-        @repositories          = {}
-        @resources             = {}
-
-        @load_path             = ['lib']
-
-        @extra                 = {}
+        @data = {
+          'source'       => [],
+          'authors'      => [],
+          'copyrights'   => [],
+          'replacements' => [],
+          'alternatives' => [],
+          'requirements' => [],
+          'dependencies' => [],
+          'conflicts'    => [],
+          'repositories' => [],
+          'resources'    => {},
+          'extra'        => {},
+          'load_path'    => ['lib']
+        }
       end
 
     end

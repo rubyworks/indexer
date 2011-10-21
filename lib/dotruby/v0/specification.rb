@@ -55,7 +55,7 @@ module DotRuby
       #   Paths from which .ruby can extract specification information.
       #
       def source=(list)
-        @source = [list].flatten
+        @data['source'] = [list].flatten
       end
 
       # Sets the name of the project.
@@ -66,9 +66,9 @@ module DotRuby
       def name=(name)
         name = name.to_s if Symbol === name
         Valid.name!(name, :name)
-        @name  = name.to_str.downcase
-        @title = @name.capitalize unless @title  # TODO: use #titlecase
-        @name
+        @data['name']  = name.to_str.downcase
+        @data['title'] = @data['name'].capitalize unless @data['title']  # TODO: use #titlecase
+        @data['name']
       end
 
       # Title is sanitized so that all white space is reduced to a
@@ -76,7 +76,7 @@ module DotRuby
       #
       def title=(title)
         Valid.oneline!(title, :title)
-        @title = title.to_str.gsub(/\s+/, ' ')
+        @data['title'] = title.to_str.gsub(/\s+/, ' ')
       end
 
       #
@@ -88,7 +88,7 @@ module DotRuby
       #
       def namespace=(namespace)
         Valid.constant!(namespace)
-        @namespace = namespace
+        @data['namespace'] = namespace
       end
 
       #
@@ -96,7 +96,7 @@ module DotRuby
       #
       def summary=(summary)
         Valid.string!(summary, :summary)
-        @summary = summary.to_str.gsub(/\s+/, ' ')
+        @data['summary'] = summary.to_str.gsub(/\s+/, ' ')
       end
 
       #
@@ -111,17 +111,17 @@ module DotRuby
       def version=(version)
         case version
         when Version::Number
-          @version = version
+          @data['version'] = version
         when Hash
           major = version['major'] || version[:major]
           minor = version['minor'] || version[:minor]
           patch = version['patch'] || version[:patch]
           build = version['build'] || version[:build]
-          @version = Version::Number.new(major,minor,patch,build)
+          @data['version'] = Version::Number.new(major,minor,patch,build)
         when String
-          @version = Version::Number.parse(version.to_s)
+          @data['version'] = Version::Number.parse(version.to_s)
         when Array
-          @version = Version::Number.new(*version)
+          @data['version'] = Version::Number.new(*version)
         else
           raise(ValidationError,"version must be a Hash or a String")
         end
@@ -133,7 +133,7 @@ module DotRuby
       def codename=(codename)
         codename = codename.to_s if Symbol === codename
         Valid.oneline!(codename, :codename)
-        @codename = codename.to_str
+        @data['codename'] = codename.to_str
       end
 
       #
@@ -143,7 +143,7 @@ module DotRuby
       #   The production date for this version.
       #
       def date=(date)
-        @date = \
+        @data['date'] = \
           case date
           when String
             Date.parse(date)
@@ -161,7 +161,7 @@ module DotRuby
       #   The creation date of this project.
       #
       def created=(date)
-        @created = \
+        @data['created'] = \
           case date
           when String
            Valid.utc_date!(date)
@@ -194,7 +194,7 @@ module DotRuby
       #   The copyrights and licenses of the project.
       #
       def copyrights=(copyrights)
-        @copyrights = \
+        @data['copyrights'] = \
           case copyrights
           when String
             [Copyright.parse(copyrights)]
@@ -214,7 +214,7 @@ module DotRuby
       # but expects the parameter to represent only one copyright.
       #
       def copyright=(copyright)
-        @copyrights = [Copyright.parse(copyright)]
+        @data['copyrights'] = [Copyright.parse(copyright)]
       end
 
       # Set the authors of the project.
@@ -223,7 +223,7 @@ module DotRuby
       #   The originating authors of the project.
       #
       def authors=(authors)
-        @authors = (
+        @data['authors'] = (
           list = Array(authors).map do |a|
                    Author.parse(a)
                  end
@@ -241,7 +241,7 @@ module DotRuby
       # TODO: should we warn if directory does not exist?
       #++
       def load_path=(paths)
-        @load_path = \
+        @data['load_path'] = \
           Array(paths).map do |path|
             Valid.path!(path)
             path
@@ -250,7 +250,7 @@ module DotRuby
 
       # List of language engine/version family supported.
       def engines=(value)
-        @engines = (
+        @data['engines'] = (
           a = [value].flatten
           a.each{ |x| Valid.oneline!(x) }
           a
@@ -259,7 +259,7 @@ module DotRuby
 
       # List of platforms supported.
       def platforms=(value)
-        @platform = (
+        @data['platform'] = (
           a = [value].flatten
           a.each{ |x| Valid.oneline!(x) }
           a
@@ -280,9 +280,9 @@ module DotRuby
         requirements = [requirements] if String === requirements
         case requirements
         when Array, Hash
-          @requirements.clear
+          @data['requirements'].clear
           requirements.each do |specifics|
-            @requirements << Requirement.parse(specifics)
+            @data['requirements'] << Requirement.parse(specifics)
           end
         else
           raise(ValidationError,"requirements must be an Array or Hash")
@@ -301,9 +301,9 @@ module DotRuby
       def dependencies=(dependencies)
         case dependencies
         when Array, Hash
-          @dependencies.clear
+          @data['dependencies'].clear
           dependencies.each do |specifics|
-            @dependencies << Dependency.parse(specifics)
+            @data['dependencies'] << Dependency.parse(specifics)
           end
         else
           raise(ValidationError,"dependencies must be an Array or Hash")
@@ -324,9 +324,9 @@ module DotRuby
       def conflicts=(conflicts)
         case conflicts
         when Array, Hash
-          @conflicts.clear
+          @data['conflicts'].clear
           conflicts.each do |specifics|
-            @conflicts << Conflict.parse(specifics)
+            @data['conflicts'] << Conflict.parse(specifics)
           end
         else
           raise(ValidationError, "conflicts must be an Array or Hash")
@@ -342,10 +342,10 @@ module DotRuby
       def alternatives=(alternatives)
         Valid.array!(alternatives, :alternatives)
 
-        @alternatives.clear
+        @data['alternatives'].clear
 
         alternatives.to_ary.each do |name|
-          @alternatives << name.to_s
+          @data['alternatives'] << name.to_s
         end
       end
 
@@ -358,10 +358,10 @@ module DotRuby
       def replacements=(replacements)
         Valid.array!(replacements, :replacements)
 
-        @replacements.clear
+        @data['replacements'].clear
 
         replacements.to_ary.each do |name|
-          @replacements << name.to_s
+          @data['replacements'] << name.to_s
         end
       end
 
@@ -373,7 +373,7 @@ module DotRuby
       #
       def suite=(value)
         Valid.oneline!(value, :suite)
-        @suite = value
+        @data['suite'] = value
       end
 
       #
@@ -385,9 +385,9 @@ module DotRuby
       def repositories=(repositories)
         case repositories
         when Hash, Array
-          @repositories.clear
+          @data['repositories'].clear
           repositories.each do |specifics|
-            @repositories << Repository.parse(specifics)
+            @data['repositories'] << Repository.parse(specifics)
           end
         else
           raise(ValidationError, "repositories must be an Array or Hash")
@@ -400,7 +400,7 @@ module DotRuby
       #   An indexed list of resources.
       #
       def resources=(resources)
-        @resources = Resources.new(resources)
+        @data['resources'] = Resources.new(resources)
       end
 
       # Set the orgnaization to which the project belongs.
@@ -410,7 +410,7 @@ module DotRuby
       #
       def organization=(organization)
         Valid.oneline!(organization)
-        @organization = organization
+        @data['organization'] = organization
       end
 
       #
@@ -423,7 +423,7 @@ module DotRuby
       #   The new post-installation message.
       #
       def install_message=(message)
-        @install_message = \
+        @data['install_message'] = \
           case message
           when Array
             message.join($/)
@@ -439,7 +439,7 @@ module DotRuby
         unless extra.kind_of?(Hash)
           raise(ValidationError, "extra must be a Hash")
         end
-        @extra = extra
+        @data['extra'] = extra
       end
 
       # -- Utility Methods ----------------------------------------------------
@@ -506,7 +506,7 @@ module DotRuby
       #
       #
       def add_repository(id, url, scm=nil)
-        @repositories << Repository.parse(:id=>id, :url=>url, :scm=>scm)
+        repositories << Repository.parse(:id=>id, :url=>url, :scm=>scm)
       end
 
       # A specification is not valid without a name and version.
@@ -555,7 +555,7 @@ module DotRuby
       #   The primary copyright for the project.
       #
       def copyright
-        @copyrights.join("\n")
+        copyrights.join("\n")
       end
 
       #
@@ -629,7 +629,7 @@ module DotRuby
       #
       # @return [Array] load paths
       def loadpath
-        @load_path
+        load_path
       end
 
       #
@@ -643,7 +643,7 @@ module DotRuby
       #
       # @return [Array] load paths
       def require_paths
-        @load_path
+        load_path
       end
 
       #
@@ -704,14 +704,9 @@ module DotRuby
       # FIXME: This needs to generate the canonical form.
       #++
       def to_h
-        data = {}
-
-        instance_variables.each do |iv|
-          name = iv.to_s.sub(/^\@/, '')
-          data[name] = send(name)
-        end
-
         date = self.date || Time.now
+
+        data = @data.dup
 
         data['version']      = version.to_s
 
@@ -736,20 +731,8 @@ module DotRuby
         # Initializes the {Metadata} attributes.
         #
         def initialize_attributes
-          @source                = []
-          @authors               = []
-          @copyrights            = []
-          @replacements          = []
-          @alternatives          = []
-          @requirements          = []
-          @dependencies          = []
-          @conflicts             = []
-          @repositories          = []
-
-          @resources             = Resources.new
-          @extra                 = {}
-
-          @load_path             = ['lib']
+          super
+          @data['resources'] = Resources.new
         end
 
     end

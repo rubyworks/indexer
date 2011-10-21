@@ -17,9 +17,9 @@ In addition, certain attributes will have default values.
     data.requirements.should == []
     data.dependencies.should == []
     data.conflicts.should    == []
+    data.repositories.should == []
 
     data.resources.should    == {}
-    data.repositories.should == {}
     data.extra.should        == {}
 
     data.load_path.should    == ['lib']

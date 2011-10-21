@@ -11,10 +11,23 @@ module DotRuby
     # The Attributes module defines all of the accepted metadata fields.
     module Attributes
 
+      def self.attributes
+        @@attributes ||= []
+      end
+
       # Define attribute, plus track it.
       def self.attr_accessor(name)
-        V0.attributes << name.to_sym
-        super(name)
+        #V0.attributes << name.to_sym
+        self.attributes << name.to_sym
+
+        class_eval %{
+          def #{name}
+            @data['#{name}']
+          end
+          def #{name}=(val)
+            @data['#{name}'] = val
+          end
+        }
       end
 
       # The revision of .ruby specification.
@@ -111,7 +124,10 @@ module DotRuby
       # The date the project was started.
       attr_accessor :created
 
-      # The organization by which the project is being developed.
+      # The company by which the project is being developed.
+      #attr_accessor :company
+
+      # The organization under which the project is being developed.
       attr_accessor :organization
 
       # The toplevel namespace of API, e.g. `module Foo` or `class Bar`.
@@ -121,32 +137,27 @@ module DotRuby
       # Any user-defined extraneous metadata.
       attr_accessor :extra
 
-      # The company by which the project is being developed.
-      #
-      # TODO: Do we need both company and organization?
-      #attr_accessor :company
-
     protected
 
-        #
-        # Initializes the {Metadata} attributes.
-        #
-        def initialize_attributes
-          @source                = []
-          @authors               = []
-          @copyrights            = []
-          @replacements          = []
-          @alternatives          = []
-          @requirements          = []
-          @dependencies          = []
-          @conflicts             = []
-          @repositories          = []
-
-          @resources             = {}
-          @extra                 = {}
-
-          @load_path             = ['lib']
-        end
+      #
+      # Initializes the {Metadata} attributes.
+      #
+      def initialize_attributes
+        @data = {
+          'source'       => [],
+          'authors'      => [],
+          'copyrights'   => [],
+          'replacements' => [],
+          'alternatives' => [],
+          'requirements' => [],
+          'dependencies' => [],
+          'conflicts'    => [],
+          'repositories' => [],
+          'resources'    => {},
+          'extra'        => {},
+          'load_path'    => ['lib']
+        }
+      end
 
     end
 
