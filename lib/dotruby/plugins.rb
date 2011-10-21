@@ -1,7 +1,7 @@
-if RUBY_VERSION > '1.8'
-  require_relative 'core_ext/rubygems'
-else
+if RUBY_VERSION < '1.9'
   require 'dotruby/core_ext/rubygems'
+else
+  require_relative 'core_ext/rubygems'
 end
 
 module DotRuby
