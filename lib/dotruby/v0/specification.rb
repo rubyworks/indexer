@@ -277,6 +277,7 @@ module DotRuby
       #   The requirements must be an `Array` or `Hash`.
       #
       def requirements=(requirements)
+        requirements = [requirements] if String === requirements
         case requirements
         when Array, Hash
           @requirements.clear
@@ -565,14 +566,14 @@ module DotRuby
       #   The primary email address for the project.
       #
       def email
-        authors.first['email']
+        authors.find{ |a| a.email }
       end
 
       #
       # TODO: Rename to website?
       def homepage #(url=nil)
         #url ? resources.homepage = url : resources.homepage
-        resources.homepage = url
+        resources.homepage
       end
 
       #
