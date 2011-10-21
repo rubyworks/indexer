@@ -10,6 +10,9 @@
 
     yaml = X.new(1).to_yaml
 
-    yaml.should == "--- \na: 1\n"
+    # becuase Syck puts in a space that Psych does not
+    yaml = yaml.sub('--- ','---').strip
+
+    yaml.should == "---\na: 1\n"
 
 
