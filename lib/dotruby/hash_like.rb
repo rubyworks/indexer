@@ -20,7 +20,7 @@ module DotRuby
     #++
     def [](key)
       if key?(key)
-        send(key)
+        __send__(key)
       else
         #raise(ArgumentError,"unknown attribute: #{key.inspect}")
         nil
@@ -55,7 +55,7 @@ module DotRuby
       #end
 
       #begin
-        send(setter, value)      
+        __send__(setter, value)      
       #rescue StandardError
       #  raise(ValidationError,"invalid assignment: #{key.inspect}")
       #end
@@ -77,7 +77,8 @@ module DotRuby
     #
     # TODO: This has code smell. What's the problem?
     def key?(name)
-      V[revision].attributes.include?(name.to_sym)
+      #V[revision].attributes.include?(name.to_sym)
+      public_methods.include?("#{name}=".to_sym)
     end
 
     #
