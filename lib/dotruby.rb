@@ -51,3 +51,6 @@ require 'dotruby/version/constraint'
 
 require 'dotruby/v0' # CURRENT_REVISION
 
+require 'dotruby/plugins'
+
+DotRuby.load_plugins
