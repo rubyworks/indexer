@@ -78,6 +78,16 @@ module DotRuby
     #   The `.ruby` file could not be located.
     #
     def self.root(from=Dir.pwd)
+      if not path = exists?(from)
+        raise Error.exception("could not locate the #{FILE_NAME} file", Errno::ENOENT)
+      end
+      path
+    end
+
+    #
+    #
+    #
+    def self.exists?(from=Dir.pwd)
       path = File.expand_path(from)
       while path != '/'
         if File.file?(File.join(path,FILE_NAME))
@@ -85,9 +95,13 @@ module DotRuby
         else
           path = File.dirname(path)
         end
-        raise Error.exception(".ruby file not found", Errno::ENOENT)
+        false #raise Error.exception(".ruby file not found", Errno::ENOENT)
       end
-      raise Error.exception("could not locate the #{FILE_NAME} file", Errno::ENOENT)
+      false #raise Error.exception("could not locate the #{FILE_NAME} file", Errno::ENOENT)
+    end
+
+    class << self
+      alias :exist? :exists?
     end
 
   end
