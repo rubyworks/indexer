@@ -87,9 +87,3 @@ module DotRuby
   end
 
 end
-
-
-  #case File.extname(src)
-  #when '.gemspec'
-  # TODO: import gemspec (this needs to be in rubygems extension)
-

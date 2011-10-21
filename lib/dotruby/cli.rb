@@ -35,9 +35,13 @@ module DotRuby
         end
         parser.parse!(argv)
         autobuild(*source)
-      rescue => e
-        puts "#{e}"
-        exit -1
+      rescue => error
+        if $DEBUG
+          raise error
+        else
+          $stderr.puts "#{error}"
+          exit -1
+        end
       end
     end
   end
