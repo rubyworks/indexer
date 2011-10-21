@@ -454,7 +454,7 @@ module DotRuby
       #   The specifics of the requirement.
       #
       def add_requirement(name, specifics)
-        requirements << Requirement.parse(name, specifics)
+        requirements << Requirement.parse([name, specifics])
       end
 
       #
@@ -467,7 +467,7 @@ module DotRuby
       #   The specifics of the dependency.
       #
       def add_dependency(name, specifics)
-        dependencies << Dependency.parse(name, specifics)
+        dependencies << Dependency.parse([name, specifics])
       end
 
       #
@@ -480,7 +480,7 @@ module DotRuby
       #   The specifics of the conflict package.
       #
       def add_conflict(name, specifics)
-        conflicts << Requirement.parse(name, specifics)
+        conflicts << Requirement.parse([name, specifics])
       end
 
       #
@@ -746,7 +746,7 @@ module DotRuby
           @conflicts             = []
           @repositories          = []
 
-          @resources             = {}
+          @resources             = Resources.new
           @extra                 = {}
 
           @load_path             = ['lib']

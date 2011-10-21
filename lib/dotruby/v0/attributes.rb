@@ -51,7 +51,7 @@ module DotRuby
       # The first author should be the primary contact.
       attr_accessor :authors
 
-      # The resource locators for the project
+      # The resource locators for the project.
       attr_accessor :resources
 
       # The repository URLs for the project
@@ -125,6 +125,28 @@ module DotRuby
       #
       # TODO: Do we need both company and organization?
       #attr_accessor :company
+
+    protected
+
+        #
+        # Initializes the {Metadata} attributes.
+        #
+        def initialize_attributes
+          @source                = []
+          @authors               = []
+          @copyrights            = []
+          @replacements          = []
+          @alternatives          = []
+          @requirements          = []
+          @dependencies          = []
+          @conflicts             = []
+          @repositories          = []
+
+          @resources             = {}
+          @extra                 = {}
+
+          @load_path             = ['lib']
+        end
 
     end
 
