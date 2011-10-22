@@ -9,7 +9,7 @@ module DotRuby
 
     # Set the revision.
     def revision=(value)
-      @revision = value.to_i
+      @data['revision'] = value.to_i
     end
 
     # New instance.
