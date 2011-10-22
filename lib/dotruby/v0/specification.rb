@@ -725,15 +725,15 @@ module DotRuby
         data
       end
 
-      protected
+    protected
 
-        #
-        # Initializes the {Metadata} attributes.
-        #
-        def initialize_attributes
-          super
-          @data['resources'] = Resources.new
-        end
+      #
+      # Initializes the {Metadata} attributes.
+      #
+      def initialize_attributes
+        super
+        @data['resources'] = Resources.new
+      end
 
     end
 

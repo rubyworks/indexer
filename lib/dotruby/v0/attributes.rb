@@ -11,14 +11,9 @@ module DotRuby
     # The Attributes module defines all of the accepted metadata fields.
     module Attributes
 
-      def self.attributes
-        @@attributes ||= []
-      end
-
       # Define attribute, plus track it.
       def self.attr_accessor(name)
-        #V0.attributes << name.to_sym
-        self.attributes << name.to_sym
+        V0.attributes << name.to_sym
 
         class_eval %{
           def #{name}
@@ -28,6 +23,11 @@ module DotRuby
             @data['#{name}'] = val
           end
         }
+      end
+
+      #
+      def attributes
+        V0.attributes
       end
 
       # The revision of .ruby specification.
