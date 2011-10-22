@@ -53,24 +53,95 @@ module DotRuby
 
       # Standard autobuild procedure.
       def autobuild(source)
-        case File.extname(source)
+        if File.directory?(source)
+          load_directory(source)          
+        else
+          load_file(source)
+        end
+        @spec.source << source unless @spec.source.include?(source)
+      end
+
+      #
+      def load_file(file)
+        case File.extname(file)
         when '.yaml', '.yml'
-          @spec.merge!(YAML.load_file(source))
+          load_yaml(file)
         when '.rb'
-          instance_eval(File.read(source))
+          load_ruby(file)
         else
           begin
-            text = File.read(source)      
+            text = File.read(file)
             if text =~ /\A---/
-              @spec.merge!(YAML.load_file(source))
+              load_yaml(file)
             else
-              instance_eval(File.read(source))
+              load_ruby(file)
             end
           rescue
             raise "ERROR: Could not read source -- `#{source}'."
           end
         end
-        @spec.source << source unless @spec.source.include?(source)
+      end
+
+      # Import setting(s) from another file.
+      def load_yaml(file)
+        @spec.merge!(YAML.load_file(file))
+      end
+
+      #
+      def load_ruby(file)
+        instance_eval(File.read(file))
+      end
+
+      # Import files in a given directory. This will only import files
+      # that have a name corresponding to a DotRuby attributes, unless
+      # the file is listed in a `.rubyextra` file within the directory.
+      #
+      # However, files with an extension of `.yml` or `.yaml` will be loaded
+      # wholeclothe and not as a single attribute.
+      #
+      # TODO: Subdirectories are simply omitted. Maybe do otherwise in future?
+      def load_directory(folder)
+        if File.directory?(folder)
+          extra = []
+          extra_file = File.join(folder, '.rubyextra')
+          if File.exist?(extra_file)
+            extra = File.read(extra_file).split("\n")
+            extra = extra.collect{ |pattern| pattern.strip  }
+            extra = extra.reject { |pattern| pattern.empty? }
+            extra = extra.collect{ |pattern| Dir[File.join(folder, pattern)] }.flatten
+          end
+          files = Dir[File.join(folder, '*')]
+          files.each do |file|
+            next if File.directory?(file)
+            name = File.basename(file)
+            next load_yaml(file) if %w{.yaml .yml}.include?(File.extname(file))
+            next load_field_file(file) if extra.include?(name)
+            next load_field_file(file) if @spec.attributes.include?(name.to_sym)
+          end
+        end
+      end
+
+      # Import a field setting from a file.
+      def load_field_file(file)
+        if File.directory?(file)
+          # ...
+        else
+          case File.extname(file)
+          when '.yaml', '.yml'
+            name = File.basename(file).chomp('.yaml').chomp('.yml')
+            @spec[name] = YAML.load_file(file)
+            #@spec.merge!(YAML.load_file(file))
+          else
+            text = File.read(file)
+            if /\A---/ =~ text
+              name = File.basename(file)
+              @spec[name] = YAML.load(text)
+            else
+              name = File.basename(file)
+              @spec[name] = text.strip
+            end
+          end
+        end
       end
 
     end
@@ -79,9 +150,13 @@ module DotRuby
 
     # Evaluating on the Builder instance, allows Ruby basic specs
     # to be built via this method.
-    def method_missing(field, *a, &b)
-      field = field.to_s.chomp('=')
-      @spec.__send__("#{field}=", *a, &b)
+    def method_missing(s, *a, &b)
+      x = s.to_s.chomp('=')
+      if @spec.respond_to?("#{x}=")
+        @spec.__send__("#{x}=", *a, &b)
+      else
+        super(s, *a, &b)
+      end
     end
 
   end
