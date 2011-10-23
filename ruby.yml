@@ -25,4 +25,5 @@ copyrights:
     license: BSD-2-Clause
 resources:
   homepage: http://dotruby.github.com
+  source: http://github.com/dotruby/dotruby
 

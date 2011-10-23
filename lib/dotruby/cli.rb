@@ -3,8 +3,6 @@ require 'optparse'  # load OptionParser library
 
 module DotRuby
 
-  # TODO: Do not use global variable, $USE_STDOUT.
-
   # Command line interface.
   #
   # To write a commnd for DotRuby simply create an executable script
@@ -15,33 +13,17 @@ module DotRuby
     if first && !first.start_with?('-')
       system "dotruby-#{argv.shift} " + argv.join(' ') 
     else
-      begin
-        source = []
-        parser = OptionParser.new do |opts|
-          opts.banner = 'Usage: dotruby [options]'
-          opts.on('-s', '--source FILE', 'source file') do |file|
-            source << file
-          end
-          opts.on('-o', '--stdout', 'output to stdout instead of file') do
-            $USE_STDOUT = true
-          end
-          opts.on_tail('--debug', 'run with $DEGUG set to true') do
-            $DEBUG = true
-          end
-          opts.on_tail('-h', '--help', 'read this help message') do
-            puts opts
-            exit
-          end
+      if Spec.exists?
+        spec = Spec.find
+        puts "%s %s - %s" % [spec.title, spec.version, spec.summary]
+        puts
+        spec.resources.each do |name, uri|
+          puts "%s: %s" % [name.capitalize, uri]
         end
-        parser.parse!(argv)
-        autobuild(*source)
-      rescue => error
-        if $DEBUG
-          raise error
-        else
-          $stderr.puts "#{error}"
-          exit -1
-        end
+        puts
+        puts spec.copyright
+      else
+        $stderr.puts "No .ruby file."
       end
     end
   end
