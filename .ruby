@@ -1,4 +1,6 @@
 ---
+source:
+- ruby.yml
 authors:
 - name: trans
   email: transfire@gmail.com
@@ -12,25 +14,24 @@ copyrights:
   year: 2011
   license: BSD-2-Clause
 replacements: []
-conflicts: []
+alternatives: []
 requirements:
 - name: qed
   groups:
   - test
 dependencies: []
+conflicts: []
 repositories: []
 resources:
   home: http://dotruby.github.com
+  code: http://github.com/dotruby/dotruby
+extra: {}
 load_path:
 - lib
-extra: {}
 revision: 0
-source:
-- ruby.yml
 name: dotruby
-version: 0.1.0
 title: DotRuby
+version: 0.1.0
 summary: Definitive Ruby Project Metadata
 description: The .ruby specification is the bomb!
-alternatives: []
-date: '2011-08-12'
+date: '2011-10-23'
