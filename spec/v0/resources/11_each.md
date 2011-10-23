@@ -2,7 +2,7 @@
 
 The `to_hash` method
 
-    r = Resources.new(
+    r = V0::Resources.new(
       :home => 'http://foo.com',
       :work => 'http://foo.com/office'
     )

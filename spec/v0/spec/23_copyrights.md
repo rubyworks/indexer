@@ -2,7 +2,7 @@
 
 The `copyrights` field is a list of copyright and licens information.
 
-    spec = Specification.new
+    spec = Spec.new
 
 The copyright list is canonically a mapping.
 

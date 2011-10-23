@@ -1,7 +1,6 @@
 # Specification requires Attributes module and all the modeling classes.
 if RUBY_VERSION > '1.9'
-  require_relative '../base'
-  require_relative 'validator'
+  require_relative 'validators'
   require_relative 'attributes'
   require_relative 'requirement'
   require_relative 'dependency'
@@ -9,8 +8,7 @@ if RUBY_VERSION > '1.9'
   require_relative 'author'
   require_relative 'copyright'
 else
-  require 'dotruby/base'
-  require 'dotruby/v0/validator'
+  require 'dotruby/v0/validators'
   require 'dotruby/v0/attributes'
   require 'dotruby/v0/requirement'
   require 'dotruby/v0/dependency'
@@ -30,7 +28,7 @@ module DotRuby
     #
     # TODO: Is `Metadata` a better name for this? Most users will just use
     # `DotRuby.load()` anyway.
-    class Specification < Base
+    module Setters
 
       include Attributes
 

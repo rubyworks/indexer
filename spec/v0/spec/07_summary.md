@@ -2,7 +2,7 @@
 
 The `summary` field is used to breifly describe a project.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.summary = "Convenient Way to Say Hello"
 

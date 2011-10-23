@@ -4,7 +4,7 @@ The `authors` field holds a list of orginating authors.
 
 The Spec class allows, of course, the canonical format.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.authors = [
       { 'name'  => 'Bob Williams',

@@ -2,7 +2,7 @@
 
 The `repositories` field holds a list of repository URLs indexed by an id.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.repositories = [
       {

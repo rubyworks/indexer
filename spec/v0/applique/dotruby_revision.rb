@@ -1,4 +1,4 @@
 require 'dotruby'
 
-include DotRuby::V[0]
+include DotRuby
 

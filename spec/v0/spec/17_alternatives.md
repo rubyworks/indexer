@@ -5,7 +5,7 @@ package can act as a reasonable substitue and vice-versa.
 
 The format of the field is an array.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.alternatives = ['BlueCloth','rdiscount']
 

@@ -2,7 +2,7 @@
 
 The `to_h` method
 
-    r = Resources.new(
+    r = V0::Resources.new(
       :home => 'http://foo.com'
     )
 

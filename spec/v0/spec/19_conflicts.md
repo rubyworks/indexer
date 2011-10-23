@@ -6,7 +6,7 @@ known not to be compatible.
 The format of the field is a mapping to package names indexing version
 constraints.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.conflicts = {
        'bad_robot' => '>=1.0',

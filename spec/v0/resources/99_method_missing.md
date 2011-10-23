@@ -3,7 +3,7 @@
 The `method_missing` method allows arbitrary resources
 to be defined and read.
 
-    r = Resources.new
+    r = V0::Resources.new
 
     r.vip = 'http://foo.com/viproom'
 

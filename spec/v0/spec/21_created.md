@@ -1,29 +1,28 @@
-## Spec#date
+## Spec#created
 
-The `date` field is the date the `.ruby` file was last edited, or if
-part of a package when the package was built.
+The `created` field is the date the project was started.
 
 This field must be a string that comforms to the ISO UTC timstamp standard.
 The format of which is "YYYY-MM-DD HH:MM:SS", wheret the time portion is
 optional.
 
-    spec = Specification.new
-    spec.date = "2011-10-20"
-    spec.date = "2011-10-01 09:42:11"
-    spec.date = "2011-10-01 14:42:11"
+    spec = Spec.new
+    spec.created = "2011-10-20"
+    spec.created = "2011-10-01 09:42:11"
+    spec.created = "2011-10-01 14:42:11"
 
 Or, the assinged value can be a Date, Time, or DateTime object.
 
-    spec.date = Date.new
-    spec.date = Time.new
-    spec.date = DateTime.new
+    spec.created = Date.new
+    spec.created = Time.new
+    spec.created = DateTime.new
 
 String values with invalid datetimes will raise an error, as will other
 type of objects.
 
     check "invalid date" do |d|
       ! DotRuby::ValidationError.raised? do
-        spec.date = d
+        spec.created = d
       end
     end
 

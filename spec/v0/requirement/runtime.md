@@ -2,7 +2,7 @@
 
 The `runtime?` method is the inverse of the `#development?` method.
 
-    r = Requirement.new('foo', :development => true)
+    r = V0::Requirement.new('foo', :development => true)
 
     r.refute.runtime?
 

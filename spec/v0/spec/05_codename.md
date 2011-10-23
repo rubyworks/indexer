@@ -2,7 +2,7 @@
 
 The `codename` field is used to name the specific version.
 
-    spec = Specification.new
+    spec = Spec.new
     spec.codename = "Lazy Louse"
 
 The `codename` value MUST have only one lone of text.

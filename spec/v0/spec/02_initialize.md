@@ -4,7 +4,7 @@
 
 A Specification object can be created using the typical `#new` class method.
 
-    spec = Specification.new
+    spec = Spec.new
 
 As we are testing revision 0, and have included the `V0` module into the 
 testing namespace, we can see that the revision is set to `0`.
@@ -31,7 +31,7 @@ In addition, certain attributes will have default values.
 A Spec object can be created with initial values by passing a spec
 hash to the initializer.
 
-    spec = Specification.new(:name=>'foo', :version=>'0.1.2')
+    spec = Spec.new(:name=>'foo', :version=>'0.1.2')
 
     spec.name.should == 'foo'
     spec.version.to_s.should == '0.1.2'
@@ -41,18 +41,17 @@ and are validated upon assignment, so no invalid values can get into the
 object's state, e.g.
 
     expect DotRuby::ValidationError do
-      Specification.new(:name=>1)
+      Spec.new(:name=>1)
     end
 
 ### Spec Block
 
 Spec can also take a block which is yeilded on `self`.
 
-    spec = Specification.new do |spec|
+    spec = Spec.new do |spec|
       spec.name    = 'foo'
       spec.version = '0.1.2'
     end
-
 
 ### Initial Validity 
 
@@ -60,7 +59,7 @@ The only way for a Spec object to be in an invalid state is
 by the creation of an instance without providing a `name` and `version`.
 Both name and version are required for a specification to be valid.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.refute.valid?
 

@@ -3,7 +3,7 @@
 The `title` field is used in place of the `name` for documentation
 purposes and the like.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.title = "Tom's Hello World Program"
 
@@ -24,7 +24,7 @@ The Spec class will stip out excess space from a title.
 If no title is defined, but `name` has been assigned, then the title
 will default to the name capitalized.
 
-    spec = Specification.new
+    spec = Spec.new
     spec.name = "foo"
     spec.title.assert == "Foo"
 

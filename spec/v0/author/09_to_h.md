@@ -2,7 +2,7 @@
 
 Given a valid author instance.
 
-    author = DotRuby::V0::Author.new(
+    author = V0::Author.new(
       :name    => 'Thomas T. Thomas',
       :email   => 'tom@mail.com',
       :website => 'http://tom.com',

@@ -6,7 +6,7 @@ files when `#require` or `#load` are used.
 
 The `load_path` value MUST be an Array of String.
 
-    spec = Specification.new
+    spec = Spec.new
     spec.load_path = ['lib', 'ext']
 
 Or any object that responds to `#to_ary`.
@@ -42,6 +42,6 @@ The elements must also be valid path strings.
 
 By default the value, when no load_path is set, is `['lib']`.
 
-    spec = Specification.new
+    spec = Spec.new
     spec.load_path.should = ['lib']
 

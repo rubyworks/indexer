@@ -1,10 +1,10 @@
-## Specification#namespace
+## Spec#namespace
 
 The namespace field is toplevel module or class name of the project's API.
 For example, if the project uses `module Foo` to encapsulate it's 
 functionality, than the namespace would be "Foo".
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.namespace = "Foo"
 

@@ -9,7 +9,7 @@ of succession.
 
 The format of the field is an array.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.replacements = ['gash']
 

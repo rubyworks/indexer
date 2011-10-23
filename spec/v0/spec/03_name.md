@@ -12,7 +12,7 @@ Examples of good @names are:
 
 To verify this we can assign each name.
 
-    spec = Specification.new
+    spec = Spec.new
 
     @names.each do |name|
       spec.name = name
@@ -27,7 +27,7 @@ And these are not good @names:
 
 Likewise, we can verify this by trying to assign each name.
 
-    spec = Specification.new
+    spec = Spec.new
 
     @names.each do |name|
       expect DotRuby::ValidationError do

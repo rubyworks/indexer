@@ -1,13 +1,23 @@
+if RUBY_VERSION > '1.9'
+  require_relative 'base'
+  require_relative 'validator'
+else
+  require 'dotruby/base'
+  require 'dotruby/validator'
+end
+
 module DotRuby
 
   # TODO: Rename to `Specification`? And "alias" as `Spec`? Or is
   # `Metadata` a better name for this? Most users will just use
   # `DotRuby.load()` anyway.
-  module Spec
+  #
+  class Spec < Base
 
     # Default file name of `.ruby` file. It is obviously `.ruby` ;-)
     FILE_NAME = '.ruby'
 
+=begin
     # Revision factory return a versioned instance of Specification.
     #
     # @param [Hash] data
@@ -21,6 +31,7 @@ module DotRuby
       end
       V[revision]::Specification.new(data)
     end
+=end
 
     # Read `.ruby` from file.
     #
@@ -28,15 +39,15 @@ module DotRuby
     #   The file name from which to read the YAML metadata.
     #
     def self.read(file)
-      data     = YAML.load_file(file)
-      revision = data['revision'] || data[:revision]
-      unless revision
-        # TODO: raise error instead ?
-        revison          = CURRENT_REVISION
-        data['revision'] = CURRENT_REVISION
-      end
-      valid_data = V[revision]::Validator.new(data).to_h
-      V[revision]::Specification.new(valid_data)
+      data = YAML.load_file(file)
+      #revision = data['revision'] || data[:revision]
+      #unless revision
+      #  # TODO: raise error instead ?
+      #  #revison          = CURRENT_REVISION
+      #  data['revision'] = CURRENT_REVISION
+      #end
+      valid_data = Validator.new(data).to_h
+      new(valid_data)
     end
 
     # Find project root and read `.ruby` file.
@@ -56,14 +67,14 @@ module DotRuby
     #   The file name from which to read the YAML metadata.
     #
     def self.load(file)
-      data     = YAML.load_file(file)
-      revision = data['revision'] || data[:revision]
-      unless revision
-        # TODO: raise error instead ?
-        revison          = CURRENT_REVISION
-        data['revision'] = CURRENT_REVISION
-      end
-      V[revision]::Specification.new(data)
+      data = YAML.load_file(file)
+      #revision = data['revision'] || data[:revision]
+      #unless revision
+      #  # TODO: raise error instead ?
+      #  revison          = CURRENT_REVISION
+      #  data['revision'] = CURRENT_REVISION
+      #end
+      new(data)
     end
 
     # Find project root by looking upward for a `.ruby` file.
@@ -102,6 +113,22 @@ module DotRuby
 
     class << self
       alias :exist? :exists?
+    end
+
+    # Create a revisioned instance of Spec.
+    #
+    # @param [Hash] data
+    #   The metadata to populate the instance.
+    #
+    def initialize(data={})
+      revision = data['revision'] || data[:revision]
+      unless revision
+        revison          = CURRENT_REVISION
+        data['revision'] = CURRENT_REVISION
+      end
+      #extend V[revision]::Attributes
+      extend V[revision]::Setters
+      super(data)
     end
 
   end

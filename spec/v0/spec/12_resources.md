@@ -2,7 +2,7 @@
 
 The `resources` field holds a list of URLs index by type.
 
-    spec = Specification.new
+    spec = Spec.new
 
     spec.resources = {
       'home' => 'http://foo.org',

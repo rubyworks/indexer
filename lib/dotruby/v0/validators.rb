@@ -1,8 +1,6 @@
 if RUBY_VERSION > '1.9'
-  require_relative '../base'
   require_relative 'attributes'
 else
-  require 'dotruby/base'
   require 'dotruby/v0/attributes'
 end
 
@@ -10,12 +8,11 @@ module DotRuby
 
   module V0
 
-    # The Validator class models the strict *canonical* specification of
-    # the `.ruby` file format. It is a one-to-one mapping with no method
-    # aliases or other conveniences. The class is used internally to load
-    # and save `.ruby` files.
+    # The Validators module is used be the Validator class to model the strict
+    # *canonical* specification of the `.ruby` file format. It is a one-to-one
+    # mapping with no method aliases or other conveniences.
     #
-    class Validator < Base
+    module Validators
 
       include Attributes
 
