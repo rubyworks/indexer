@@ -6,20 +6,21 @@ module DotRuby
     #
     # The class also recognizes common entry names and aliases,
     # which can be accessed via method calls.
-    #--
-    # TODO: Consider if this should instead be an associative array
-    # of [type, url]. Could there not be more than one URL for
-    # a given type?
     #
-    # TODO: Resource aliases are probably the trickiest part of this
-    # specification. It's hard to judge what exactly they should be.
-    # Perhaps there should bo no aliases?
-    #++
     class Resources < Model
       include Enumerable
 
-      # Valid URL regular expression.
-      URL = /^(\w+)\:\/\/\S+$/
+      #--
+      # TODO: Consider if this should instead be an associative array
+      # of [type, url]. Could there not be more than one URL for
+      # a given type?
+      #
+      # TODO: Resource aliases are probably the trickiest part of this
+      # specification. It's hard to judge what exactly they should be.
+      #++
+
+      ## Valid URL regular expression.
+      #URL = /^(\w+)\:\/\/\S+$/
 
       @key_aliases = {}
 
@@ -29,10 +30,10 @@ module DotRuby
       end
 
       #
-      def self.attr_accessor name, *aliases
+      def self.attr_accessor *aliases
         code = []
-        ([name] + aliases).each do |method|
-          key_aliases[method.to_sym] = name.to_sym
+        aliases.each do |method|
+          key_aliases[method.to_sym] = aliases
           code << "def #{method}"
           code << "  self['#{name}']"
           code << "end"
@@ -56,29 +57,44 @@ module DotRuby
       end
 
       #
-      def key_index(key)
-        key = key.to_sym
-        self.class.key_aliases[key] || key
+      #def key_index(key)
+      #  key = key.to_sym
+      #  self.class.key_aliases[key] || key
+      #end
+
+      #
+      def key_aliases
+        self.class.key_aliases
       end
 
+      # Get a resource URI.
       #
       def [](key)
-        @table[key_index(key)]
+        #@table[key_index(key)]
+        @table[find_key(key)]
       end
 
+      # Add a resource.
       #
-      def []=(key, url)
-        unless Valid.url?(url) or Valid.irc?(url)
-          raise ValidationError, "Not a valid URL - `#{url}' for `#{key}'"
+      # This is rather inefficient, but it does the job right.
+      # If there is an optimized way to go about it, hey, let us know.
+      #
+      def []=(key, uri)
+        unless Valid.url?(uri) or Valid.irc?(url)
+          raise ValidationError, "Not a valid URI - `#{uri}' for `#{key}'"
         end
-        @table[key_index(key)] = url
+        #@table[key_index(key)] = uri
+        select_keys(key).each do |k|
+          @table.delete(k)
+        end
+        @table[key.to_sym] = uri
       end
 
       # Offical project website.
-      attr_accessor :home, :homepage
+      attr_accessor :homepage, :home
 
       # Location of development site.
-      attr_accessor :work, :dev, :development
+      attr_accessor :development, :work, :dev
 
       # Package distribution service webpage.
       attr_accessor :gem, :distro, :distributor
@@ -136,12 +152,12 @@ module DotRuby
         @table.empty?
       end
 
-      # Iterate over each enty, including aliases.
+      # Iterate over each enty.
       def each(&block)
         @table.each(&block)
       end
 
-      # The size of the table, including aliases.
+      # The size of the table.
       def size
         @table.size
       end
@@ -155,6 +171,23 @@ module DotRuby
       def merge!(res)
         res.each do |key, url|
           self[key] = url
+        end
+      end
+
+      # Locate an entry with a matching key.
+      def find_key(key)
+        names = (key_aliases[key] || []) + [key]
+        @table.keys.each do |k|
+          return k if k.to_s.downcase =~ /(#{names.join('|').downcase})/
+        end
+        key
+      end
+
+      #
+      def select_keys(key)
+        names = (key_aliases[key] || []) + [key]
+        @table.keys.select do |k|
+          k.to_s.downcase =~ /(#{names.join('|').downcase})/
         end
       end
 
