@@ -4,16 +4,30 @@ if defined?(Gem)
 
     # Search RubyGems for matching paths in current gem versions.
     #
+    # For RubyGems older than version 1.7 (actually I don't know
+    # the exact cut-off, so let me know if you discover otherwise)
+    # then this search will return matches from ALL gems.
+    #
+    # For RubyGems 1.7+ it returns matches ONLY from active gems or
+    # the latest versions of non-active gems.
+    #
+    # The later is proper functionality. But the API on the old version
+    # of RubyGems is not condusive, and worse, now docs for it are hard
+    # to find.
+    #
     def self.search(match, options={})
-      return unless defined?(::Gem)
-      matches = []
-      Gem::Specification.current_specs.each do |spec|
-        glob = File.join(spec.lib_dirs_glob, match)
-        list = Dir[glob] #.map{ |f| f.untaint }
-        list = list.map{ |d| d.chomp('/') }
-        matches.concat(list)
+      return [] unless defined?(::Gem)
+      if Gem::VERSION < '1.7'
+        matches = Gem::find_files(match)
+      else
+        matches = []
+        Gem::Specification.current_specs.each do |spec|
+          glob = File.join(spec.lib_dirs_glob, match)
+          list = Dir[glob] #.map{ |f| f.untaint }
+          matches.concat(list)
+        end
       end
-      matches
+      matches.map{ |d| d.chomp('/') }
     end
 
     class Specification
