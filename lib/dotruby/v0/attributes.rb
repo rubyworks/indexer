@@ -67,8 +67,13 @@ module DotRuby
       # The resource locators for the project.
       attr_accessor :resources
 
+      # TODO: Give some thought to #repositories and #scm_uri, might they be unified somehow?
+
       # The repository URLs for the project
       attr_accessor :repositories
+
+      # URI for linking to source code.
+      attr_accessor :scm_uri
 
       # The build date of the .ruby file
       attr_accessor :date

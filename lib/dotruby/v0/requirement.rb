@@ -58,8 +58,8 @@ module DotRuby
           raise(ValidationError, "requirement")
         end
 
-        version = nil                       if version.to_s.strip.empty?
-        groups = groups.split(/\s+/)        if groups
+        version = nil                          if version.to_s.strip.empty?
+        groups = groups.split(/\s*[,;]?\s+/) if groups
 
         specifics = {}
         specifics['version']     = version  if version
