@@ -8,6 +8,7 @@ module DotRuby
     #
     DIR = File.dirname(__FILE__)
 
+    #
     # Require RubyGems library.
     #
     def self.require_rubygems
@@ -19,17 +20,7 @@ module DotRuby
       end
     end
 
-    # 
-    # TODO: techincally this is not the correct way to find this file. we can
-    #       either use rbconfig.rb or move it to lib along with this code
     #
-    def self.available_gemspecs
-      glob  = DIR + '/../data/dotruby/*.gemspec'
-      glob  = File.expand_path(glob)
-      files = Dir.glob(glob)
-      files.sort
-    end
-
     # Create a Gem::Specification from a DotRuby::Spec.
     #
     # Becuase the DotRuby specificaiton is extensive, a Gem::Specification
@@ -61,122 +52,59 @@ module DotRuby
     #
     def self.gemspec(spec, root=nil)
       require_rubygems
+      Gemspec.new(:root=>root, :data=>spec.to_h).to_gemspec
+    end
 
-      if spec.resources
-        homepage = spec.resources.homepage
-      else
-        homepage = nil
+    #
+    #
+    #
+    def self.gemspec_file(revision=0)
+      DIR + '/v#{revison}/gemspec.rb'
+    end
+
+    #
+    # Create a gemsepc file. This is done by copy vX/gemspec.rb
+    # to current directory and appending `DotRuby::VX::Gemspec.instance`.
+    #
+    def self.copy_gemspec(opts={})
+      name   = opts[:name]
+      force  = opts[:force]
+      static = opts[:static]
+      which  = opts[:which] || 0
+
+      if name
+        gemspec = "#{name}.gemspec"
+      else                   # TODO: Should we find existing gemspec? 
+        gemspec = '.gemspec' #Dir['{,*}.gemspec'].first || '.gemspec'
       end
 
-      if homepage && md = /(\w+).rubyforge.org/.match(homepage)
-        rubyforge_project = md[1]
+      file = gemspec_file(which)
+
+      if File.exist?(gemspec) && !force
+        $stderr.puts "gemspec already exists, use -f/--force to overwrite"
       else
-        # b/c it has to be something according to Eric Hodel.
-        rubyforge_project = spec.name.to_s
-      end
+        FileUtils.cp(file, gemspec)
 
-      ::Gem::Specification.new do |gemspec|
-        gemspec.name          = spec.name.to_s
-        gemspec.version       = spec.version.to_s
-        gemspec.require_paths = spec.load_path.to_a
+        File.open(gemspec, 'a') do |f|
+          f << "\nDotRuby::V#{which}::Gemspec.instance"
+        end
 
-        gemspec.summary       = spec.summary.to_s
-        gemspec.description   = spec.description.to_s
-        gemspec.authors       = spec.authors.to_a
-        gemspec.email         = spec.email.to_s
-        gemspec.licenses      = spec.licenses.to_a
-
-        gemspec.homepage      = spec.homepage.to_s
-
-        # -- platform --
-
-        # TODO: how to handle multiple platforms?
-        #gemspec.platform = options[:platform] #|| verfile.platform  #'ruby' ???
-        #if spec.platform != 'ruby'
-        #  gemspec.require_paths.concat(gemspec.require_paths.collect{ |d| File.join(d, platform) })
-        #end
-
-        # -- rubyforge project --
-        gemspec.rubyforge_project = rubyforge_project
-
-        # -- dependencies --
-        spec.requirements.each do |dep|
-          if dep.development?
-            gemspec.add_development_dependency( *[dep.name, dep.constraint].compact )
-          else
-            next if dep.optional?
-            gemspec.add_runtime_dependency( *[dep.name, dep.constraint].compact )
+        if static
+          spec = eval(File.read(gemspec), clean_binding, gemspec)
+          File.open(gemspec, 'w') do |f|
+            f << spec.to_yaml
           end
         end
-
-        gemspec.requirements = spec.dependencies.map do |dep|
-          [dep.name, dep.constraint].compact.join(' ') 
-        end
-
-        # -- install message --
-        if spec.install_message
-          gemspec.post_install_message = spec.install_message
-        end
-
-        # -- compiled extensions --
-        if root
-          exts = local_files(root, 'ext/**/extconfig.rb')
-          gemspec.extensions = exts unless exts.empty?
-        end
-
-        # -- executables --
-        # TODO: bin/ is a convention, is there are reason to do otherwise?
-        if root
-          bindir = local_files(root, 'bin').first
-          execs  = local_files(root, 'bin/*')
-
-          gemspec.bindir      = bindir if bindir
-          gemspec.executables = execs
-        end
-
-        # -- distributed files --
-        if root
-          if manifest_file = Dir.glob(File.join(root, 'manifest{,.txt}')).first
-            manifest = File.read(manifest_file).split("\n")
-            filelist = manifest.select{ |f| File.file?(f) }
-            gemspec.files = filelist
-          else
-            gemspec.files = root.glob_relative("**/*").map{ |f| f.to_s }
-          end
-        end
-
-        # -- rdocs (argh!) --
-        if root
-          readme = local_files(root, 'README{,.*}', :casefold).first
-
-          rdoc_extra = local_files(root, '[A-Z]*.*')
-          rdoc_extra.unshift readme if readme
-          rdoc_extra.uniq!
-
-          gemspec.extra_rdoc_files = rdoc_extra
-
-          rdoc_options = [] #['--inline-source']
-          rdoc_options.concat ["--title", "#{spec.title}"] #if spec.title
-          rdoc_options.concat ["--main", readme] if readme
-
-          gemspec.rdoc_options = rdoc_options
-        end
-
-        # DEPRECATED: -- test files --
-        #gemspec.test_files = manifest.select do |f|
-        #  File.basename(f) =~ /test\// && File.extname(f) == '.rb'
-        #end
       end
+    end
 
-    private
+  private
 
-      def local_files(root, glob, *flags)
-        bits = flags.map{ |f| File.const_get("FNM_#{f.to_s.upcase}") }
-        files = Dir.glob(File.join(root,glob), bits)
-        files = files.map{ |f| f.sub(root,'') }
-        files
-      end
-
+    def local_files(root, glob, *flags)
+      bits = flags.map{ |f| File.const_get("FNM_#{f.to_s.upcase}") }
+      files = Dir.glob(File.join(root,glob), bits)
+      files = files.map{ |f| f.sub(root,'') }
+      files
     end
 
     # If the source file is a gemspec, import it.
@@ -251,7 +179,6 @@ module DotRuby
       def self.parse_gemspec(gemspec)
         new.import_gemspec(gemspec)
       end
-
     end
 
   end
