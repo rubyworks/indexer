@@ -56,42 +56,39 @@ module DotRuby
     end
 
     #
-    #
-    #
-    def self.gemspec_file(revision=0)
-      DIR + '/v#{revison}/gemspec.rb'
-    end
-
-    #
     # Create a gemsepc file. This is done by copy vX/gemspec.rb
     # to current directory and appending `DotRuby::VX::Gemspec.instance`.
     #
     def self.copy_gemspec(opts={})
-      name   = opts[:name]
+      file   = opts[:file]
       force  = opts[:force]
       static = opts[:static]
       which  = opts[:which] || 0
 
-      if name
-        gemspec = "#{name}.gemspec"
-      else                   # TODO: Should we find existing gemspec? 
-        gemspec = '.gemspec' #Dir['{,*}.gemspec'].first || '.gemspec'
+      if file
+        if file.extname(file) != '.gemspec'
+          warn "gemspec file without .gemspec extension"
+        end
+      else
+        # TODO: look for pre-existent gemspec, but to do that right we should get
+        #       name from .ruby file if it eixts.
+        file = '.gemspec'  # Dir['{,*}.gemspec'].first || '.gemspec'
       end
 
-      file = gemspec_file(which)
+      lib_file = File.join(DIR, "v#{which}", "gemspec.rb")
 
-      if File.exist?(gemspec) && !force
-        $stderr.puts "gemspec already exists, use -f/--force to overwrite"
+      if File.exist?(file) && !force
+        $stderr.puts "`#{file}' already exists, use -f/--force to overwrite."
       else
-        FileUtils.cp(file, gemspec)
+        FileUtils.cp(lib_file, file)
 
-        File.open(gemspec, 'a') do |f|
+        File.open(file, 'a') do |f|
           f << "\nDotRuby::V#{which}::Gemspec.instance"
         end
 
         if static
-          spec = eval(File.read(gemspec), clean_binding, gemspec)
-          File.open(gemspec, 'w') do |f|
+          spec = eval(File.read(file), clean_binding, lib_file)
+          File.open(file, 'w') do |f|
             f << spec.to_yaml
           end
         end
@@ -100,12 +97,17 @@ module DotRuby
 
   private
 
-    def local_files(root, glob, *flags)
-      bits = flags.map{ |f| File.const_get("FNM_#{f.to_s.upcase}") }
-      files = Dir.glob(File.join(root,glob), bits)
-      files = files.map{ |f| f.sub(root,'') }
-      files
+    #
+    def self.clean_binding
+      binding
     end
+
+    #def local_files(root, glob, *flags)
+    #  bits = flags.map{ |f| File.const_get("FNM_#{f.to_s.upcase}") }
+    #  files = Dir.glob(File.join(root,glob), bits)
+    #  files = files.map{ |f| f.sub(root,'') }
+    #  files
+    #end
 
     # If the source file is a gemspec, import it.
     #
@@ -128,6 +130,7 @@ module DotRuby
       end
     end
 
+    # TODO: Shouldn't this be in V0 ?
     #
     module Specable
       # Create a Gem::Specification from a  .ruby Spec. Because Spec is extensive

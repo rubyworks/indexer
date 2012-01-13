@@ -1,3 +1,5 @@
+require 'dotruby'
+
 module DotRuby
 
   if RUBY_VERSION > '1.9'
@@ -30,7 +32,7 @@ module DotRuby
         opt.on('--static', '-s', "provide a static gemspec") do
           static = true
         end
-        opt.on('--revision', '-r INT', "specification revison" do |i|
+        opt.on('--revision', '-r INT', "specification revison") do |i|
           which = i.to_i
         end
         opt.on_tail('--debug', '-D', "display debugging information") do
@@ -42,15 +44,11 @@ module DotRuby
         end
       end.parse!(argv)
 
-      name = argv.shift
+      file = argv.shift
 
-      copy_gemspec(:name=>name, :which=>which, :force=>force, :static=>static)
+      copy_gemspec(:file=>file, :which=>which, :force=>force, :static=>static)
     end
 
-    #
-    #def self.clean_binding
-    #  binding
-    #end
   end
 
 end

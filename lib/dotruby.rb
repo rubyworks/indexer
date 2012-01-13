@@ -50,6 +50,7 @@ require 'dotruby/version/constraint'
 
 require 'dotruby/v0' # CURRENT_REVISION
 
-require 'dotruby/plugins'
+# If we ever descide to support plugins in the future.
+#require 'dotruby/plugins'
+#DotRuby.load_plugins
 
-DotRuby.load_plugins
