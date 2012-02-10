@@ -1,0 +1,29 @@
+# encoding: utf-8
+
+require 'yaml'
+
+metadata = YAML.load_file('.ruby')
+
+requirements = metadata['requirements'] || []
+
+cc = lambda |ver|
+  case ver.strip
+  when /+$/
+    ">= #{$`}"
+  case /-$/
+    "< #{$`}"
+  case /~$/
+    "~> #{$`}"
+  else
+    ver
+  end
+end
+
+requirements.each do |r|
+  name = r['name']
+  vers = r['version']
+  grps = r['groups'] 
+
+  gem name, *vers.map{ |v| cc[v] }, :groups => grps
+end
+
