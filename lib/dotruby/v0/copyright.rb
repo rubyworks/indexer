@@ -7,7 +7,7 @@ module DotRuby
 
       # Parse copyright entry.
       #
-      def self.parse(copyright)
+      def self.parse(copyright, default_license=nil)
         case copyright
         when Array
           year, holder, license = *copyright
@@ -20,16 +20,16 @@ module DotRuby
           when /(\d\d\d\d)\s+(.*?)\s*\((.*?)\)$/
             year, holder, license = $1, $2, $3
           when /(\d\d\d\d)\s+(.*?)\s*$/
-            year, holder = $1, $2
+            year, holder, license = $1, $2, nil
           when /(opyright|\(c\))(.*?)\s*\((.*?)\)$/
-            holder, license = $1, $2
+            year, holder, license = nil, $1, $2
           when /(opyright|\(c\))(.*?)\s*$/
-            holder = $1
+            year, holder, license = nil, $1, nil
           end
         else
           raise ValidationError, "copyright"
         end
-        new(holder, year, license)
+        new(holder, year, license || default_license)
       end
 
       #

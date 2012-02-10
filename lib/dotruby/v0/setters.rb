@@ -195,16 +195,17 @@ module DotRuby
         @data['copyrights'] = \
           case copyrights
           when String
-            [Copyright.parse(copyrights)]
+            [Copyright.parse(copyrights, @_license)]
           when Hash
-            [Copyright.parse(copyrights)]
+            [Copyright.parse(copyrights, @_license)]
           when Array
             copyrights.map do |copyright|
-              Copyright.parse(copyright)
+              Copyright.parse(copyright, @_license)
             end
           else
             raise(ValidationError, "copyright must be a String, Hash or Array")
           end
+        @data['copyrights']
       end
 
       #
@@ -213,6 +214,20 @@ module DotRuby
       #
       def copyright=(copyright)
         @data['copyrights'] = [Copyright.parse(copyright)]
+      end
+
+      # TODO: Should their just be a "primary" license field ?
+
+      #
+      # Set copyright license for all copyright holders.
+      #
+      def license=(license)
+        if copyrights = @data['copyrights']
+          copyrights.each do |c|
+            c.license = license  # TODO: unless c.license ?
+          end
+        end
+        @_license = license
       end
 
       # Set the authors of the project.
