@@ -96,7 +96,9 @@ module DotRuby
     end
 
     #
+    # Does a .ruby file exist?
     #
+    # @return [true,false] Whether .ruby file exists.
     #
     def self.exists?(from=Dir.pwd)
       path = File.expand_path(from)
@@ -129,6 +131,46 @@ module DotRuby
       #extend V[revision]::Attributes
       extend V[revision]::Setters
       super(data)
+    end
+
+    # TODO: Does this need to be revisioned code?
+
+    # Create nicely formated project "about" texts.
+    #
+    # @return [String] Formatted about text.
+    #
+    def about(*parts)
+      s = []
+      parts = [:header, :description, :resources, :copyright] if parts.empty?
+      parts.each do |part|
+        case part.to_sym
+        when :header
+          s << "%s %s (%s-%s)" % [title, version, name, version]
+        when :title
+          s << title
+        when :package
+          s << "%s-%s" % [name, version]
+        when :description
+          s << description || summary
+        when :summary
+          s << summary
+        when :resources
+          s << resources.map{ |name, uri|
+            "%s: %s" % [name, uri]
+          }.join("\n")
+        when :repositories
+          s << repositories.map{ |repo|
+            "%s" % [repo.uri]
+          }.join("\n")
+        when :copyright, :copyrights
+          s << copyrights.map{ |c|
+            "Copyright (c) %s %s (%s)" % [c.year, c.holder, c.license]
+          }.join("\n")
+        else
+          s << __send__(part)
+        end
+      end
+      s.join("\n\n")
     end
 
   end
