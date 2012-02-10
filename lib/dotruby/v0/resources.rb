@@ -163,6 +163,11 @@ module DotRuby
       end
 
       #
+      def to_a
+        @table.map{ |k,v| [k,v] }
+      end
+
+      #
       def inspect
         @table.inspect
       end
