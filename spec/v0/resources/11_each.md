@@ -11,17 +11,15 @@ The `to_hash` method
 
     r.each{ |k,v| a << [k,v] }
 
-    a.assert == [
-      [:home, 'http://foo.com'],
-      [:work, 'http://foo.com/office']
-    ]
+    a.assert.include? [:home, 'http://foo.com']
+    a.assert.include? [:work, 'http://foo.com/office']
+    a.size.assert == 2
 
 Resources is Enumerable, so methods like #map also work.
 
     a = r.map{ |k,v| [k,v] }
 
-    a.assert == [
-      [:home, 'http://foo.com'],
-      [:work, 'http://foo.com/office']
-    ]
+    a.assert.include? [:home, 'http://foo.com']
+    a.assert.include? [:work, 'http://foo.com/office']
+    a.size.assert == 2
 
