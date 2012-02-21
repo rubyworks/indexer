@@ -13,18 +13,20 @@ copyrights:
 - holder: Postmodern
   year: 2011
   license: BSD-2-Clause
-replacements: []
-alternatives: []
 requirements:
 - name: qed
   groups:
   - test
+- name: ae
+  groups:
+  - test
 dependencies: []
+alternatives: []
 conflicts: []
 repositories: []
 resources:
-  home: http://dotruby.github.com
-  code: http://github.com/dotruby/dotruby
+  homepage: http://dotruby.github.com
+  source: http://github.com/dotruby/dotruby
 extra: {}
 load_path:
 - lib

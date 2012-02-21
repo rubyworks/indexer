@@ -11,6 +11,9 @@ requirements:
   - name: qed
     groups:
       - test
+  - name: ae
+    groups:
+      - test
 authors:
   - name: trans
     email: transfire@gmail.com
