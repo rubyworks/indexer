@@ -1,51 +1,37 @@
-# Specification requires Attributes module and all the modeling classes.
 if RUBY_VERSION > '1.9'
-  require_relative 'validators'
   require_relative 'attributes'
+  require_relative 'conversion'
   require_relative 'requirement'
   require_relative 'dependency'
+  require_relative 'resources'
   require_relative 'conflict'
   require_relative 'author'
   require_relative 'copyright'
 else
-  require 'dotruby/v0/validators'
   require 'dotruby/v0/attributes'
+  require 'dotruby/v0/conversion'
   require 'dotruby/v0/requirement'
   require 'dotruby/v0/dependency'
   require 'dotruby/v0/conflict'
+  require 'dotruby/v0/resources'
   require 'dotruby/v0/author'
   require 'dotruby/v0/copyright'
 end
 
 module DotRuby
 
-  # First revision of dotruby specification.
   module V0
 
-    # The Specification generalized for the convenience of developers.
-    # It offers method aliases and models various parts of the specification 
-    # with useful classes.
+    # Conventional interface for DotRuby specification provides convenience 
+    # for developers. It offers method aliases and models various parts of 
+    # the specification with useful classes.
     #
-    # TODO: Is `Metadata` a better name for this? Most users will just use
-    # `DotRuby.load()` anyway.
-    module Setters
+    module Conventional
 
       include Attributes
-
-      # -- IO Methods ------------------------------------------------------
-   
-      # Save `.ruby` file.
-      #
-      # @param [String] file
-      #   The file name in which to save the metadata as YAML.
-      #
-      def save!(file='.ruby')
-        v = Validator.new(to_h)
-        v.save!(file)
-      end
+      include Conversion
 
       # -- Writers ------------------------------------------------------------
-
 
       # Internal sources for building .ruby file.
       #
@@ -245,14 +231,13 @@ module DotRuby
         )
       end
 
+      # TODO: should we warn if directory does not exist?
+
       # Sets the require paths of the project.
       #
       # @param [Array<String>, String] paths
       #   The require-paths or a glob-pattern.
       #
-      #--
-      # TODO: should we warn if directory does not exist?
-      #++
       def load_path=(paths)
         @data['load_path'] = \
           Array(paths).map do |path|
@@ -363,22 +348,6 @@ module DotRuby
       end
 
       #
-      # Sets the packages this package is intended to usurp.
-      # 
-      # @param [Array<String>] replacements
-      #   The replacements for the project.
-      #
-      def replacements=(replacements)
-        Valid.array!(replacements, :replacements)
-
-        @data['replacements'].clear
-
-        replacements.to_ary.each do |name|
-          @data['replacements'] << name.to_s
-        end
-      end
-
-      #
       # Suite must be a single line string.
       #
       # @param [String] suite
@@ -407,6 +376,7 @@ module DotRuby
         end
       end
 
+      #
       # Resources map <code>name => URL</code>.
       #
       # @param [Hash] resources
@@ -416,6 +386,7 @@ module DotRuby
         @data['resources'] = Resources.new(resources)
       end
 
+      #
       # Set the orgnaization to which the project belongs.
       #
       # @param [String] organization
@@ -446,6 +417,7 @@ module DotRuby
           end
       end
 
+      #
       # Set extraneous developer-defined metdata.
       #
       def extra=(extra)
@@ -507,31 +479,25 @@ module DotRuby
       end
 
       #
-      # Adds a new replacement.
-      #
-      # @param [String] name
-      #   The name of the replacement.
-      #
-      def add_replacement(name)
-        replacements << name.to_s
-      end
-
       #
       #
       def add_repository(id, url, scm=nil)
         repositories << Repository.parse(:id=>id, :url=>url, :scm=>scm)
       end
 
+      #
       # A specification is not valid without a name and version.
       #
       # @return [Boolean] valid specification?
+      #
       def valid?
         return false unless name
         return false unless version
         true
       end
 
-# TOTO: What was used for again, load_path ?
+
+# TODO: What was used for again, load_path ?
 =begin
       #
       # Iterates over the paths.
@@ -667,20 +633,6 @@ module DotRuby
       end
 
       #
-      # Alternate short name for #replacements.
-      #
-      def replaces
-        replacements
-      end
-
-      #
-      # Alternate short name for #replacements.
-      #
-      def replaces=(value)
-        self.replacements = value
-      end
-
-      #
       # Alternate short name for #requirements.
       #
       def requires
@@ -733,7 +685,6 @@ module DotRuby
         data['repositories'] = repositories.map { |x| x.to_h }
 
         data['resources']    = resources.to_h
-        data['replacements'] = replacements.to_a
 
         data
       end

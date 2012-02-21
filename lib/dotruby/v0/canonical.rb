@@ -8,24 +8,13 @@ module DotRuby
 
   module V0
 
-    # The Validators module is used be the Validator class to model the strict
+    # The Canonical module is used by the Validator class to model the strict
     # *canonical* specification of the `.ruby` file format. It is a one-to-one
     # mapping with no method aliases or other conveniences.
     #
-    module Validators
+    module Canonical
 
       include Attributes
-
-      # -- IO Methods ------------------------------------------------------
-   
-      # By saving via the Validator, we help ensure only the canoncial
-      # form even makes it to disk.
-      #
-      def save!(file)
-        File.open(file, 'w') do |f|
-          f << to_h.to_yaml
-        end
-      end
 
       # -- Writers ------------------------------------------------------------
 
@@ -125,12 +114,6 @@ module DotRuby
         super(value)
       end
 
-      # List of packages for which this package serves as a replacement.
-      def replacements=(value)
-        Valid.array!(value, :replacements)
-        super(value)
-      end
-
       # provides?
 
       # Suite must be a single line string.
@@ -160,8 +143,6 @@ module DotRuby
         Valid.utc_date!(value, :created)
         super(value)
       end
-
-# TODO: plural or no?
 
       # Set sequence of copyrights mappings.
       def copyrights=(value)
@@ -257,10 +238,9 @@ module DotRuby
           'source'       => [],
           'authors'      => [],
           'copyrights'   => [],
-          'replacements' => [],
-          'alternatives' => [],
           'requirements' => [],
           'dependencies' => [],
+          'alternatives' => [],
           'conflicts'    => [],
           'repositories' => [],
           'resources'    => {},

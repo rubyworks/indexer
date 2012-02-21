@@ -2,7 +2,9 @@ module DotRuby
 
  module V0
 
-    # Copyright class models ...
+    # Copyright class models a copyright holer, the year of copyright
+    # and the accosiated license.
+    #
     class Copyright < Model
 
       # Parse copyright entry.

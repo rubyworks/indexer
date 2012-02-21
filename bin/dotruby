@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
 require 'dotruby'
-DotRuby.cli(*ARGV)
+require 'dotruby/cli'
+DotRuby::CLI.main(*ARGV)

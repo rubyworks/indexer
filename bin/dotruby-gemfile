@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require 'dotruby'
+require 'dotruby/cli/gemfile'
+DotRuby::CLI.gemfile(*ARGV)
+

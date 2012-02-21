@@ -14,7 +14,6 @@ testing namespace, we can see that the revision is set to `0`.
 In addition, certain attributes will have default values.
 
     spec.copyrights.should   == []
-    spec.replacements.should == []
     spec.authors.should      == []
     spec.requirements.should == []
     spec.dependencies.should == []

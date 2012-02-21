@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
-require 'dotruby/cli/rubygems'
-DotRuby::RubyGems.cli(*ARGV)
+require 'dotruby'
+require 'dotruby/cli/gemspec'
+DotRuby::CLI.gemspec(*ARGV)
+

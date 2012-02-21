@@ -42,15 +42,17 @@ require 'dotruby/valid'
 require 'dotruby/model'
 #require 'dotruby/factories'
 
+require 'dotruby/v0' # CURRENT_REVISION
+
 require 'dotruby/spec'
 
 require 'dotruby/version/exceptions'
 require 'dotruby/version/number'
 require 'dotruby/version/constraint'
 
-require 'dotruby/v0' # CURRENT_REVISION
-
 # If we ever descide to support plugins in the future.
 #require 'dotruby/plugins'
 #DotRuby.load_plugins
+
+#require 'dotruby/bundler'
 

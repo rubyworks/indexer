@@ -10,14 +10,12 @@ module DotRuby
     class Resources < Model
       include Enumerable
 
-      #--
       # TODO: Consider if this should instead be an associative array
-      # of [type, url]. Could there not be more than one URL for
+      # of [type, uri]. Could there not be more than one URL for
       # a given type?
-      #
+
       # TODO: Resource aliases are probably the trickiest part of this
       # specification. It's hard to judge what exactly they should be.
-      #++
 
       ## Valid URL regular expression.
       #URL = /^(\w+)\:\/\/\S+$/
@@ -51,8 +49,8 @@ module DotRuby
 
         data = {} if data.nil?
 
-        data.each do |key, url|
-          self[key] = url
+        data.each do |key, uri|
+          self[key] = uri
         end
       end
 
@@ -80,7 +78,7 @@ module DotRuby
       # If there is an optimized way to go about it, hey, let us know.
       #
       def []=(key, uri)
-        unless Valid.url?(uri) or Valid.irc?(url)
+        unless Valid.url?(uri) or Valid.irc?(uri)
           raise ValidationError, "Not a valid URI - `#{uri}' for `#{key}'"
         end
         #@table[key_index(key)] = uri
@@ -174,8 +172,8 @@ module DotRuby
 
       #
       def merge!(res)
-        res.each do |key, url|
-          self[key] = url
+        res.each do |key, uri|
+          self[key] = uri
         end
       end
 

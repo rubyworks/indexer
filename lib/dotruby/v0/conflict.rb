@@ -1,5 +1,7 @@
 module DotRuby
+
   module V0
+
     # The Conflict class models the name and versions of
     # packages that have know incompatibilities.
     #
@@ -76,5 +78,7 @@ module DotRuby
       end
 
     end
+
   end
+
 end

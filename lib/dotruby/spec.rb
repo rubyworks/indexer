@@ -17,21 +17,19 @@ module DotRuby
     # Default file name of `.ruby` file. It is obviously `.ruby` ;-)
     FILE_NAME = '.ruby'
 
-=begin
-    # Revision factory return a versioned instance of Specification.
-    #
-    # @param [Hash] data
-    #   The metadata to populate the instance.
-    #
-    def self.new(data={})
-      revision = data['revision'] || data[:revision]
-      unless revision
-        revison          = CURRENT_REVISION
-        data['revision'] = CURRENT_REVISION
-      end
-      V[revision]::Specification.new(data)
-    end
-=end
+    ## Revision factory return a versioned instance of Specification.
+    ##
+    ## @param [Hash] data
+    ##   The metadata to populate the instance.
+    ##
+    #def self.new(data={})
+    #  revision = data['revision'] || data[:revision]
+    #  unless revision
+    #    revison          = CURRENT_REVISION
+    #    data['revision'] = CURRENT_REVISION
+    #  end
+    #  V[revision]::Specification.new(data)
+    #end
 
     # Read `.ruby` from file.
     #
@@ -117,6 +115,16 @@ module DotRuby
       alias :exist? :exists?
     end
 
+    #
+    # Create a new DotRuby::Spec given a Gem::Specification or .gemspec file.
+    #
+    # @param [Gem::Specification,String] gemspec
+    #   RubyGems Gem::Specification object or path to .gemspec file.
+    #
+    def self.from_gemspec(gemspec)
+      new.import_gemspec(gemspec)
+    end
+
     # Create a revisioned instance of Spec.
     #
     # @param [Hash] data
@@ -124,18 +132,30 @@ module DotRuby
     #
     def initialize(data={})
       revision = data['revision'] || data[:revision]
+
       unless revision
         revison          = CURRENT_REVISION
         data['revision'] = CURRENT_REVISION
       end
-      #extend V[revision]::Attributes
-      extend V[revision]::Setters
+
+      extend V[revision]::Conventional
+
       super(data)
     end
 
-    # TODO: Does this need to be revisioned code?
+    # Save `.ruby` file.
+    #
+    # @param [String] file
+    #   The file name in which to save the metadata as YAML.
+    #
+    def save!(file='.ruby')
+      v = Validator.new(to_h)
+      v.save!(file)
+    end
 
-    # Create nicely formated project "about" texts.
+    # TODO: The #about method probably needs to be revisioned code.
+
+    # Create nicely formated project "about" text.
     #
     # @return [String] Formatted about text.
     #

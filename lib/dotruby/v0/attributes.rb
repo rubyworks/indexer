@@ -107,11 +107,6 @@ module DotRuby
       #
       attr_accessor :alternatives
 
-      # The packages that this package can replace (near equivalent APIs).
-      # This is similar to `alternatives` but defines a stringer relationship.
-      # Think Erubis for ERB, or libXML2 or libXML.
-      attr_accessor :replacements
-
       # The packages with which this project cannot function.
       attr_accessor :conflicts
 
@@ -152,7 +147,6 @@ module DotRuby
           'source'       => [],
           'authors'      => [],
           'copyrights'   => [],
-          'replacements' => [],
           'alternatives' => [],
           'requirements' => [],
           'dependencies' => [],

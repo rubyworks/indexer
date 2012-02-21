@@ -2,7 +2,12 @@
 
 ## Introduction
 
-The .ruby specification defines an very explict and detailed ...
+Please note, that this file may be slightly out of date witht the
+the current specification. See the project wiki for the most uptodate
+spec.
+
+The .ruby specification defines an very explict and detailed project
+metadata specification.
 
 
 ## Fields

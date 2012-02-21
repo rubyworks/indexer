@@ -12,7 +12,6 @@ to the initializer.
 In addition, certain attributes will have default values.
 
     data.copyrights.should   == []
-    data.replacements.should == []
     data.authors.should      == []
     data.requirements.should == []
     data.dependencies.should == []

@@ -2,34 +2,50 @@ require 'dotruby'
 
 module DotRuby
 
-  # TODO: Do not use global variable, $USE_STDOUT.
+  module CLI
 
-  #
-  def self.cli_source(*argv)
-    begin
-      parser = OptionParser.new do |opts|
-        opts.banner = 'Usage: dotruby [options]'
-        opts.on('-o', '--stdout', 'output to stdout instead of file') do
-          $USE_STDOUT = true
+    #
+    # Build .ruby file from external sources.
+    #
+    # @todo Rename to cli_build ?
+    #
+    def source(*argv)
+      stdout = false
+
+      begin
+        parser = OptionParser.new do |opts|
+          opts.banner = 'Usage: dotruby [options]'
+          opts.on('-o', '--stdout', 'output to stdout instead of file') do
+            stdout = true
+          end
+          opts.on_tail('--debug', 'run with $DEBUG set to true') do
+            $DEBUG = true
+          end
+          opts.on_tail('-h', '--help', 'read this help message') do
+            puts opts
+            exit
+          end
         end
-        opts.on_tail('--debug', 'run with $DEBUG set to true') do
-          $DEBUG = true
+
+        parser.parse!(argv)
+
+        spec = build(*argv)
+
+        if stdout
+          puts spec.to_yaml
+        else
+          spec.save!  # TODO: Make sure only save when different.
         end
-        opts.on_tail('-h', '--help', 'read this help message') do
-          puts opts
-          exit
+      rescue => error
+        if $DEBUG
+          raise error
+        else
+          $stderr.puts "#{error}"
+          exit -1
         end
-      end
-      parser.parse!(argv)
-      autobuild(*argv)
-    rescue => error
-      if $DEBUG
-        raise error
-      else
-        $stderr.puts "#{error}"
-        exit -1
       end
     end
+
   end
 
 end

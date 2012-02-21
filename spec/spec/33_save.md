@@ -11,7 +11,7 @@ the `#save!` method.
 
     spec.save!('save.yml')
 
-We can us `#read` to ensure it saved as we expected.
+We can use `#read` to ensure it saved as we expected.
 
     spec = DotRuby::Spec.read('save.yml')
 
@@ -22,7 +22,7 @@ And we can verify it was read.
 
 To be even more sure let's load in the raw YAML.
 
-    yaml = YAML.load_file('ruby.yml')
+    yaml = YAML.load_file('save.yml')
 
     yaml['name'].should    == 'foo'
     yaml['version'].should == '1.0.0'
