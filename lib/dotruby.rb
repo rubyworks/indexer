@@ -50,6 +50,8 @@ require 'dotruby/version/exceptions'
 require 'dotruby/version/number'
 require 'dotruby/version/constraint'
 
+require 'dotruby/builder'
+
 # If we ever descide to support plugins in the future.
 #require 'dotruby/plugins'
 #DotRuby.load_plugins

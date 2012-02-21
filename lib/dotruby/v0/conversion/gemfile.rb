@@ -25,7 +25,7 @@ module DotRuby
           add_requirement(d.name,
             :version     => d.requirement.to_s,  # may need to parse this
             :groups      => d.groups,
-            :development => (d.type == :development),
+            :development => (d.type == :development)
             #:engines    => d.platforms ?
             #:platforms  => ?
           )

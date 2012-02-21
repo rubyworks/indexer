@@ -1,5 +1,3 @@
-require 'dotruby'
-
 module DotRuby
 
   module CLI
@@ -29,7 +27,7 @@ module DotRuby
 
         parser.parse!(argv)
 
-        spec = build(*argv)
+        spec = DotRuby.build(*argv)
 
         if stdout
           puts spec.to_yaml
