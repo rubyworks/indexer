@@ -58,6 +58,11 @@ module DotRuby
       def import_gemspec(gemspec)
         require 'rubygems'
 
+        # TODO: ensure this is robust
+        authors = [gemspec.authors].flatten.zip([gemspec.email].flatten)
+
+        # TODO: how to handle license(s) ?
+
         if not Gem::Specification === gemspec
           # TODO: YAML-based gem specs
           gemspec = Gem::Specification.load(gemspec)
@@ -65,10 +70,11 @@ module DotRuby
 
         self.name         = gemspec.name
         self.version      = gemspec.version.to_s
+        self.date         = gemspec.date
         self.title        = gemspec.name.capitalize
         self.summary      = gemspec.summary
         self.description  = gemspec.description || gemspec.summary
-        self.authors      = gemspec.authors # gemspec.email
+        self.authors      = authors
         self.load_path    = gemspec.require_paths
 
         self.resources.homepage = gemspec.homepage
