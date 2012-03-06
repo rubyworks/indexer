@@ -16,7 +16,7 @@ module DotRuby
         when '.yaml', '.yml'
           load_yaml(source)
         else
-          test = read(source)
+          text = read(source)
           if text =~ /\A---/
             load_yaml(source)
           else

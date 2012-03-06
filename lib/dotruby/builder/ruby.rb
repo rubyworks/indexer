@@ -16,6 +16,7 @@ module DotRuby
         when '.rb'  # TODO: Other ruby extensions ?
           load_ruby(source)
         else
+          text = read(source)
           if text !=~ /\A---/  # not YAML
             load_ruby(source)
           else

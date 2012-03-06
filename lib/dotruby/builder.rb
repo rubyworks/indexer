@@ -23,12 +23,14 @@ module DotRuby
         require 'dotruby/builder/yaml'
         require 'dotruby/builder/gemspec'
         require 'dotruby/builder/gemfile'
+        require 'dotruby/builder/version'
       else
         require_relative 'builder/file'
         require_relative 'builder/ruby'
         require_relative 'builder/yaml'
         require_relative 'builder/gemspec'
         require_relative 'builder/gemfile'
+        require_relative 'builder/version'
       end
     end
 
@@ -90,22 +92,33 @@ module DotRuby
     # to be built via this method.
     #
     def method_missing(s, *a, &b)
-      if a.empty?
+      r = s.to_s.chomp('=')
+      case a.size
+      when 0
         if @spec.respond_to?(s)
-          @spec.__send__(s)
-        else
-          super(s, *a, &b)
+          return @spec.__send__(s, &b)
+        end
+      when 1
+        if @spec.respond_to?("#{r}=")
+          return @spec.__send__("#{r}=", *a)
         end
       else
-        x = s.to_s.chomp('=')
-        if @spec.respond_to?("#{x}=")
-          @spec.__send__("#{x}=", *a, &b)
-        else
-          super(s, *a, &b)
+        if @spec.respond_to?("#{r}=")
+          return @spec.__send__("#{r}=", a)
         end
       end
+      super(s, *a, &b)  # if cases don't match-up
     end
 
+    #
+    # Is `text` a YAML document? It detrmines this simply
+    # be checking for `---` at the top of the text.
+    #
+    # @todo Ignore top comments.
+    #
+    def yaml?(text)
+      text =~ /\A---/
+    end
   end
 
 end
