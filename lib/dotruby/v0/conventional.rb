@@ -257,7 +257,7 @@ module DotRuby
 
       # List of platforms supported.
       def platforms=(value)
-        @data['platform'] = (
+        @data['platforms'] = (
           a = [value].flatten
           a.each{ |x| Valid.oneline!(x) }
           a
