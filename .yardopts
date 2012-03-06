@@ -1,1 +1,6 @@
---markup markdown --title 'DotRuby Documentation' --protected
+--markup markdown
+--title 'DotRuby Documentation'
+--private
+lib/**/*.rb
+-
+[A-Z]*.*
