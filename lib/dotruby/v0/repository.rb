@@ -97,15 +97,39 @@ module DotRuby
       end
 
       #
+      # Prefix URI that can be used to link to source code.
+      #
+      # This name is the traditional one from a time when CVS was the
+      # most popular SCM.
+      #
+      attr_reader :webcvs
+
+      #
+      #
+      #
+      def webcvs=(uri)
+        Valid.oneline!(uri)
+        Valid.uri!(uri)  # TODO: any other limitations?
+        @webcvs = uri
+      end
+
+      # TODO: Should we rename Repository#webcvs to just #web ?
+
+      #
+      alias_method :web, :webcvs
+      alias_method :web=, :webcvs=
+
+      #
       def to_h
         h = {}
-        h['uri']  = uri
-        h['scm']  = scm  if scm
-        h['name'] = name if name
+        h['uri']    = uri
+        h['scm']    = scm    if scm
+        h['name']   = name   if name
+        h['webcvs'] = webcvs if webcvs
         h
       end
 
-      private
+    private
 
       #
       def infer_scm(uri)

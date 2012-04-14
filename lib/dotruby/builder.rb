@@ -42,6 +42,7 @@ module DotRuby
 
       spec = nil
 
+      # TODO: Is using `dotruby source` then this should only search the current direcory.
       if Spec.exists?
         spec   = Spec.find
         source = spec.source if source.empty?

@@ -195,6 +195,64 @@ module DotRuby
       end
 
       #
+      # Applies only for specified Ruby engines. Each entry can be
+      # the `RUBY_ENGINE` value and optionally a version constraint
+      # on `RUBY_VERSION`.
+      #
+      # @return [Hash] name and version constraint
+      #
+      attr_reader :engines
+
+      #
+      # Applies only for specified Ruby engines. Each entry can be
+      # the `RUBY_ENGINE` value and optionally a version constraint
+      # on `RUBY_VERSION`.
+      #
+      # @example
+      #
+      #   requirement.engines = [
+      #     'ruby 1.8~'
+      #   ]
+      #
+      def engines=(engines)
+        @engines = Array(engines).map do |engine|
+          case engine
+          when String
+            name, vers = engine.strip.split(/\s+/)
+            vers = nil if vers.empty?
+          when Array
+            name, vers = *engine
+          when Hash
+            name = engine['name']
+            vers = engine['version']
+          end
+          e = {}
+          e['name']    = name
+          e['version'] = Version::Constraint.parse(vers) if vers
+          e
+        end
+      end
+
+      alias_method :engine,  :engines
+      alias_method :engine=, :engines=
+
+      attr_reader :platforms
+
+      #
+      # Applies only for specified platforms. The platform must be verbatim
+      # `RUBY_PLATFORM` value.
+      #
+      # @example
+      #   requirement.platforms = ['x86_64-linux']
+      #
+      def platforms=(platforms)
+        @platforms = Array(platforms)
+      end
+
+      alias_method :platform,  :platforms
+      alias_method :platform=, :platforms=
+
+      #
       # The public repository resource in which the requirement source code
       # can be found.
       #
@@ -218,8 +276,22 @@ module DotRuby
         h['version']     = version.to_s    if version
         h['groups']      = groups          if not groups.empty?
         h['development'] = development?    if development?
+        h['optional']    = optional?       if optional?
+        h['platforms']   = platforms       if platforms
+        h['engines']     = engines_to_h    if engines
         h['repository']  = repository.to_h if repository
         h
+      end
+
+    private
+
+      def engines_to_h
+        engines.map do |engine|
+          hash = {}
+          hash['name'] = engine['name']
+          hash['version'] = engine['version'].to_s
+          hash
+        end
       end
 
     end

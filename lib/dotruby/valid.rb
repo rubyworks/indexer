@@ -34,7 +34,7 @@ module DotRuby
       return name
     end
 
-    # TODO: Or uri ?
+    #
     def url?(url)
       URL =~ url
     end
@@ -45,7 +45,7 @@ module DotRuby
       return url
     end
 
-    # TODO: Or uri ?
+    #
     def irc?(irc)
       IRC =~ irc
     end
@@ -54,6 +54,17 @@ module DotRuby
     def irc!(irc, field=nil)
       raise_invalid("IRC", irc, field) unless irc?(irc)
       return irc
+    end
+
+    #
+    def uri?(uri)
+      url?(uri) || irc(uri)
+    end
+
+    #
+    def uri!(uri, field=nil)
+      raise_invalid("URI", uri, field) unless uri?(uri)
+      return uri
     end
 
     #
