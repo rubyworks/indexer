@@ -139,13 +139,13 @@ is an array of hashes, composed of `name`, `version`, `groups`, `development`,
         groups: [build]
         development: true
         optional: false
-        engine:
+        engines:
           - ruby 1.9+
-        platform:
+        platforms:
           - x86_64-linux
         repository:
           scm: git
-          url: http://github.com/dotruby/dotruby.git
+          uri: http://github.com/dotruby/dotruby.git
 
 ### Dependencies
 
