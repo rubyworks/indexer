@@ -67,13 +67,13 @@ module DotRuby
       # The resource locators for the project.
       attr_accessor :resources
 
-      # TODO: Give some thought to #repositories and #scm_uri, might they be unified somehow?
-
       # The repository URLs for the project
       attr_accessor :repositories
 
+      # TODO: Might webcvs simply be taken from the first repository instead?
+
       # URI for linking to source code.
-      attr_accessor :scm_uri
+      attr_accessor :webcvs
 
       # The build date of the .ruby file
       attr_accessor :date
@@ -152,7 +152,7 @@ module DotRuby
           'dependencies' => [],
           'conflicts'    => [],
           'repositories' => [],
-          'resources'    => {},
+          'resources'    => [],
           'extra'        => {},
           'load_path'    => ['lib']
         }

@@ -76,8 +76,7 @@ module DotRuby
         self.description  = gemspec.description || gemspec.summary
         self.authors      = authors
         self.load_path    = gemspec.require_paths
-
-        self.resources.homepage = gemspec.homepage
+        self.homepage     = gemspec.homepage
 
         #self.engines      = gemspec.platform
         #self.extensions   = gemspec.extensions

@@ -3,7 +3,7 @@ if RUBY_VERSION > '1.9'
   require_relative 'conversion'
   require_relative 'requirement'
   require_relative 'dependency'
-  require_relative 'resources'
+  require_relative 'resource'
   require_relative 'conflict'
   require_relative 'author'
   require_relative 'copyright'
@@ -13,7 +13,7 @@ else
   require 'dotruby/v0/requirement'
   require 'dotruby/v0/dependency'
   require 'dotruby/v0/conflict'
-  require 'dotruby/v0/resources'
+  require 'dotruby/v0/resource'
   require 'dotruby/v0/author'
   require 'dotruby/v0/copyright'
 end
@@ -377,13 +377,37 @@ module DotRuby
       end
 
       #
-      # Resources map <code>name => URL</code>.
+      # Set the resources for the project.
       #
-      # @param [Hash] resources
-      #   An indexed list of resources.
+      # @param [Array,Hash] resources
+      #   A list or map of resources.
       #
       def resources=(resources)
-        @data['resources'] = Resources.new(resources)
+        case repositories
+        when Array
+          @data['resources'].clear
+          resources.each do |specifics|
+            @data['resources'] << Resource.parse(specifics)
+          end
+        when Hash
+          @data['resources'].clear
+          resources.each do |name, uri|
+            @data['resources'] << Resource.new(:uri=>uri, :name=>name)
+          end
+        else
+          raise(ValidationError, "repositories must be an Array or Hash")
+        end
+      end
+
+      #
+      # The webcvs prefix must be a valid URI.
+      #
+      # @param [String] uri
+      #   The webcvs prefix, which must be a valid URI.
+      #
+      def webcvs=(uri)
+        Valid.uri!(uri, :webcvs)
+        @data['webcvs'] = uri
       end
 
       #
@@ -549,17 +573,29 @@ module DotRuby
       end
 
       #
-      # TODO: Rename to website?
-      def homepage #(url=nil)
-        #url ? resources.homepage = url : resources.homepage
-        resources.homepage
+      # Get homepage URI.
+      #
+      def homepage #(uri=nil)
+        #uri ? self.homepage = url
+        resources.each do |r|
+          if r.type == 'home'
+            return r.uri
+          end
+        end
       end
+      alias_method :website, :homepage
 
       #
-      # TODO: Rename to website?
-      def homepage=(url)
-        resources.homepage = url
+      # Convenience method for setting a `hompage` resource.
+      #
+      # @todo Rename to website?
+      #
+      def homepage=(uri)
+        resource = Resource.new(:name=>'homepage', :type=>'home', :uri=>uri)
+        resources.unshift(resource)
+        uri
       end
+      alias_method :website=, :homepage=
 
       #
       # Returns the runtime requirements of the project.
@@ -572,7 +608,7 @@ module DotRuby
       end
 
       #
-      #
+      # Returns the runtime dependencies of the project.
       #
       # @return [Array<Dependency>] runtime dependencies.
       def runtime_dependencies
@@ -665,9 +701,8 @@ module DotRuby
       #
       # Convert convenience form of metadata to canonical form.
       #
-      #--
-      # FIXME: This needs to generate the canonical form.
-      #++
+      # @todo: Make sure this generates the canonical form.
+      #
       def to_h
         date = self.date || Time.now
 
@@ -683,8 +718,7 @@ module DotRuby
         data['requirements'] = requirements.map { |x| x.to_h }
         data['conflicts']    = conflicts.map    { |x| x.to_h }
         data['repositories'] = repositories.map { |x| x.to_h }
-
-        data['resources']    = resources.to_h
+        data['resources']    = resources.map    { |x| x.to_h }
 
         data
       end
@@ -696,7 +730,6 @@ module DotRuby
       #
       def initialize_attributes
         super
-        @data['resources'] = Resources.new
       end
 
     end

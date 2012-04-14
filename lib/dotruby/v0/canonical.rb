@@ -130,7 +130,7 @@ module DotRuby
         super(value)
       end
 
-# TODO: Maybe organization should be a hash with `name` and `url`?
+# TODO: Maybe organization should be a hash with `name` and `uri`?
 
       # Organization must be a single line string.
       def organization=(value)
@@ -152,19 +152,18 @@ module DotRuby
       end
 
       # Authors must an array of hashes in the form
-      # of `{name: ..., email: ..., :website ..., roles: [...] }`.
+      # of `{name: ..., email: ..., website: ..., roles: [...] }`.
       def authors=(value)
         Valid.array!(value, :authors)
         value.each{ |h| Valid.hash!(h, :authors) }
         super(value)
       end
 
-      # Resources  must be a mapping of <code>name => URL</code>.
+      # Resources must be an array of hashes in the form
+      # of `{uri: ..., name: ..., type: ...}`.
       def resources=(value)
-        Valid.hash!(value, :resources)
-        value.each do |id, url|
-          Valid.url!(url, "resources #{id}")
-        end
+        Valid.array!(value, :resources)
+        value.each{ |h| Valid.hash!(h, :resources) }
         super(value)
       end
 
@@ -196,11 +195,17 @@ module DotRuby
         super(value)
       end
 
-# TODO: SCM ?
+      # TODO: SCM ?
 
       # SCM must be a word.
-      def scm=(value)
-        Valid.word!(value, :scm)
+      #def scm=(value)
+      #  Valid.word!(value, :scm)
+      #  super(value)
+      #end
+
+      # The webcvs prefix must be a valid URI.
+      def webcvs=(value)
+        Valid.uri!(value, :webcvs)
         super(value)
       end
 

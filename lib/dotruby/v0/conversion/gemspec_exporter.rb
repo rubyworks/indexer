@@ -148,6 +148,8 @@ module DotRuby
         gemspec.licenses = metadata['copyrights'].map{ |c| c['license'] }.compact
 
         metadata['requirements'].each do |req|
+          next if req['optional']
+
           name    = req['name']
           version = req['version']
           groups  = req['groups'] || []
@@ -187,7 +189,14 @@ module DotRuby
         end
 
         # determine homepage from resources
-        homepage = metadata['resources'].find{ |key, url| key =~ /^home/ }
+        homepage = metadata['resources'].find do |r|
+          r['type'] == 'home' || (
+            case r['name'].to_s
+            when /^home/i, /^website/i
+              true
+            end
+          )
+        end
         gemspec.homepage = homepage.last if homepage
 
         gemspec.require_paths        = metadata['load_path'] || ['lib']
