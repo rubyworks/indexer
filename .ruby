@@ -25,8 +25,11 @@ alternatives: []
 conflicts: []
 repositories: []
 resources:
-  homepage: http://dotruby.github.com
-  source: http://github.com/dotruby/dotruby
+- uri: http://dotruby.github.com
+  type: homepage
+- uri: http://github.com/dotruby/dotruby
+  type: source
+categories: []
 extra: {}
 load_path:
 - lib
@@ -36,4 +39,4 @@ title: DotRuby
 version: 0.1.0
 summary: Definitive Ruby Project Metadata
 description: The .ruby specification is the bomb!
-date: '2011-10-23'
+date: '2012-05-02'
