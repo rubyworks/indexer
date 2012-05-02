@@ -175,8 +175,8 @@ module DotRuby
         when :summary
           s << summary
         when :resources
-          s << resources.map{ |name, uri|
-            "%s: %s" % [name, uri]
+          s << resources.map{ |resource|
+            "%s: %s" % [resource.name, resource.uri]
           }.join("\n")
         when :repositories
           s << repositories.map{ |repo|
