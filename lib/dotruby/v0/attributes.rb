@@ -114,6 +114,12 @@ module DotRuby
       # NOTE: This is a Debian concept. Is it useful?
       #attr_accessor :provides
 
+      # Categories can be used to help clarify the purpose of
+      # a project, e.g. `testing` or `rest`. There are no standard
+      # categories, just use common sense. Categories must be single-line
+      # strings. When comparisons are made they will be downcased.
+      attr_accessor :categories
+
       # The version of Ruby required by the project
       # NOTE: is it possible to to makes this a part of ordinary requirements?
       #attr_accessor :required_ruby_version
@@ -153,6 +159,7 @@ module DotRuby
           'conflicts'    => [],
           'repositories' => [],
           'resources'    => [],
+          'categories'   => [],
           'extra'        => {},
           'load_path'    => ['lib']
         }

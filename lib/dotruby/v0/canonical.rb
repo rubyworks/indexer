@@ -116,6 +116,15 @@ module DotRuby
 
       # provides?
 
+      #
+      def categories=(value)
+        Valid.array!(value, :categories)
+        value.each_with_index do |c, i|
+          Valid.oneline!(c, "categories #{i}")
+        end
+        super(value)
+      end
+
       # Suite must be a single line string.
       def suite=(value)
         Valid.oneline!(value, :suite)
@@ -248,7 +257,8 @@ module DotRuby
           'alternatives' => [],
           'conflicts'    => [],
           'repositories' => [],
-          'resources'    => {},
+          'resources'    => [],
+          'categories'   => [],
           'extra'        => {},
           'load_path'    => ['lib']
         }

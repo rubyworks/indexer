@@ -348,6 +348,23 @@ module DotRuby
       end
 
       #
+      # Sets the categories for this project.
+      # 
+      # @param [Array<String>] categories
+      #   List of purpose categories for the project.
+      #
+      def categories=(categories)
+        Valid.array!(categories, :categories)
+
+        @data['categories'].clear
+
+        categories.to_ary.each do |name|
+          Valid.oneline!(name.to_s)
+          @data['categories'] << name.to_s
+        end
+      end
+
+      #
       # Suite must be a single line string.
       #
       # @param [String] suite
@@ -383,7 +400,7 @@ module DotRuby
       #   A list or map of resources.
       #
       def resources=(resources)
-        case repositories
+        case resources
         when Array
           @data['resources'].clear
           resources.each do |specifics|
@@ -391,8 +408,8 @@ module DotRuby
           end
         when Hash
           @data['resources'].clear
-          resources.each do |name, uri|
-            @data['resources'] << Resource.new(:uri=>uri, :name=>name)
+          resources.each do |type, uri|
+            @data['resources'] << Resource.new(:uri=>uri, :type=>type)
           end
         else
           raise(ValidationError, "repositories must be an Array or Hash")
