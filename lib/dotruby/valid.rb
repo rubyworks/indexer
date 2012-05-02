@@ -58,7 +58,7 @@ module DotRuby
 
     #
     def uri?(uri)
-      url?(uri) || irc(uri)
+      url?(uri) || irc?(uri)
     end
 
     #
