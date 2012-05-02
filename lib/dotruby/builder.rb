@@ -38,17 +38,24 @@ module DotRuby
     # Build .ruby specification from external sources.
     #
     def self.build(*source)
+      options = (Hash === source.last ? source.pop : {})
+
       require_builders
 
-      spec = nil
+      #spec = nil
 
-      # TODO: Is using `dotruby source` then this should only search the current direcory.
-      if Spec.exists?
-        spec   = Spec.find
-        source = spec.source if source.empty?
+      ## use source of current spec if none given
+      ## TODO: Only search the current direcory or search up to root?
+      if source.empty? 
+        if file = Dir['.ruby'].first  #or `Spec.exists?` ?
+          data = YAML.load_file(file)
+          source = Array(data['source'])
+        end
       end
 
-      builder = Builder.new(spec)
+      raise ArgumentError, "no data sources" if source.empty?
+
+      builder = Builder.new #(spec)
 
       source.each do |src|
         builder.build(src)
