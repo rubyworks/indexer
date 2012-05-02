@@ -10,18 +10,22 @@ module DotRuby
       # Ruby script build procedure.
       #
       def build(source)
-        return super(source) unless File.file?(source)
-
-        case File.extname(source) 
-        when '.rb'  # TODO: Other ruby extensions ?
-          load_ruby(source)
-        else
-          text = read(source)
-          if text !=~ /\A---/  # not YAML
+        if File.file?(source)
+          case File.extname(source) 
+          when '.rb'  # TODO: Other ruby extensions ?
             load_ruby(source)
+            true
           else
-            super(source)
-          end         
+            text = read(source)
+            if text !=~ /\A---/  # not YAML
+              load_ruby(source)
+              true
+            else
+              super(source) if defined?(super)
+            end         
+          end
+        else
+          super(source) if defined?(super)
         end
       end
 

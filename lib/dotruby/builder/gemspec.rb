@@ -18,6 +18,7 @@ module DotRuby
           # TODO: handle YAML-based gemspecs
           gemspec = ::Gem::Specification.load(source)
           spec.import_gemspec(gemspec)
+          true
         else
           super(source) if defined?(super)
         end

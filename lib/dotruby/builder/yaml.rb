@@ -10,18 +10,22 @@ module DotRuby
       # YAML build procedure.
       #
       def build(source)
-        return super(source) unless File.file?(source)
-
-        case File.extname(source)
-        when '.yaml', '.yml'
-          load_yaml(source)
-        else
-          text = read(source)
-          if text =~ /\A---/
+        if File.file?(source)
+          case File.extname(source)
+          when '.yaml', '.yml'
             load_yaml(source)
+            true
           else
-            super(source)
+            text = read(source)
+            if text =~ /\A---/
+              load_yaml(source)
+              true
+            else
+              super(source) if defined?(super)
+            end
           end
+        else
+          super(source) if defined?(super)
         end
       end
 

@@ -81,8 +81,12 @@ module DotRuby
     #
     #
     def build(source)
-      super(source) if defined?(super)
-      spec.source << source unless spec.source.include?(source)
+      success = super(source) if defined?(super)
+      if success
+        spec.source << source unless spec.source.include?(source)
+      else
+        raise "metadata source not found or not a known type -- #{source}"
+      end
     end
 
     #
@@ -100,6 +104,8 @@ module DotRuby
     # to be built via this method.
     #
     def method_missing(s, *a, &b)
+      return if s == :build
+
       r = s.to_s.chomp('=')
       case a.size
       when 0

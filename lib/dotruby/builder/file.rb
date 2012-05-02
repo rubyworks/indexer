@@ -10,8 +10,12 @@ module DotRuby
       # Files build procedure.
       #
       def build(source)
-        super(source) unless File.directory?(source)
-        load_directory(source)          
+        if File.directory?(source)
+          load_directory(source)
+          true
+        else
+          super(source) if defined?(super)
+        end
       end
 
       #

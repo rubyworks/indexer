@@ -12,6 +12,7 @@ module DotRuby
         case source
         when 'Gemfile'
           @spec.import_gemfile(source)
+          true
         else
           super(source) if defined?(super)
         end
