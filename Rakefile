@@ -16,7 +16,7 @@ end
 
 desc "coverage report"
 task :cov do
-  sh "qed --simplecov -Ilib qed/"
+  sh "qed -r ./config/qed-simplecov -Ilib"
 end
 
 desc "build gem"
