@@ -41,7 +41,7 @@ module DotRuby
           files = Dir[File.join(folder, '*')]
           files.each do |file|
             next if File.directory?(file)
-            name = File.basename(file)
+            name = File.basename(file).downcase
             next load_yaml(file) if %w{.yaml .yml}.include?(File.extname(file))
             next load_field_file(file) if extra.include?(name)
             next load_field_file(file) if @spec.attributes.include?(name.to_sym)
@@ -52,22 +52,31 @@ module DotRuby
       #
       # Import a field setting from a file.
       #
+      # TODO: Ultimately support JSON and maybe other types, and possibly
+      # use mime-types library to recognize them.
+      #
       def load_field_file(file)
         if File.directory?(file)
           # ...
         else
-          case File.extname(file)
+          case File.extname(file).downcase
           when '.yaml', '.yml'
-            name = File.basename(file).chomp('.yaml').chomp('.yml')
+            name = File.basename(file).downcase
+            name = name.chomp('.yaml').chomp('.yml')
             @spec[name] = YAML.load_file(file)
-            #@spec.merge!(YAML.load_file(file))
+            #@spec.merge!(YAML.load_file(file))   # TODO: should yaml files with explict extension by merged instead?
+          when '.text', '.txt'
+            name = File.basename(file).downcase
+            name = name.chomp('.text').chomp('.txt')
+            text = File.read(file)
+            @spec[name] = text.strip
           else
             text = File.read(file)
             if /\A---/ =~ text
-              name = File.basename(file)
+              name = File.basename(file).downcase
               @spec[name] = YAML.load(text)
             else
-              name = File.basename(file)
+              name = File.basename(file).downcase
               @spec[name] = text.strip
             end
           end
