@@ -156,6 +156,7 @@ module DotRuby
         'irc'     => "IRC Channel",
         'chat'    => "IRC Channel",
         'doc'     => "Documentation",
+        'docs'    => "Documentation",
         'wiki'    => "User Guide"
       }
 
