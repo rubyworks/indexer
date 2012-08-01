@@ -1,13 +1,17 @@
-DotRuby
-=======
+# Ruby Metaspec
 
-[![Build Status](https://secure.travis-ci.org/dotruby/dotruby.png)](http://travis-ci.org/dotruby/dotruby)
+[![Build Status](https://secure.travis-ci.org/dotruby/dotruby.png)](http://travis-ci.org/rubyworks/metaspec)
 
-DotRuby (`.ruby`) is a well-defined Ruby project/package metadata file format.
+Metaspec is a well-defined project/package metadata specification for Ruby projects.
 
-A .ruby file has a very strict specification. The specification is simple
-enough for Ruby developers to work with the file format directly.
+A projects metadata is stored in a `.meta` file. The specification is very strict,
+yet simple enough for Ruby developers to work with the file format directly.
 
-DotRuby project also provides a conveneient API for working with a .ruby file
-and it data.
+The Metaspec project also provides a conveneient API for working with a .meta file
+and its data.
+
+
+## Copying
+
+Metaspec Application for Ruby (c) 2012 Rubyworks
 

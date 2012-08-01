@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-require 'dotruby'
-require 'dotruby/cli/about'
-DotRuby::CLI.about(*ARGV)
-
