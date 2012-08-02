@@ -33,6 +33,9 @@ module Meta
       # The revision of ruby meta specification.
       def revision ; 0 ; end
 
+      # The type of ruby meta specification.
+      attr_accessor :type
+
       # Internal sources for building specification.
       attr_accessor :source
 
@@ -150,6 +153,7 @@ module Meta
       #
       def initialize_attributes
         @data = {
+          'type'         => 'ruby',
           'source'       => [],
           'authors'      => [],
           'copyrights'   => [],

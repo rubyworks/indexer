@@ -249,6 +249,7 @@ module Meta
       #
       def initialize_attributes
         @data = {
+          'type'         => 'ruby',
           'source'       => [],
           'authors'      => [],
           'copyrights'   => [],
