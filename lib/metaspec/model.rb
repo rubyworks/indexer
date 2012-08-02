@@ -7,6 +7,9 @@ module Meta
     #   author = Meta::V0::Author.new(...)
     #   author.is_a?(Meta::Author)  #=> true
     #
+    # TODO: This is probably a dead giveaway that the inverse factory
+    #       we are using via module extensions, is not the way to go.
+    #
     def self.inherited(base)
       basename = base.name.split('::').last
       if not Meta.const_defined?(basename)

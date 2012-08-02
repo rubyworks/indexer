@@ -1,12 +1,12 @@
 ---
 revision: 0
-source: ruby.yml
-name: dotruby
-version: 0.1.0
-title: DotRuby
+source: meta.yml
+name: meta
+version: 0.2.0
+title: Meta
 summary: Definitive Ruby Project Metadata
 description:
-  The .ruby specification is the bomb! 
+  The .meta specifications are the bomb! 
 requirements:
   - name: qed
     groups:
@@ -27,6 +27,6 @@ copyrights:
     holder: Postmodern
     license: BSD-2-Clause
 resources:
-  homepage: http://dotruby.github.com
-  source: http://github.com/dotruby/dotruby
+  homepage: http://rubyworks.github.com/meta
+  source: http://github.com/rubyworks/meta
 

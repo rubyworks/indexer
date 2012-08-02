@@ -1,6 +1,8 @@
----
+--- 
+type: ruby
+date: '2012-05-02'
 source:
-- ruby.yml
+- meta.yml
 authors:
 - name: trans
   email: transfire@gmail.com
@@ -34,9 +36,9 @@ extra: {}
 load_path:
 - lib
 revision: 0
-name: dotruby
-title: DotRuby
+name: metaspec
+title: Ruby Metadata
 version: 0.1.0
 summary: Definitive Ruby Project Metadata
-description: The .ruby specification is the bomb!
-date: '2012-05-02'
+description: The .meta specification is the bomb!
+
