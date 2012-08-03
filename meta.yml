@@ -1,12 +1,12 @@
 ---
 revision: 0
 source: meta.yml
-name: meta
+name: metadata
 version: 0.2.0
-title: Meta
-summary: Definitive Ruby Project Metadata
+title: Metadata
+summary: Ruby Project Metadata Specification
 description:
-  The .meta specifications are the bomb! 
+  Metaspecs are the bomb! 
 requirements:
   - name: qed
     groups:
@@ -27,6 +27,6 @@ copyrights:
     holder: Postmodern
     license: BSD-2-Clause
 resources:
-  homepage: http://rubyworks.github.com/meta
-  source: http://github.com/rubyworks/meta
+  home: http://rubyworks.github.com/metadata
+  code: http://github.com/rubyworks/metadata
 

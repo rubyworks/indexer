@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-require 'metaspec'
-require 'metaspec/cli/source'
-Meta::Spec::CLI.source(*ARGV)
-

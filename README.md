@@ -1,6 +1,6 @@
-# Ruby Metaspec
+# Ruby Metadata Specification
 
-[![Build Status](https://secure.travis-ci.org/dotruby/dotruby.png)](http://travis-ci.org/rubyworks/metaspec)
+[![Build Status](https://secure.travis-ci.org/dotruby/dotruby.png)](http://travis-ci.org/rubyworks/metadata)
 
 Metaspec is a well-defined project/package metadata specification for Ruby projects.
 
@@ -13,5 +13,5 @@ and its data.
 
 ## Copying
 
-Metaspec Application for Ruby (c) 2012 Rubyworks
+Metadata (c) 2012 Rubyworks
 

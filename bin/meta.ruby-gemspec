@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-require 'metaspec'
-require 'metaspec/cli/gemspec'
-Meta::Spec::CLI.gemspec(*ARGV)
-

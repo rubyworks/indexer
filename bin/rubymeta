@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'meta'
+require 'meta/cli'
+Ruby::Metadata::CLI.main(*ARGV)
