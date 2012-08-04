@@ -1,9 +1,8 @@
 ---
 revision: 0
-source: meta.yml
-name: metadata
+name: meta
 version: 0.2.0
-title: Metadata
+title: Meta
 summary: Ruby Project Metadata Specification
 description:
   Metaspecs are the bomb! 
@@ -27,6 +26,6 @@ copyrights:
     holder: Postmodern
     license: BSD-2-Clause
 resources:
-  home: http://rubyworks.github.com/metadata
-  code: http://github.com/rubyworks/metadata
-
+  home: http://rubyworks.github.com/meta
+  code: http://github.com/rubyworks/meta
+  mail: http://google.groups.com/groups/rubyworks-mailinglist
