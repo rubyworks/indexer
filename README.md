@@ -1,17 +1,22 @@
-# Ruby Metadata Specification
+# Rumbler
 
-[![Build Status](https://secure.travis-ci.org/dotruby/dotruby.png)](http://travis-ci.org/rubyworks/metadata)
+## Ruby Metadata Enabler
 
-Metaspec is a well-defined project/package metadata specification for Ruby projects.
+[![Build Status](https://secure.travis-ci.org/rubyworks/rumbler.png)](http://travis-ci.org/rubyworks/rumbler)
 
-A projects metadata is stored in a `.meta` file. The specification is very strict,
+Rumbler provides a detailed and well-defined project metadata specification
+for Ruby projects.
+
+A projects metadata is stored in a `.ruby` file. The specification is very strict,
 yet simple enough for Ruby developers to work with the file format directly.
 
-The Metaspec project also provides a conveneient API for working with a .meta file
+The project also provides a conveneient API for working with `.ruby` files
 and its data.
 
 
 ## Copying
 
-Metadata (c) 2012 Rubyworks
+Rumbler (c) 2012 Rubyworks
+
+BSD-2-Clause License
 
