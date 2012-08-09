@@ -1,0 +1,32 @@
+--- 
+name: app_name
+version: 0.1.0
+
+title: App Name
+summary: Online summary of your app/library
+
+description:
+  Long description of your application or library.
+  Unlike summary this can be multiple lines.
+
+authors:
+  - you <you@foomail.com>
+
+requirements:
+- dependency 1.0~
+- rake (build)
+- test (test)
+
+repositories:
+  upstream: http://github.com/organization/app_name/app_name.git
+
+resources:
+  home: http://organization.github.org/app_name
+  code: http://github.com/organization/app_name
+
+categories:
+  - foo
+
+copyrights:
+  - 2012 Your Name (MIT)
+

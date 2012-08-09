@@ -1,0 +1,32 @@
+--- 
+name: metaspec
+version: 0.1.0
+
+title: Ruby Metadata
+summary: Ruby User-friendly Metadata Enabler
+
+description:
+  Rumbler gives Ruby project a common format for reuable project metadata.
+
+authors:
+  - trans <transfire@gmail.com>
+  - postmodern (http://trans.github.com)
+
+requirements:
+- qed (test)
+- ae  (test)
+
+repositories:
+  upstream: http://github.com/rubyworks/rumbler/rumbler.git
+
+resources:
+  homepage: http://dotruby.github.com
+  source: http://github.com/dotruby/dotruby
+
+categories:
+  - metadata
+
+copyrights:
+  - 2011 Rubyworks (BSD-2-Clause)
+  - 2011 Postmodern (BSD-2-Clause)
+

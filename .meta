@@ -1,37 +1,43 @@
---- 
+---
 type: ruby
-date: '2012-05-02'
 source:
-- meta.yml
+- Rubyfile
 authors:
 - name: trans
   email: transfire@gmail.com
-- name: postmodern
-  website: http://trans.github.com
+- name: postmodern (http://trans.github.com)
 copyrights:
-- holder: Trans
-  year: 2011
+- holder: Rubyworks
+  year: '2011'
   license: BSD-2-Clause
 - holder: Postmodern
-  year: 2011
+  year: '2011'
   license: BSD-2-Clause
 requirements:
 - name: qed
   groups:
   - test
+  development: true
 - name: ae
   groups:
   - test
+  development: true
 dependencies: []
 alternatives: []
 conflicts: []
-repositories: []
+repositories:
+- uri: http://github.com/rubyworks/rumbler/rumbler.git
+  scm: git
+  name: upstream
 resources:
 - uri: http://dotruby.github.com
+  label: Homepage
   type: homepage
 - uri: http://github.com/dotruby/dotruby
+  label: Source Code
   type: source
-categories: []
+categories:
+- metadata
 extra: {}
 load_path:
 - lib
@@ -39,6 +45,6 @@ revision: 0
 name: metaspec
 title: Ruby Metadata
 version: 0.1.0
-summary: Definitive Ruby Project Metadata
-description: The .meta specification is the bomb!
-
+summary: Ruby User-friendly Metadata Enabler
+description: Rumbler gives Ruby project a common format for reuable project metadata.
+date: '2012-08-09'
