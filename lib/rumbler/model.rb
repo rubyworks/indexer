@@ -20,7 +20,7 @@ module Rumbler
             Rumbler::V[revison]::#{basename}
           end
           def self.new(*args, &blk)
-            Rumbler::V[CURRENT_REVISION]::#{basename}.new(*args, &blk)
+            Rumbler::V[REVISION]::#{basename}.new(*args, &blk)
           end
         }
         Rumbler.const_set(basename, mod)

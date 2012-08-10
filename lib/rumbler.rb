@@ -5,7 +5,13 @@ module Rumbler
   # Rumbler library directory.
   DATADIR = File.dirname(__FILE__) + '/../data/rumbler'
 
-  # Current stable revision.
+  # Default metadata file for use by end-developer.
+  USER_FILE = 'Metadata'
+
+  # File name of locked metadata file.
+  LOCK_FILE = '.metadata.lock'
+
+  # Current stable revision of specification.
   REVISION = 0
 end
 
@@ -27,7 +33,7 @@ require 'rumbler/version/constraint'
 require 'rumbler/builder'
 #require 'rumbler/bundler'
 
-require 'rumbler/v0' # CURRENT_REVISION
+require 'rumbler/v0'  # current revision
 
 require 'rumbler/metadata'
 

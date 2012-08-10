@@ -337,7 +337,7 @@ module Rumbler; module V0
     #   List of purpose categories for the project.
     #
     def categories=(categories)
-      Valid.array!(categories, :categories)
+      categories = Array(categories)
 
       @data['categories'].clear
 

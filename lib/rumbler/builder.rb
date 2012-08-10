@@ -15,8 +15,6 @@ module Rumbler
   #
   class Builder
 
-    DEFAULT_SOURCE = 'Rubyfile'  # TODO: Or 'Metafile'?
-
     # Require all builder mixins.
     def self.require_builders
       require_relative 'builder/file'
@@ -40,14 +38,14 @@ module Rumbler
       ## use source of current metadata if none given
       ## TODO: Only search the current directory or search up to root?
       if source.empty? 
-        if file = Dir[Metadata::FILE_NAME].first  #or `Metadata.exists?` ?
+        if file = Dir[LOCK_FILE].first  #or `Metadata.exists?` ?
           data   = YAML.load_file(file)
           source = Array(data['source'])
         end
       end
 
       if source.empty?
-        source = [DEFAULT_SOURCE]
+        source = [USER_FILE]
       end
 
       source.each do |file|

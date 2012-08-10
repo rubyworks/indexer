@@ -33,10 +33,10 @@ module Rumbler
           template = File.join(template_dir, 'ruby.txt')
         end
 
-        if File.exists?('Metafile')
-          raise Error.exception("Metafile already exists.", IOError) 
+        if File.exists?('Metadata')
+          raise Error.exception("Metadata file already exists.", IOError) 
         else
-          File.open('Metafile', 'w') do |f|
+          File.open('Metadata', 'w') do |f|
             f << File.read(template)
           end
         end

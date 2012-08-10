@@ -50,7 +50,7 @@ module Rumbler
       file   = opts[:file]
       force  = opts[:force]
       static = opts[:static]
-      which  = opts[:which] || CURRENT_REVISION
+      which  = opts[:which] || REVISION
 
       if file
         if file.extname(file) != '.gemspec'

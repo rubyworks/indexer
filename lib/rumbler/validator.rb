@@ -17,8 +17,8 @@ module Rumbler
       revision = data['revision'] || data[:revision]
 
       unless revision
-        revison          = CURRENT_REVISION
-        data['revision'] = CURRENT_REVISION
+        revison          = REVISION
+        data['revision'] = REVISION
       end
 
       extend V[revision]::Canonical

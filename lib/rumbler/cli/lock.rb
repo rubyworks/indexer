@@ -3,9 +3,7 @@ module Rumbler
   module CLI
 
     #
-    # Build locked Rubyfile from a variety of possible sources.
-    #
-    # @todo Rename source command?
+    # Build locked metadata from a variety of possible sources.
     #
     def run_lock(*argv)
       stdout = false

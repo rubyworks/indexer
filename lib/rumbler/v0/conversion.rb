@@ -1,7 +1,7 @@
 module Rumbler; module V0
 
   # Conversion module provides routines for converting
-  # other metadata sources to and from Rubyfile format.
+  # other metadata sources to and from Rumbler's format.
   #
   module Conversion
   end

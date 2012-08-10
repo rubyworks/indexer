@@ -3,18 +3,6 @@ module Rumbler
   class Metadata
 
     #
-    # File name of `.meta` file. It is obviously `.meta` ;)
-    #
-    FILE_NAME = '.meta'  # TODO: rename, maybe to LOCK_FILE.
-
-    #
-    # Current revision of specification.
-    #
-    # @deprecated Use Rumbler::REVISION instead.
-    #
-    CURRENT_REVISION = 0
-
-    #
     # Hash which auto-loads specification revsions.
     #
     # @return [Hash{Integer => Module}]
@@ -28,7 +16,7 @@ module Rumbler
       module_name = "V#{revision}"
 
       unless Rumbler.const_defined?(module_name)
-        raise("unsupported Rubyfile version: #{revision.inspect}")
+        Error.exception("unsupported revision: #{revision.inspect}")
       end
 
       hash[key] = Rumbler.const_get(module_name)
@@ -115,44 +103,52 @@ module Rumbler
     #   The directory from which to start the upward search.
     #
     def self.find(from=Dir.pwd)
-      File.join(root(from), FILE_NAME)
+      File.join(root(from), LOCK_FILE)
     end
 
     #
-    # Find project root by looking upward for a `.meta` file.
+    # Find project root by looking upward for a locked metadata file.
     #
     # @param [String] from
     #   The directory from which to start the upward search.
     #
     # @return [String]
-    #   The path to the `.meta` file.
+    #   The path to the locked metadata file.
     #
-    # @raise []
-    #   The `.meta` file could not be located.
+    # @raise [Errno::ENOENT]
+    #   The locked metadata file could not be located.
     #
     def self.root(from=Dir.pwd)
       if not path = exists?(from)
-        raise Error.exception("could not locate the #{FILE_NAME} file", Errno::ENOENT)
+        lock_file_missing(from)
       end
       path
     end
 
     #
-    # Does a .meta file exist?
+    # Does a locked metadata file exist?
     #
-    # @return [true,false] Whether .meta file exists.
+    # @return [true,false] Whether locked metadata file exists.
     #
     def self.exists?(from=Dir.pwd)
+      home = File.expand_path('~')
       path = File.expand_path(from)
-      while path != '/'
-        if File.file?(File.join(path,FILE_NAME))
+      while path != '/' and path != home
+        if File.file?(File.join(path,LOCK_FILE))
           return path
         else
           path = File.dirname(path)
         end
-        false #raise Error.exception(".meta file not found", Errno::ENOENT)
+        false #lock_file_missing(from)
       end
-      false #raise Error.exception("could not locate the #{FILE_NAME} file", Errno::ENOENT)
+      false #lock_file_missing(from)
+    end
+
+    #
+    # Raise lock file missing error.
+    #
+    def lock_file_missing(from=nil)
+      raise Error.exception("could not locate locked metadata", Errno::ENOENT)
     end
 
     #
@@ -165,7 +161,7 @@ module Rumbler
     #
     def self.ensure_locked
       unless exists?
-        files = ['Rubyfile']
+        files = [USER_FILE]
         Builder.build(*files)
       end
     end
@@ -180,8 +176,8 @@ module Rumbler
 
       unless revision
         # TODO: raise error instead ?
-        revison          = CURRENT_REVISION
-        data['revision'] = CURRENT_REVISION
+        revison          = REVISION
+        data['revision'] = REVISION
       end
 
       return revision, data

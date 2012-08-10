@@ -2,11 +2,11 @@ module Rumbler
 
   class Builder
 
-    # It is not the recommended that a .gemspec be the usual source of the metadata.
-    # Rather it is recommended that a the gemspec be produced from the Rubyfile
-    # instead. (Note, the gemspec can lawasy be augmented as needed.) Nonetheless,
-    # this can serve as a temporary measure for creating a Rubyfile file until
-    # such a transition is made.
+    # It is not the recommended that a .gemspec be the usual source of metadata.
+    # Rather it is recommended that a the gemspec be produced from the metadata
+    # instead. (Rumber's metadata covers almost every aspect of a emspec, and
+    # a gemspec can be augmented where needed.) Nonetheless, a gemspec can serve
+    # as a good soruce for creating an initial metadata file.
     #
     module GemspecBuild
 

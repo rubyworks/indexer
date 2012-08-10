@@ -15,7 +15,6 @@ module Rumbler; module V0
     #
     # @return [Resource] resource instance
     def self.parse(data)
-p data
       case data
       when String
         new('uri'=>data)
