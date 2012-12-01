@@ -14,9 +14,15 @@ module Rumbler; module V0
       case file
       when String
         # FIXME: Is this the correct way fot load a gemfile?
-        bundle = ::Bundler::Dsl.new.eval_gemfile(file)
+        bundle = ::Bundler::Dsl.new
+        bundle.eval_gemfile(file)
       when NilClass
         bundle = ::Bundler.definition
+      end
+
+      begin
+        merge!(bundle.metadata.to_h)
+      rescue
       end
 
       bundle.dependencies.each do |d|
