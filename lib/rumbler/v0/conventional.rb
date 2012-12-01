@@ -392,7 +392,7 @@ module Rumbler; module V0
       when Hash
         @data['resources'].clear
         resources.each do |type, uri|
-          @data['resources'] << Resource.new(:uri=>uri, :type=>type)
+          @data['resources'] << Resource.new(:uri=>uri, :type=>type.to_s)
         end
       else
         raise(ValidationError, "repositories must be an Array or Hash")

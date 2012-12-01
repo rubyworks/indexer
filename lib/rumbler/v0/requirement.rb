@@ -28,7 +28,14 @@ module Rumbler; module V0
     #
     #
     def self.parse_hash(data)
-      name = data.delete('name') || data.delete(:name)
+      name = (data.delete('name') || data.delete(:name)).to_s
+      # make sure groups are strings
+      groups = []
+      groups << (data.delete('groups') || data.delete(:groups))
+      groups << (data.delete('group')  || data.delete(:group))
+      groups = groups.flatten.compact.map{ |g| g.to_s }
+      data[:groups] = groups
+      #
       new(name, data)
     end
 
@@ -73,7 +80,13 @@ module Rumbler; module V0
       name, data = *array
       case data
       when Hash
-        new(name, data)
+        groups = []
+        groups << (data.delete('groups') || data.delete(:groups))
+        groups << (data.delete('group')  || data.delete(:group))
+        groups = groups.flatten.compact.map{ |g| g.to_s }
+        data[:groups] = groups
+
+        new(name.to_s, data)
       when String
         parse_string(name + " " + data)
       else
@@ -159,6 +172,7 @@ module Rumbler; module V0
     #
     # Set the groups to which the requirement belongs.
     #
+
     # @return [Array, String] list of groups
     #
     def groups=(groups)

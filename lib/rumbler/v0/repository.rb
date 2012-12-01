@@ -21,9 +21,9 @@ module Rumbler; module V0
       when Array
         h, d = {}, data.dup  # TODO: data.rekey(&:to_s)
         h.update(d.pop) while Hash === d.last
-        h['name'] = d.shift unless d.empty?
-        h['uri']  = d.shift unless d.empty?
-        h['scm']  = d.shift unless d.empty?
+        h['name'] = d.shift.to_s unless d.empty?
+        h['uri']  = d.shift.to_s unless d.empty?
+        h['scm']  = d.shift.to_s unless d.empty?
         new(h)
       when Hash
         new(data)
