@@ -1,13 +1,13 @@
 ---
 type: ruby
 source:
-- Rubyfile
+- Metadata
 authors:
 - name: trans
   email: transfire@gmail.com
 - name: postmodern (http://trans.github.com)
 copyrights:
-- holder: Rubyworks
+- holder: Ruby Works
   year: '2011'
   license: BSD-2-Clause
 - holder: Postmodern
@@ -30,21 +30,21 @@ repositories:
   scm: git
   name: upstream
 resources:
-- uri: http://dotruby.github.com
+- uri: http://rubyworks.github.com/rumbler
   label: Homepage
-  type: homepage
-- uri: http://github.com/dotruby/dotruby
+  type: home
+- uri: http://github.com/rubyworks/rumbler
   label: Source Code
-  type: source
+  type: code
 categories:
 - metadata
 extra: {}
 load_path:
 - lib
 revision: 0
-name: metaspec
-title: Ruby Metadata
+name: rumbler
+title: Rumbler
 version: 0.1.0
-summary: Ruby User-friendly Metadata Enabler
-description: Rumbler gives Ruby project a common format for reuable project metadata.
-date: '2012-08-09'
+summary: Ruby Metadata Enabler
+description: Rumbler gives Ruby project's a unified format for reusable project metadata.
+date: '2012-08-10'
