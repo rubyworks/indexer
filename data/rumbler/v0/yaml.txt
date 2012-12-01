@@ -1,13 +1,11 @@
 --- 
-name: app_name
-version: 0.1.0
-
-title: App Name
-summary: Online summary of your app/library
+name:    <%= name %>
+version: <%= version %>
+title:   <%= title %>
+summary: <%= summary %>
 
 description:
-  Long description of your application or library.
-  Unlike summary this can be multiple lines.
+  <%= description %>
 
 authors:
   - you <you@foomail.com>

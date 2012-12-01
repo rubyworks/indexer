@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
-name 'app_name'
-version '0.1.0'
-title 'App Name'
-summary 'Online summary of your app/library'
+name    <%= name.inspect %>
+version <%= version.inspect %>
+title   <%= title.inspect %>
+summary <%= summary.inpsect %>
 
-description 'Long description of your application or library. ' \
-            'Unlike summary this can be multiple lines.'
+description \
+  <% description.inspect %>
 
 authors [
   'you <you@foomail.com>'
@@ -25,6 +25,7 @@ repositories {
 resources {
   'home' => 'http://organization.github.org/app_name',
   'code' => 'http://github.com/organization/app_name'
+}
 
 categories ['foo']
 
