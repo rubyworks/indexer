@@ -27,7 +27,7 @@ It can also take a string path.
 Any other object will cause an error.
 
     check "invalid load_path" do |d|
-      ! DotRuby::ValidationError.raised? do
+      ! Indexer::ValidationError.raised? do
         spec.load_path = d
       end
     end

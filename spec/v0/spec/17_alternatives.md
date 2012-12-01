@@ -27,7 +27,7 @@ But the elements must be String, or respond to `#to_str`.
 The `alternatives` field cannot accept anything else.
 
     check "invalid alternative" do |d|
-      ! DotRuby::ValidationError.raised? do
+      ! Indexer::ValidationError.raised? do
         spec.alternatives = d
       end
     end

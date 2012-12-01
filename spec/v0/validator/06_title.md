@@ -9,7 +9,7 @@ purposes and the like.
 
 The `title` value MUST have only one lione of text.
 
-    expect DotRuby::ValidationError do
+    expect Indexer::ValidationError do
       data.title = "Foo\nBar"
     end
 

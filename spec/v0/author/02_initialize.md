@@ -10,10 +10,10 @@ are `name`, `email`, `website` and `role`.
       :role    => 'development'
     )
 
-DotRuby uses a dynamically module to allow revisioned components
+Indexer uses a dynamically module to allow revisioned components
 to be tested with a non-revisioned "tag ancestor".
 
-    author.assert.kind_of?(DotRuby::Author)
+    author.assert.kind_of?(Indexer::Author)
 
 The tag module can be used as a factory for creating a new 
 revisioned component.

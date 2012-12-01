@@ -21,7 +21,7 @@ end
 
 desc "build gem"
 task :gem do
-  sh "gem build dotruby.gemspec"
+  sh "gem build indexer.gemspec"
 end
 
 desc "release gem"

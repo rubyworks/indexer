@@ -39,7 +39,7 @@ Entries passed to the initializer are assigned via Spec's setters
 and are validated upon assignment, so no invalid values can get into the
 object's state, e.g.
 
-    expect DotRuby::ValidationError do
+    expect Indexer::ValidationError do
       Spec.new(:name=>1)
     end
 

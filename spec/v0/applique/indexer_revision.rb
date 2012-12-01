@@ -1,0 +1,4 @@
+require 'indexer'
+
+include Indexer
+

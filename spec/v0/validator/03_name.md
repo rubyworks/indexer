@@ -30,7 +30,7 @@ Likewise, we can verify this by trying to assign each name.
     data = Validator.new
 
     @names.each do |name|
-      expect DotRuby::ValidationError do
+      expect Indexer::ValidationError do
         data.name = name
       end
     end

@@ -2,7 +2,7 @@
 
 Given a Spec instance.
 
-    spec = DotRuby::Spec.new
+    spec = Indexer::Spec.new
     spec.name    = 'foo'
     spec.version = '1.0.0'
 
@@ -13,7 +13,7 @@ the `#save!` method.
 
 We can use `#read` to ensure it saved as we expected.
 
-    spec = DotRuby::Spec.read('save.yml')
+    spec = Indexer::Spec.read('save.yml')
 
 And we can verify it was read.
 

@@ -7,7 +7,7 @@ The `codename` field is used to name the specific version.
 
 The `codename` value MUST have only one lone of text.
 
-    expect DotRuby::ValidationError do
+    expect Indexer::ValidationError do
       spec.codename = "foo\nbar"
     end
 

@@ -1,15 +1,15 @@
 ## Spec.read
 
-Given a `.ruby` file:
+Given a `.index` file:
 
     ---
     name: foo
     version: 1.0.0
 
-Then `Spec.read('.ruby')` will read in a file, parse and
+Then `Spec.read('.index')` will read in a file, parse and
 validate it and return a new Spec object.
 
-    spec = DotRuby::Spec.read('.ruby')
+    spec = Indexer::Spec.read('.index')
 
 And we can verify it was read.
 

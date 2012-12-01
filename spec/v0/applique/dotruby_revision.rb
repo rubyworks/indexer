@@ -1,4 +1,0 @@
-require 'dotruby'
-
-include DotRuby
-

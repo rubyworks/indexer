@@ -66,7 +66,7 @@ on the singular method.
 
 But not the plural.
 
-    expect DotRuby::ValidationError do
+    expect Indexer::ValidationError do
       spec.copyrights = ["2010", "T. Bone Willy", "BSD-2-Clause"]
     end
 

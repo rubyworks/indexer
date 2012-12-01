@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+ 
+name    'indexer'
+version '0.1.0'
+
+title   'Indexer'
+summary 'Ruby Metadata Enabler'
+
+description "Indexer gives Ruby project's a unified format for " \
+            "reusable project metadata."
+
+authors 'trans <transfire@gmail.com>',
+        'postmodern (http://trans.github.com)'
+
+requirements 'qed (test)',
+             'ae  (test)'
+
+repositories(
+  'upstream' => 'http://github.com/rubyworks/indexer/indexer.git'
+)
+
+resources(
+  'home' => 'http://rubyworks.github.com/indexer',
+  'code' => 'http://github.com/rubyworks/indexer'
+)
+
+categories 'metadata'
+
+copyrights(
+  '2011 Ruby Works (BSD-2-Clause)',
+  '2011 Postmodern (BSD-2-Clause)'
+)
+

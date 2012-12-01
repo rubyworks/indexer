@@ -7,7 +7,7 @@ characters /[A-Z][a-z]_-/.
 ### word?
 
     check "word" do |word|
-      DotRuby::Valid.word?(word)
+      Indexer::Valid.word?(word)
     end
 
 These are all valid words.
@@ -27,7 +27,7 @@ And these are not valid words.
 ### word!
 
     check do |word|
-      DotRuby::Valid.word!(word)
+      Indexer::Valid.word!(word)
     end
 
 Again, these are all valid words.

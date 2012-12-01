@@ -1,7 +1,7 @@
 ---
 type: ruby
 source:
-- Metadata
+- Indexfile
 authors:
 - name: trans
   email: transfire@gmail.com
@@ -26,14 +26,14 @@ dependencies: []
 alternatives: []
 conflicts: []
 repositories:
-- uri: http://github.com/rubyworks/rumbler/rumbler.git
+- uri: http://github.com/rubyworks/indexer/indexer.git
   scm: git
   name: upstream
 resources:
-- uri: http://rubyworks.github.com/rumbler
+- uri: http://rubyworks.github.com/indexer
   label: Homepage
   type: home
-- uri: http://github.com/rubyworks/rumbler
+- uri: http://github.com/rubyworks/indexer
   label: Source Code
   type: code
 categories:
@@ -42,9 +42,9 @@ extra: {}
 load_path:
 - lib
 revision: 0
-name: rumbler
-title: Rumbler
+name: indexer
+title: Indexer
 version: 0.1.0
-summary: Ruby Metadata Enabler
-description: Rumbler gives Ruby project's a unified format for reusable project metadata.
+summary: Ruby Metadata Indexer
+description: Indexer gives Ruby project's a unified format for reusable project metadata.
 date: '2012-08-10'

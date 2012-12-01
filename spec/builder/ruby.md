@@ -1,8 +1,8 @@
 # Ruby
 
-Builder can create a DotRuby Spec via method_missing.
+Builder can create an index via method_missing.
 
-    builder = DotRuby::Builder.new
+    builder = Indexer::Builder.new
 
     builder.name 'example'
 
@@ -17,6 +17,6 @@ So then
 
     spec.authors.size == 2
 
-The Ruby-based builder module uses this fact whe loading Ruby-based
+The Ruby-based builder module uses this fact when loading Ruby-based
 sources.
 

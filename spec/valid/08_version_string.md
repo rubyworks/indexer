@@ -3,7 +3,7 @@
 ### version_string?
 
   check do |str|
-    DotRuby::Valid.assert.version_string?(str)
+    Indexer::Valid.assert.version_string?(str)
   end
 
   ok '1.0.0'
@@ -17,7 +17,7 @@
 ### version_string!
 
   check do |str|
-    DotRuby::Valid.version_string!(str)
+    Indexer::Valid.version_string!(str)
   end
 
   ok '1.0.0'

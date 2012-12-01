@@ -14,7 +14,7 @@ removed.
 
 The summary can be assigned only object's that responds to #to_str.
 
-    expect DotRuby::ValidationError do
+    expect Indexer::ValidationError do
       spec.summary = :even_a_symbol
     end
 

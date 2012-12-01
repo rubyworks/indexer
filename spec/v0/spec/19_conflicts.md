@@ -30,7 +30,7 @@ Or an array of hash entries.
 The `conflicts` field can only by assigned such a Hash.
 
     check "invalid conflict" do |d|
-      ! DotRuby::ValidationError.raised? do
+      ! Indexer::ValidationError.raised? do
         spec.conflicts = d
       end
     end

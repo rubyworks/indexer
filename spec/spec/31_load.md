@@ -1,6 +1,6 @@
 ## Spec.load
 
-Given a `ruby.yml` file:
+Given a `metadata.yml` file:
 
     ---
     name: foo
@@ -8,10 +8,10 @@ Given a `ruby.yml` file:
     copyright: 2010 T. J. Hooker
     require_paths: ['lib', 'vendor/ansi/lib']
 
-Then `Spec.load('ruby.ayml')` will read in a file, parse it and
+Then `Spec.load('metadata.yaml')` will read in a file, parse it and
 return a new Spec object.
 
-    spec = DotRuby::Spec.load('ruby.yml')
+    spec = Indexer::Spec.load('metadata.yml')
 
 And we can verify it was read.
 

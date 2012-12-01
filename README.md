@@ -1,10 +1,10 @@
-# Rumbler
+# Indexer
 
 ## Enable Your Ruby Projects Metadata
 
-[![Build Status](https://secure.travis-ci.org/rubyworks/rumbler.png)](http://travis-ci.org/rubyworks/rumbler)
+[![Build Status](https://secure.travis-ci.org/rubyworks/indexer.png)](http://travis-ci.org/rubyworks/indexer)
 
-Rumbler defines a detailed and well-defined project metadata specification
+Indexer defines a detailed and well-defined project metadata specification
 for Ruby projects.
 
 A project's metadataq is canonized and stored in a `.ruby.lock` file.
@@ -17,7 +17,7 @@ specification and its data when suitable to the usecase.
 
 ## Copyrights
 
-Rumbler (c) 2012 Rubyworks
+Indexer (c) 2012 Rubyworks
 
 BSD-2-Clause License
 
