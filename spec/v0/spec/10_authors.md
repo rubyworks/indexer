@@ -1,10 +1,10 @@
-# Spec#authors
+# Indexer::V0::Metadata#authors
 
 The `authors` field holds a list of orginating authors.
 
-The Spec class allows, of course, the canonical format.
+The Metadata class allows, of course, the canonical format.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.authors = [
       { 'name'  => 'Bob Williams',

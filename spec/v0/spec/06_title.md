@@ -1,9 +1,9 @@
-## Spec#title
+## Indexer::V0::Metadata#title
 
 The `title` field is used in place of the `name` for documentation
 purposes and the like.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.title = "Tom's Hello World Program"
 
@@ -13,7 +13,7 @@ The `title` value MUST have only one line of text.
       spec.title = "Foo\nBar"
     end
 
-The Spec class will stip out excess space from a title.
+The Metadata class will stip out excess space from a title.
 
     spec.title = "Foo   Bar"
     spec.title.assert == "Foo Bar"
@@ -24,7 +24,7 @@ The Spec class will stip out excess space from a title.
 If no title is defined, but `name` has been assigned, then the title
 will default to the name capitalized.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
     spec.name = "foo"
     spec.title.assert == "Foo"
 

@@ -1,8 +1,8 @@
-## Spec.save!
+## Metadata.save!
 
-Given a Spec instance.
+Given a Metadata instance.
 
-    spec = Indexer::Spec.new
+    spec = Indexer::Metadata.new
     spec.name    = 'foo'
     spec.version = '1.0.0'
 
@@ -13,7 +13,7 @@ the `#save!` method.
 
 We can use `#read` to ensure it saved as we expected.
 
-    spec = Indexer::Spec.read('save.yml')
+    spec = Indexer::Metadata.read('save.yml')
 
 And we can verify it was read.
 

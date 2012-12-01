@@ -1,4 +1,4 @@
-## Spec.find
+## Metadata.find
 
 Given a `.index` file:
 
@@ -6,14 +6,12 @@ Given a `.index` file:
     name: foo
     version: 1.0.0
 
-Then `Spec.find` will ascend upward in the directory heireachy looking for a
-`.index` file. If found it will read, parse and validate it and then return
-a new Spec object.
+Then `Metadata.find` will ascend upward in the directory heireachy looking for a
+`.index` file.
 
-    spec = Indexer::Spec.find
+    file = Indexer::Metadata.find
 
-And we can verify it was read.
+And we can verify it was found.
 
-    spec.assert.name == 'foo'
-    spec.assert.version.to_s == '1.0.0'
+    File.basename(file).assert == '.index'
 

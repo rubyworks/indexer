@@ -12,7 +12,7 @@ Examples of good @names are:
 
 To verify this we can assign each name.
 
-    data = Validator.new
+    data = Indexer::V0::Validator.new
 
     @names.each do |name|
       data.name = name
@@ -27,7 +27,7 @@ And these are not good @names:
 
 Likewise, we can verify this by trying to assign each name.
 
-    data = Validator.new
+    data = Indexer::V0::Validator.new
 
     @names.each do |name|
       expect Indexer::ValidationError do

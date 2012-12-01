@@ -1,4 +1,4 @@
-## Spec#extra
+## Indexer::V0::Metadata#extra
 
 The `extra` field is used to store extraneous information that
 a project developer may want to provide in the `.ruby` that is
@@ -9,7 +9,7 @@ much at all, but is made available for the rare case.
 
 The `extra` field is simply a Hash.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.extra.should == {}
 

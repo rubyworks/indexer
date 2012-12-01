@@ -1,4 +1,4 @@
-## Spec#date
+## Indexer::V0::Metadata#date
 
 The `date` field is the date the `.ruby` file was last edited, or if
 part of a package when the package was built.
@@ -7,7 +7,7 @@ This field must be a string that comforms to the ISO UTC timstamp standard.
 The format of which is "YYYY-MM-DD HH:MM:SS", wheret the time portion is
 optional.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
     spec.date = "2011-10-20"
     spec.date = "2011-10-01 09:42:11"
     spec.date = "2011-10-01 14:42:11"

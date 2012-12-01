@@ -1,4 +1,4 @@
-## Spec#dependencies
+## Indexer::V0::Metadata#dependencies
 
 The `dependencies` field is essentially the same as `requirements` except that
 it is a list of *binary* packages which are required of the opersating system.
@@ -22,17 +22,17 @@ The canonical field value is an Array of Hashes. The format of the
 
 Only `name` and `version` are required sub-fields.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.dependencies = [
       {'name'=>'foo', 'version'=>'1.0+'},
       {'name'=>'bar', 'version'=>'1.1~', 'development'=>true, 'groups'=>['doc']}
     ]
 
-The Spec class allows some flexibilty in defining dependencies. For instance each
+The Metadata class allows some flexibilty in defining dependencies. For instance each
 entry can be a string in the format of `name [constraint] [(group...)]`.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.dependencies = [
       'foo >= 1.0',
@@ -47,7 +47,7 @@ be a development requirement.
 The exact interface to `Requirement.new` is `(name, specifics)` so
 array elements of this king can be used as well.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.dependencies = [
       ['foo', {'version'=>'>= 1.0'} ],
@@ -56,7 +56,7 @@ array elements of this king can be used as well.
 
 And combinations of all these can be used.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.dependencies = [
       'foo =1.2.3',
@@ -67,7 +67,7 @@ And combinations of all these can be used.
 
 For simple dependencies a hash can also be used.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.dependencies = {
       'foo' => '>= 1.0',
@@ -76,7 +76,7 @@ For simple dependencies a hash can also be used.
 
 More complex hashes can be used as well.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.dependencies = {
       'foo' => {'version'=>'>= 1.0'},

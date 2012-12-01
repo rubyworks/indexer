@@ -1,8 +1,8 @@
-## Spec#summary
+## Indexer::V0::Metadata#summary
 
 The `summary` field is used to breifly describe a project.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.summary = "Convenient Way to Say Hello"
 

@@ -1,15 +1,15 @@
-## Spec#alternatives
+## Indexer::V0::Metadata#alternatives
 
 The `alternatives` field holds a list of other packages with which this
 package can act as a reasonable substitue and vice-versa.
 
 The format of the field is an array.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.alternatives = ['BlueCloth','rdiscount']
 
-The Spec class allows any object that responds to #to_ary to be
+The Metadata class allows any object that responds to #to_ary to be
 assinged.
 
     o = Object.new

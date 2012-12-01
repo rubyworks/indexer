@@ -2,14 +2,14 @@
 
 The `resources` field holds a list of URLs index by type.
 
-    data = Validator.new
+    data = Indexer::V0::Validator.new
 
-    data.resources = {
+    data.resources = [{
       'home' => 'http://foo.org',
       'docs' => 'http://foo.org/api'
-    }
+    }]
 
-The `resource` field MUST be a Hash.
+The `resource` field MUST be a Array.
 
     no 100
     no :symbol

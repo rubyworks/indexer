@@ -3,7 +3,7 @@
 # @todo best match for this?
 When '`(((\w+)))` field (((is|holds)))' do |name, _|
   check "#{name} setting invalid" do |value|
-    data = Indexer::Spec.new
+    data = Indexer::V0::Metadata.new
     begin
       data.send("#{name}=", value)
       true

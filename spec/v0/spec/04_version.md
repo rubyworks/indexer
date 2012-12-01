@@ -1,10 +1,10 @@
-## Spec#version
+## Indexer::V0::Metadata#version
 
-The Spec class can hande 
+The Indexer::V0::Metadata class can hande 
 The `version` field follows closely to the SemVer[http://semiver.org] standard.
 
     check "version validation error" do |v, r|
-      spec = Spec.new
+      spec = Indexer::V0::Metadata.new
       spec.version = v
       spec.version.to_a.should == r
     end

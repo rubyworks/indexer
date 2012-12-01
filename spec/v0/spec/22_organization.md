@@ -1,4 +1,4 @@
-## Spec#organization
+## Indexer::V0::Metadata#organization
 
 The `organization` field holds the name of the company, club, foundation,
 or programming group to which a project belongs. For users of GitHub this

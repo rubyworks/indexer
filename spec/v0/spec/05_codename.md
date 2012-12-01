@@ -1,8 +1,8 @@
-## Sped#codename
+## Indexer::V0::Metadata#codename
 
 The `codename` field is used to name the specific version.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
     spec.codename = "Lazy Louse"
 
 The `codename` value MUST have only one lone of text.
@@ -11,7 +11,7 @@ The `codename` value MUST have only one lone of text.
       spec.codename = "foo\nbar"
     end
 
-The Spec allows any object that responds to #to_s to be assigned.
+The Indexer::V0::Metadata allows any object that responds to #to_s to be assigned.
 
     spec.codename = :LazyLouse
     spec.codename.assert == 'LazyLouse'

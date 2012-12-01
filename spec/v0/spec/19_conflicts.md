@@ -1,4 +1,4 @@
-## Spec#conflicts
+## Indexer::V0::Metadata#conflicts
 
 The `conflicts` field holds a list of packages with which the project is
 known not to be compatible.
@@ -6,7 +6,7 @@ known not to be compatible.
 The format of the field is a mapping to package names indexing version
 constraints.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
 
     spec.conflicts = {
        'bad_robot' => '>=1.0',

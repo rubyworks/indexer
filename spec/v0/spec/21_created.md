@@ -1,4 +1,4 @@
-## Spec#created
+## Indexer::V0::Metadata#created
 
 The `created` field is the date the project was started.
 
@@ -6,7 +6,7 @@ This field must be a string that comforms to the ISO UTC timstamp standard.
 The format of which is "YYYY-MM-DD HH:MM:SS", wheret the time portion is
 optional.
 
-    spec = Spec.new
+    spec = Indexer::V0::Metadata.new
     spec.created = "2011-10-20"
     spec.created = "2011-10-01 09:42:11"
     spec.created = "2011-10-01 14:42:11"

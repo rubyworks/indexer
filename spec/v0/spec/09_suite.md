@@ -1,4 +1,4 @@
-## Spec#suite
+## Indexer::V0::Metadata#suite
 
 The `suite` field is used to identify the _suite_ of packages that a package
 belongs. For example Microsoft "Word" is part of the Microsoft "Office" suite.

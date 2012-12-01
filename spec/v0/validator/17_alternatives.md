@@ -6,7 +6,7 @@ the natural successor of a given package.
 
 The format of the field is an array.
 
-    data = Validator.new
+    data = Indexer::V0::Validator.new
 
     data.alternatives = ['BlueCloth','rdiscount']
 

@@ -32,6 +32,7 @@ require 'indexer/version/constraint'
 
 require 'indexer/builder'
 #require 'indexer/bundler'
+#require 'indexer/validator'
 
 require 'indexer/v0'  # current revision
 

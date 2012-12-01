@@ -21,22 +21,14 @@ module Indexer; module V0
       when Array
         h, d = {}, data.dup  # TODO: data.rekey(&:to_s)
         h.update(d.pop) while Hash === d.last
-        args = h.keys.map{ |k| k.to_s } - ['uri', 'type', 'label']
-        args.each do |key|
-          case key
-          when 'uri'
-            if u = d.find{ |e| Valid.uri?(e) }
-              h['uri'] = d.delete(u)
-            end
-          when 'type'
-            if t = d.find{ |e| Valid.word?(e) && e.downcase == e }
-              h['type'] = d.delete(t)
-            end
-          when 'label'
-            h['label'] = d.shift
-          end
-          raise ValidationError, "malformed resource -- #{data.inspect}" unless d.empty?
+        if x = d.find{ |e| Valid.uri?(e) }
+          h['uri'] = d.delete(x)
         end
+        if x = d.find{ |e| Valid.word?(e) && e.downcase == e }
+          h['type'] = d.delete(x)
+        end
+        h['label'] = d.shift unless d.empty?
+        raise ValidationError, "malformed resource -- #{data.inspect}" unless d.empty?
         new(h)
       when Hash
         new(data)

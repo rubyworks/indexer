@@ -2,7 +2,7 @@
 
 The `repositories` field holds a list of repository URLs indexed by an id.
 
-    data = Validator.new
+    data = Indexer::V0::Validator.new
 
     data.repositories = [
       {

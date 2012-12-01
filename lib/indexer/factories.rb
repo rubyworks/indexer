@@ -18,9 +18,9 @@ module Indexer
     end
   end
 
-  class Resources
+  class Resource
     def self.v(revision)
-      V[revision || REVISION]::Resources
+      V[revision || REVISION]::Resource
     end
   end
 

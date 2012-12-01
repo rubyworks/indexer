@@ -9,7 +9,7 @@ much at all, but is made available for the rare case.
 
 The `extra` field is simply a Hash.
 
-    data = Validator.new
+    data = Indexer::V0::Validator.new
 
     data.extra.should == {}
 

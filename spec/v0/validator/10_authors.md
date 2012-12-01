@@ -2,7 +2,7 @@
 
 The `authors` field holds a list of orginating authors.
 
-    data = Validator.new
+    data = Indexer::V0::Validator.new
 
     data.authors = [
       { 'name'  => 'Bob Sawyer',

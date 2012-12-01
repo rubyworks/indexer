@@ -64,8 +64,8 @@ module Indexer
     #   or a directory from which to lookup the file.
     #
     def self.read(file=Dir.pwd)
-      file = find(file) if File.directory?(path)
-      new(YAML.load_file(data))    
+      file = find(file) if File.directory?(file)
+      new(YAML.load_file(file))  
     end
 
     #
@@ -77,7 +77,7 @@ module Indexer
     end
 
     #
-    # Load from YAML string of IO.
+    # Load from YAML string or IO.
     #
     # @param [String,#read] String or IO object
     #   The file name from which to read the YAML metadata.

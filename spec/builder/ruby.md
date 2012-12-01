@@ -11,11 +11,11 @@ Builder can create an index via method_missing.
 
 So then
 
-    spec = builder.spec
+    metadata = builder.metadata
 
-    spec.name.assert == 'example'
+    metadata.name.assert == 'example'
 
-    spec.authors.size == 2
+    metadata.authors.size == 2
 
 The Ruby-based builder module uses this fact when loading Ruby-based
 sources.
