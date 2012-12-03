@@ -1,15 +1,15 @@
 module Indexer
 
-  class Builder
+  class Importer
 
     # Build metadata from a Ruby script.
     #
-    module RubyBuild
+    module RubyImportation
 
       #
-      # Ruby script build procedure.
+      # Ruby script import procedure.
       #
-      def build(source)
+      def import(source)
         if File.file?(source)
           case File.extname(source) 
           when '.rb'  # TODO: Other ruby extensions ?
@@ -37,10 +37,10 @@ module Indexer
         instance_eval(File.read(file))
       end
 
-    end #module RubyBuild
+    end #module RubyImportation
 
-    # Include RubyBuild mixin into Builder class.
-    include RubyBuild
+    # Include RubyImportation mixin into Builder class.
+    include RubyImportation
 
   end
 

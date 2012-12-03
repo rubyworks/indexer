@@ -1,37 +1,39 @@
 module Indexer
 
-  # Build external sources into metadata.
+  # Import external sources into metadata.
   #
-  def self.build(*sources)
-    Builder.build(*sources)
+  def self.import(*sources)
+    Importer.import(*sources)
   end
 
-  # Builder class takes disperate data sources and imports them
+  # Importer class takes disperate data sources and imports them
   # into a Metadata instance.
   #
-  # Mixins are used to inject build behavior by overriding the `#build` method.
-  # Any such  mixin's #build method must call `#super` if it's method doesn't
-  # apply, allowing the routine to fallback the other possible build methods.
+  # Mixins are used to inject import behavior by overriding the `#import` method.
+  # Any such  mixin's #import method must call `#super` if it's method doesn't
+  # apply, allowing the routine to fallback the other possible import methods.
   #
-  class Builder
+  class Importer
 
-    # Require all builder mixins.
-    def self.require_builders
-      require_relative 'builder/file'
-      require_relative 'builder/ruby'
-      require_relative 'builder/yaml'
-      require_relative 'builder/gemspec'
-      require_relative 'builder/gemfile'
-      require_relative 'builder/version'
+    #
+    # Require all import mixins.
+    #
+    def self.require_importer
+      require_relative 'importer/file'
+      require_relative 'importer/ruby'
+      require_relative 'importer/yaml'
+      require_relative 'importer/gemspec'
+      require_relative 'importer/gemfile'
+      require_relative 'importer/version'
     end
 
     #
-    # Build metadata from external sources.
+    # Import metadata from external sources.
     #
-    def self.build(*source)
+    def self.import(*source)
       options = (Hash === source.last ? source.pop : {})
 
-      require_builders
+      require_importers
 
       #metadata = nil
 
@@ -54,17 +56,17 @@ module Indexer
         end
       end
 
-      builder = Builder.new #(metadata)
+      import = Importer.new #(metadata)
 
       source.each do |src|
-        builder.build(src)
+        importer.import(src)
       end
 
-      return builder.metadata
+      return importer.metadata
     end
 
     #
-    # Initialize builder.
+    # Initialize importer.
     #
     def initialize(metadata=nil)
       @metadata   = metadata || Metadata.new
@@ -79,7 +81,7 @@ module Indexer
     #
     #
     #
-    def build(source)
+    def import(source)
       success = super(source) if defined?(super)
       if success
         metadata.source << source unless metadata.source.include?(source)
@@ -89,7 +91,7 @@ module Indexer
     end
 
     #
-    # Provides a file contents cache. This is used by the YAMLBuild
+    # Provides a file contents cache. This is used by the YAMLImportation
     # script, for instance, to see if the file begins with `---`, in
     # which case the file is taken to be YAML format, even if the 
     # file's extension is not `.yml` or `.yaml`.
@@ -99,11 +101,11 @@ module Indexer
     end
 
     #
-    # Evaluating on the Builder instance, allows Ruby basic metadata
+    # Evaluating on the Importer instance, allows Ruby basic metadata
     # to be built via this method.
     #
     def method_missing(s, *a, &b)
-      return if s == :build
+      return if s == :import
 
       r = s.to_s.chomp('=')
       case a.size

@@ -1,14 +1,14 @@
 module Indexer
 
-  class Builder
+  class Importer
 
     # Build mixin for Bundler's Gemfile.
     #
-    module GemfileBuild
+    module GemfileImportation
       #
       # If the source file is a Gemfile, import it.
       #
-      def build(source)
+      def import(source)
         case source
         when 'Gemfile'
           metadata.import_gemfile(source)
@@ -19,8 +19,8 @@ module Indexer
       end
     end
 
-    # Include GemfileBuild mixin into Builder class.
-    include GemfileBuild
+    # Include GemfileImportation mixin into Builder class.
+    include GemfileImportation
 
   end
 

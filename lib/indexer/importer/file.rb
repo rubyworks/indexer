@@ -1,15 +1,15 @@
 module Indexer
 
-  class Builder
-  
-    # Build metadata from individual files.
+  class Importer
+
+    # Import metadata from individual files.
     #
-    module FileBuild
+    module FileImportation
 
       #
-      # Files build procedure.
+      # Files import procedure.
       #
-      def build(source)
+      def import(source)
         if File.directory?(source)
           load_directory(source)
           true
@@ -19,9 +19,9 @@ module Indexer
       end
 
       #
-      # Import files in a given directory. This will only import files
+      # Import files from a given directory. This will only import files
       # that have a name corresponding to a metadata attribute, unless
-      # the file is listed in a `.metaextra` file within the directory.
+      # the file is listed in a `.index_extra` file within the directory.
       #
       # However, files with an extension of `.yml` or `.yaml` will be loaded
       # wholeclothe and not as a single attribute.
@@ -31,7 +31,7 @@ module Indexer
       def load_directory(folder)
         if File.directory?(folder)
           extra = []
-          extra_file = File.join(folder, '.metaextra')
+          extra_file = File.join(folder, '.index_extra')
           if File.exist?(extra_file)
             extra = File.read(extra_file).split("\n")
             extra = extra.collect{ |pattern| pattern.strip  }
@@ -84,10 +84,10 @@ module Indexer
         end
       end
 
-    end #module FileBuild
+    end
 
-    # Include FileBuild mixin into Builder class.
-    include FileBuild
+    # Include FileImportation mixin into Builder class.
+    include FileImportation
 
   end
 

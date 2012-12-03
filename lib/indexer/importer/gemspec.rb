@@ -1,6 +1,6 @@
 module Indexer
 
-  class Builder
+  class Importer
 
     # It is not the recommended that a .gemspec be the usual source of metadata.
     # Rather it is recommended that a the gemspec be produced from the metadata
@@ -8,12 +8,12 @@ module Indexer
     # a gemspec can be augmented where needed.) Nonetheless, a gemspec can serve
     # as a good soruce for creating an initial metadata file.
     #
-    module GemspecBuild
+    module GemspecImportation
 
       #
       # If the source file is a gemspec, import it.
       #
-      def build(source)
+      def import(source)
         case File.extname(source)
         when '.gemspec'
           # TODO: handle YAML-based gemspecs
@@ -34,8 +34,8 @@ module Indexer
       #end
     end
 
-    # Include GemspecBuild mixin into Builder class.
-    include GemspecBuild
+    # Include GemspecImportation mixin into Builder class.
+    include GemspecImportation
 
   end
 

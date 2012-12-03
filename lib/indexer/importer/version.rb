@@ -1,14 +1,14 @@
 module Indexer
 
-  class Builder
+  class Importer
 
     # Build mixin for Bundler's Gemfile.
     #
-    module VersionBuild
+    module VersionImportation
       #
       # If the source file is a Gemfile, import it.
       #
-      def build(source)
+      def import(source)
         case source
         when 'VERSION.txt', 'Version.txt'
           vers = File.read(source).strip
@@ -30,8 +30,8 @@ module Indexer
       end
     end
 
-    # Include VersionBuild mixin into Builder class.
-    include VersionBuild
+    # Include VersionImportation mixin into Builder class.
+    include VersionImportation
 
   end
 

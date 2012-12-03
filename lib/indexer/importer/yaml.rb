@@ -1,15 +1,15 @@
 module Indexer
 
-  class Builder
+  class Importer
 
-    # Build metadata from a YAML source.
+    # Import metadata from a YAML source.
     #
-    module YAMLBuild
+    module YAMLImportation
 
       #
-      # YAML build procedure.
+      # YAML import procedure.
       #
-      def build(source)
+      def import(source)
         if File.file?(source)
           case File.extname(source)
           when '.yaml', '.yml'
@@ -38,8 +38,8 @@ module Indexer
 
     end
 
-    # Include YAMLBuild mixin into Builder class.
-    include YAMLBuild
+    # Include YAMLImportation mixin into Builder class.
+    include YAMLImportation
 
   end
 
