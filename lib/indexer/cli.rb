@@ -1,12 +1,58 @@
+require 'indexer'
+require 'optparse'
+
 module Indexer
 
-  require 'optparse'  # load OptionParser library
-
-  # CLI is a self extend module.
   #
-  module CLI
-    extend self
+  # Base CLI class.
+  #
+  class CLI
 
+    def self.execute
+      new.execute
+    end
+
+    def argv
+      ARGV
+    end
+
+    def parse(parser)
+    end
+
+    def run
+    end
+
+    def execute
+      begin
+        parse_options
+        run
+      rescue => error
+        raise error if $DEBUG
+        $stderr.puts "#{error}"
+        exit -1
+      end
+    end
+
+  private
+
+    def parse_options
+      parser = OptionParser.new
+
+      parse(parser)
+
+      parser.on_tail('--debug', "display debugging information") do
+        $DEBUG = true
+      end
+
+      parser.on_tail('--help', '-h', "display this help message") do
+        puts opt
+        exit 0
+      end
+
+      parser.parse!
+    end
+
+=begin
     #
     # Command line interface.
     #
@@ -35,18 +81,7 @@ module Indexer
         exit -1
       end
     end
-
-    # 
-    # Require command script. This allows rumble to support
-    # command plugins.
-    # 
-    def require_command(cmd)
-      cmd = 'generate' if cmd == 'gen'
-      begin
-        require "indexer/cli/#{cmd}"
-      rescue LoadError
-      end
-    end
+=end
 
   end
 
