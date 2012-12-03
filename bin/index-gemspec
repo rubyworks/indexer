@@ -1,5 +1,3 @@
 #!/usr/bin/env ruby
-require 'meta'
-require 'meta/cli/gemspec'
-Ruby::Metadata::CLI.gemspec(*ARGV)
-
+require 'indexer/cli/gemspec'
+Indexer::CLI::Gemspec.execute

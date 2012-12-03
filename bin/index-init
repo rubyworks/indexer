@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'indexer/cli/init'
+Indexer::CLI::Init.execute
+

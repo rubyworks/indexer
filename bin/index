@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'rumbler'
-require 'rumbler/cli'
-Rumbler::CLI.main(*ARGV)
+require 'indexer/cli/index'
+Indexer::CLI::Index.execute
 

@@ -1,5 +1,3 @@
 #!/usr/bin/env ruby
-require 'meta'
-require 'meta/cli/source'
-Ruby::Metadata::CLI.source(*ARGV)
-
+require 'indexer/cli/source'
+Indexer::CLI::Source.execute
