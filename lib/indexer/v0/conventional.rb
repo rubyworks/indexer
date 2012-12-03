@@ -11,15 +11,17 @@ module Indexer; module V0
 
     # -- Writers ------------------------------------------------------------
 
-    # Internal sources for building .meta file.
+    #
+    # Sources for building index file.
     #
     # @param [String, Array] path(s)
     #   Paths from which metadata can be extracted.
     #
-    def source=(list)
+    def import=(list)
       @data['source'] = [list].flatten
     end
 
+    #
     # Sets the name of the project.
     #
     # @param [String] name
@@ -33,6 +35,7 @@ module Indexer; module V0
       @data['name']
     end
 
+    #
     # Title is sanitized so that all white space is reduced to a
     # single space character.
     #

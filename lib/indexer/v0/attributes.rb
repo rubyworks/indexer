@@ -33,8 +33,8 @@ module Indexer; module V0
     # The type of ruby meta specification.
     attr_accessor :type
 
-    # Internal sources for building specification.
-    attr_accessor :source
+    # Files from which to import metadata.
+    attr_accessor :import
 
     # The name of the project
     attr_accessor :name
@@ -44,6 +44,9 @@ module Indexer; module V0
 
     # The nick name for the particular version, e.g. "Lucid Lynx".
     attr_accessor :codename
+
+    # The date of this version.
+    attr_accessor :date
 
     # The project title
     attr_accessor :title
@@ -74,9 +77,6 @@ module Indexer; module V0
 
     # URI for linking to source code.
     attr_accessor :webcvs
-
-    # The build date of the .meta file.
-    attr_accessor :date
 
     # The directories to search within the project when requiring files
     attr_accessor :load_path  # :loadpath or :require_paths ?

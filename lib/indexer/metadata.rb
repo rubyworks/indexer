@@ -97,7 +97,7 @@ module Indexer
     end
 
     #
-    # Find project root and read `.meta` file.
+    # Find project root and read the index file.
     #
     # @param [String] from
     #   The directory from which to start the upward search.
@@ -162,7 +162,7 @@ module Indexer
     def self.ensure_locked
       unless exists?
         files = [USER_FILE]
-        Builder.build(*files)
+        Importer.import(*files)
       end
     end
 
