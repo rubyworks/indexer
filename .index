@@ -1,6 +1,6 @@
 ---
 type: ruby
-source:
+import:
 - Indexfile
 authors:
 - name: trans
@@ -41,7 +41,7 @@ categories:
 extra: {}
 load_path:
 - lib
-revision: 0
+revision: 2013
 name: indexer
 title: Indexer
 version: 0.1.0
