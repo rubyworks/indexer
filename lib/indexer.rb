@@ -11,12 +11,16 @@ module Indexer
   # File name of locked metadata file.
   LOCK_FILE = '.index'
 
-  # Current stable revision of specification.
-  REVISION = 0
+  # Current stable revision of the specification (by year).
+  REVISION = 2013
 end
 
 require 'yaml'
 require 'time'
+
+require 'indexer/version/exceptions'
+require 'indexer/version/number'
+require 'indexer/version/constraint'
 
 require 'indexer/cli'
 
@@ -24,17 +28,12 @@ require 'indexer/error'
 require 'indexer/valid'
 
 require 'indexer/base'
-require 'indexer/model'
+require 'indexer/models'
 
-require 'indexer/version/exceptions'
-require 'indexer/version/number'
-require 'indexer/version/constraint'
+require 'indexer/importer'
+#require 'indexer/gemfile'
 
-require 'indexer/builder'
-#require 'indexer/bundler'
-#require 'indexer/validator'
-
-require 'indexer/v0'  # current revision
+require 'indexer/v2103'  # current revision
 
 require 'indexer/metadata'
 

@@ -2,6 +2,13 @@ module Indexer
 
   class Model
 
+    def self.r(revision)
+      Class.new(self){ 
+        include const_get("V%s" % [revision || REVISION)
+      }
+    end
+
+=begin
     # What the heck does this do?
     #
     #   author = Indexer::V0::Author.new(...)
@@ -29,6 +36,7 @@ module Indexer
       end
       base.send(:include, mod)
     end
+=end
 
   end
 
