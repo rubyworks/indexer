@@ -8,8 +8,8 @@ end
 
 require_relative 'v2013/attributes'
 require_relative 'v2013/conversion'
-require_relative 'v2013/canonical'
-require_relative 'v2013/conventional'
+#require_relative 'v2013/canonical'
+#require_relative 'v2013/conventional'
 require_relative 'v2013/author'
 require_relative 'v2013/copyright'
 require_relative 'v2013/conflict'

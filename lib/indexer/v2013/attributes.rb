@@ -12,7 +12,7 @@ module Indexer
 
       # Define attribute, plus track it.
       def self.attr_accessor(name)
-        V0.attributes << name.to_sym
+        V2013.attributes << name.to_sym
 
         class_eval %{
           def #{name}

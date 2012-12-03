@@ -12,7 +12,7 @@ module Indexer
       elsif orig.nil?
         orig = StandardError.new(msg)
       else
-        orig.message = msg if msg
+        orig = orig.exception(msg) if msg
       end
       orig.extend self
       orig

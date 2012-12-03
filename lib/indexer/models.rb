@@ -2,9 +2,9 @@ module Indexer
 
   class Model
     def self.r(revision)
-      Class.new(self){ 
-        include const_get("V%s" % [revision || REVISION)
-      }
+      Class.new(self) do
+        include const_get("V%s" % [revision || REVISION])
+      end
     end
   end
 

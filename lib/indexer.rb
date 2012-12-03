@@ -33,7 +33,7 @@ require 'indexer/models'
 require 'indexer/importer'
 #require 'indexer/gemfile'
 
-require 'indexer/v2103'  # current revision
+require 'indexer/v2013'  # current revision
 
 require 'indexer/metadata'
 

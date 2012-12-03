@@ -8,6 +8,9 @@ module Indexer
     #
     class Metadata < Indexer::Base
 
+      include Attributes
+      include Conversion
+
       # Load metadata, ensuring canoncial validity.
       #
       # @param [String] file
@@ -28,10 +31,6 @@ module Indexer
         new.import_gemspec(gemspec)
       end
 
-
-      include Attributes
-      include Conversion
-
       # -- Writers ------------------------------------------------------------
 
       #
@@ -41,8 +40,12 @@ module Indexer
       #   Paths from which metadata can be extracted.
       #
       def import=(list)
-        @data['source'] = [list].flatten
+        @data['import'] = [list].flatten
       end
+
+      # TODO: Temporary alias
+      alias :source  :import
+      alias :source= :import=
 
       #
       # Sets the name of the project.
@@ -547,33 +550,33 @@ module Indexer
       end
 
 
-  # TODO: What was used for again, load_path ?
-  =begin
-      #
-      # Iterates over the paths.
-      #
-      # @param [Array<String>, String] paths
-      #   The paths or path glob pattern to iterate over.
-      #
-      # @yield [path]
-      #   The given block will be passed each individual path.
-      #
-      # @yieldparam [String] path
-      #   An individual path.
-      #
-      def each_path(paths,&block)
-        case paths
-        when Array
-          paths.each(&block)
-        when String
-          Dir.glob(paths,&block)  # TODO: should we be going this?
-        else
-          raise(ValidationError, "invalid path")
-        end
+# TODO: What was used for again, load_path ?
+=begin
+    #
+    # Iterates over the paths.
+    #
+    # @param [Array<String>, String] paths
+    #   The paths or path glob pattern to iterate over.
+    #
+    # @yield [path]
+    #   The given block will be passed each individual path.
+    #
+    # @yieldparam [String] path
+    #   An individual path.
+    #
+    def each_path(paths,&block)
+      case paths
+      when Array
+        paths.each(&block)
+      when String
+        Dir.glob(paths,&block)  # TODO: should we be going this?
+      else
+        raise(ValidationError, "invalid path")
       end
+    end
 
-      private :each_path
-  =end
+    private :each_path
+=end
 
       # -- Calculations -------------------------------------------------------
 

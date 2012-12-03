@@ -11,7 +11,12 @@ module Indexer
     # TODO: Or a capitalized method?
     V = Hash.new do |hash,key|
       revision = key.to_i
-      require "indexer/v#{revision}"
+
+      begin
+        require "indexer/v#{revision}"
+      rescue LoadError
+        raise Error.exception("unsupported revision: #{revision.inspect}")
+      end
 
       module_name = "V#{revision}"
 

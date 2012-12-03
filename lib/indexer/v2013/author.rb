@@ -115,8 +115,8 @@ module Indexer
       alias :role  :roles
       alias :role= :roles=
 
-      alias :group  :group
-      alias :group= :group=
+      alias :group  :roles
+      alias :group= :roles=
 
       #
       def to_h
