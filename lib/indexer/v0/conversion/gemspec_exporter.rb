@@ -27,7 +27,7 @@ module Indexer; module V0
       require 'yaml'
 
       @root_dir = options[:root] #|| Dir.pwd
-      @metadata = options[:data] || YAML.load_file(File.join(@root_dir, '.meta'))
+      @metadata = options[:data] || YAML.load_file(File.join(@root_dir, '.index'))
 
       if @metadata['revision'].to_i != REVISION
         warn "You have the wrong revision. Trying anyway..."
@@ -218,7 +218,7 @@ module Indexer; module V0
 
     #
     # Return a copy of this file. This is used to generate a local
-    # .gemspec file that can automatically read the .meta file.
+    # .gemspec file that can automatically read the index file.
     #
     def self.source_code
       File.read(__FILE__)

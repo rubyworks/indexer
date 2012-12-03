@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require 'meta'
-require 'meta/cli/gemfile'
-Ruby::Metadata::CLI.gemfile(*ARGV)
+require 'indexer'
+require 'indexer/cli/gemfile'
+Indexer::CLI.gemfile(*ARGV)
 

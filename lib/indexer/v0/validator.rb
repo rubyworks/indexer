@@ -1,5 +1,9 @@
 module Indexer; module V0
 
+  # Validator class models the strict *canonical* specification of the index
+  # file format. It is a one-to-one mapping with no method aliases or other
+  # conveniences.
+  #
   class Validator < Base
 
     include Attributes

@@ -10,7 +10,7 @@ module Indexer; module V0
     # are a few points where the two do not intersect. In these cases
     # the remaining gemspec fields need to be provided post conversion.
     #
-    # Gem::Specification fields that the specification can't provided include:
+    # Gem::Specification fields that the specification can't provide include:
     #
     # * platform
     #
@@ -40,7 +40,7 @@ module Indexer; module V0
 
     #
     # Import a Gem::Specification into Spec. This is intended to make it
-    # fairly easy to build a `.meta` file from a pre-existing `.gemspec`.
+    # fairly easy to build the metadata from a pre-existing `.gemspec`.
     #
     # By making this an instance method, it is possible to import other
     # resources into the Spec prior to a `.gemspec`.

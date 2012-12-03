@@ -78,7 +78,7 @@ module Indexer
 
       if File.exist?('Gemfile')
         gemfile_text = File.read('Gemfile')
-        if md = /^# \.ruby.*?^# end \.ruby/m.match(gemfile_text)
+        if md = /^# \.index.*?^# end \.index/m.match(gemfile_text)
           gemfile_text.sub!(md[0], text)
         else
           gemfile_text << "\n\n" << text
@@ -94,18 +94,18 @@ module Indexer
 
     #
     # Put together a Gemfile script based in requirements given in a
-    # a project's `.ruby` file.
+    # a project's `.index` file.
     #
     # @return [String] Gemfile script
     #
     def self.gemfile_script
       spec = Spec.find
 
-      script = ['# .meta']
+      script = ['# .index']
       spec.requirements.each do |name, req|
         script << "gem %s, %s, :group=>%s" % [req.name.inspect, req.version.to_s,inspect, req.groups.inspect]
       end 
-      script << '# end .meta'
+      script << '# end .index'
 
       script.join("\n")
     end

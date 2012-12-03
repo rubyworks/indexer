@@ -1,9 +1,9 @@
 module Indexer
 
   # The Validator class models the strict *canonical* specification of
-  # the `.meta` file format. It is a one-to-one mapping with no method
+  # the index file format. It is a one-to-one mapping with no method
   # aliases or other conveniences. The class is used internally to load
-  # and save `.meta` files.
+  # and save index files.
   #
   class Validator < Base
 
