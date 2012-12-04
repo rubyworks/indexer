@@ -4,8 +4,7 @@ module Indexer
 
   #
   #
-  #
-  class CLI::Source
+  class CLI::Source < CLI
 
     #
     attr_accessor :stdout
@@ -19,7 +18,7 @@ module Indexer
     def parse(opts)
       opts.banner = "Usage: #{$0} [options]"
       opts.on('-o', '--stdout', 'output to stdout instead of file') do
-        stdout = true
+        @stdout = true
       end
     end
 
