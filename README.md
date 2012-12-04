@@ -56,14 +56,14 @@ command line interface. For example, lets say we have customized our metadata vi
 but we are also keeping the version information is a separate `VERSION` file. Then we can simple issue
 the `index` command with the `-s/--source` option:
 
-  $ index -s VERSION Indexfile 
+    $ index -s VERSION Indexfile 
 
 And indexer will utilize both sources to construct the `.index` file.
 
 Over time project metadata tends to evolve and change. To keep the canoncial `.index` file up to date simply
 use the `index` command line tool with the the update option `-u/--update`.
 
-  $ index -u
+    $ index -u
 
 For more information on using Indexer, see the Wiki, API documentation, QED specification and the Manpages.
 
