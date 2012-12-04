@@ -14,6 +14,13 @@ to work with the file format without an intermediate API.
 Howerver, the project also provides a conveneient API for working with
 specification and its data when suitable to the usecase.
 
+## Authors
+
+<ul class="vcard">
+  <li class="nickname">trans</li>
+  <li class="email">transfire@gmail.com</li>
+  <li><a class="url" href="http://example.com/">http://trans.gihub.com/</a></li>
+</ul>
 
 ## Copyrights
 
