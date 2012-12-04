@@ -1,50 +1,54 @@
 ---
 type: ruby
-import:
+sources:
 - Indexfile
+- README.md
 authors:
 - name: trans
   email: transfire@gmail.com
-- name: postmodern (http://trans.github.com)
-copyrights:
-- holder: Ruby Works
-  year: '2011'
-  license: BSD-2-Clause
-- holder: Postmodern
-  year: '2011'
-  license: BSD-2-Clause
+- name: postmodern
 requirements:
-- name: qed
-  groups:
+- version: 1.5+
+  name: nokogiri 1.5+
+- version: 2.2+
+  name: redcarpet
+- groups:
   - test
-  development: true
-- name: ae
-  groups:
+  version: 2.9+
+  name: qed
+- groups:
   - test
-  development: true
+  version: 
+  name: ae  (test)
 dependencies: []
 alternatives: []
 conflicts: []
-repositories:
-- uri: http://github.com/rubyworks/indexer/indexer.git
-  scm: git
-  name: upstream
 resources:
-- uri: http://rubyworks.github.com/indexer
+- type: home
+  uri: http://rubyworks.github.com/indexer
   label: Homepage
-  type: home
-- uri: http://github.com/rubyworks/indexer
+- type: code
+  uri: http://github.com/rubyworks/indexer
   label: Source Code
-  type: code
+- type: api
+  uri: http://rubydoc.info/gems/indexer/frames
+  label: API Reference
+repositories:
+- name: upstream
+  scm: git
+  uri: http://github.com/rubyworks/indexer/indexer.git
 categories:
 - metadata
-extra: {}
 load_path:
 - lib
-revision: 2013
+copyrights:
+- holder: Rubyworks
+  year: '2012'
+  license: BSD-2-Clause
+extra: {}
+version: 0.1.0
+summary: Enable Your Project's Metadata
+description: Indexer gives developers a unified data format for reusable project metadata.
 name: indexer
 title: Indexer
-version: 0.1.0
-summary: Ruby Metadata Indexer
-description: Indexer gives Ruby project's a unified format for reusable project metadata.
-date: '2012-08-10'
+date: '2012-12-04'

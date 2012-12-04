@@ -15,7 +15,6 @@ metadata to be kept, in a `.index` file.
 Indexer provides a tool to import metadata from external sources. Indexer can handle a variety of metadata
 source formats, including YAML, HTML Micorformat and Ruby DSL scripts.
 
-
 ## Resources
 
 <ul>
