@@ -6,8 +6,8 @@
 
 <p class="idescription">Indexer gives developers a unified data format for reusable project metadata.</p>
 
-Indexer defines a *canonical*, detailed and strict, project metadata specification. The strictness
-of the specification makes the format simple enough for developers to use without an intermediate API.
+Indexer defines a *canonical*, detailed and strict, project <span class="icategory">metadata</span> specification.
+The strictness of the specification makes the format simple enough for developers to use without an intermediate API.
 Although Indexer also provides a convenience API for working with the specification and its data 
 more loosely when suitable to the usecase. Indexer also specifies a stanadard location for canonized
 metadata to be kept, in a `.index` file.
@@ -66,6 +66,3 @@ source formats, including YAML, HTML Micorformat and Ruby DSL scripts.
 </li>
 <ul>
 
-<div style="display: none;">
-  <span class="icategory">metadata</span>
-<div>
