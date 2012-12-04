@@ -27,13 +27,17 @@ require 'indexer/cli'
 require 'indexer/error'
 require 'indexer/valid'
 
-require 'indexer/base'
-require 'indexer/models'
+#require 'indexer/base'
+require 'indexer/loadable'
+require 'indexer/revisioned'
+require 'indexer/factories'
+require 'indexer/model'
 
 require 'indexer/importer'
 #require 'indexer/gemfile'
 
+require 'indexer/v'
 require 'indexer/v2013'  # current revision
 
-require 'indexer/metadata'
+#require 'indexer/metadata'
 
