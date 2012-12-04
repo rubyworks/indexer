@@ -28,7 +28,7 @@ source formats, including YAML, HTML Micorformat and Ruby DSL scripts.
 
 <ul>
 <li class="irequirement">
-  <a class="name" href="http://nokogiri.org/">nokogiri</span> <span class="version">1.5+</span></span>
+  <a class="name" href="http://nokogiri.org/">nokogiri</a> <span class="version">1.5+</span></span>
 </li>
 <li class="irequirement">
   <a class="name" href="https://github.com/vmg/redcarpet">redcarpet</a> <span class="version">2.2+</span></span>
@@ -37,7 +37,7 @@ source formats, including YAML, HTML Micorformat and Ruby DSL scripts.
   <a class="name" href="http://rubyworks.github.com/qed/">qed</a> <span class="version">2.9+</span> <span class="groups">(test)</span>
 </li>
 <li class="irequirement">
-  <a class="name" href="http://rubyworks.github.com/ae/">ae</span> <span class="version"></span> <span class="groups">(test)</span>
+  <a class="name" href="http://rubyworks.github.com/ae/">ae</a> <span class="version"></span> <span class="groups">(test)</span>
 </li>
 </ul>
 
@@ -66,6 +66,6 @@ source formats, including YAML, HTML Micorformat and Ruby DSL scripts.
 </li>
 <ul>
 
-<div stlye="display: none;">
+<div style="display: none;">
   <span class="icategory">metadata</span>
 <div>
