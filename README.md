@@ -26,6 +26,12 @@ specification and its data when suitable to the usecase.
 
 ## Copyrights
 
-Indexer (c) 2012 Rubyworks
+<ul>
+<li class="copyright">
+  &copy; <span class="year">2012</span> <span class="holder">Rubyworks</span>
+  <div class="license">
+    <a href="http://www.spdx.org/licenses/BSD-2-Clause" rel="license">BSD-2-Clause License</a>
+  </div>
+</li>
 
-<a href="http://www.spdx.org/licenses/BSD-2-Clause" rel="license">BSD-2-Clause</a> License
+
