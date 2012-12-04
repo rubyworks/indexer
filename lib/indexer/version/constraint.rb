@@ -15,6 +15,7 @@ module Indexer
 
       #
       def self.parse(constraint)
+        constraint = nil if constraint == ""
         new(constraint)
       end
 
