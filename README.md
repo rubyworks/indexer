@@ -16,15 +16,16 @@ specification and its data when suitable to the usecase.
 
 ## Authors
 
-<ul class="vcard">
-  <li class="nickname">trans</li>
-  <li class="email">transfire@gmail.com</li>
-  <li><a class="url" href="http://example.com/">http://trans.gihub.com/</a></li>
+<ul>
+<li class="vcard">
+  <div class="nickname">trans</div>
+  <div><a class="email" href="mailto:transfire@gmail.com">transfire@gmail.com</a></div>
+  <div><a class="url" href="http://example.com/">http://trans.gihub.com/</a></div>
+</li>
 </ul>
 
 ## Copyrights
 
 Indexer (c) 2012 Rubyworks
 
-BSD-2-Clause License
-
+<a href="http://www.spdx.org/licenses/BSD-2-Clause" rel="license">BSD-2-Clause</a> License
