@@ -5,7 +5,8 @@ module Indexer
     # Copyright class models a copyright holer, the year of copyright
     # and the accosiated license.
     #
-    class Copyright < Indexer::Copyright
+    class Copyright < Model
+      include Indexer::Copyright
 
       # Parse copyright entry.
       #
@@ -31,15 +32,16 @@ module Indexer
         else
           raise ValidationError, "copyright"
         end
-        new(holder, year, license || default_license)
+        license = license || default_license
+        new(:holder=>holder, :year=>year, :license=>license)
       end
 
       #
-      def initialize(holder, year=nil, license=nil)
-        self.holder  = holder
-        self.year    = year    if year
-        self.license = license if license
-      end
+      #def initialize(holder, year=nil, license=nil)
+      #  self.holder  = holder
+      #  self.year    = year    if year
+      #  self.license = license if license
+      #end
 
       #
       attr :year
@@ -53,19 +55,19 @@ module Indexer
       #
       def year=(year)
         Valid.copyright_year!(year, "copyright.year")
-        @year = year
+        @data[:year] = year
       end
 
       #
       def holder=(holder)
         Valid.oneline!(holder, "copyright.holder")
-        @holder = holder
+        @data[:holder] = holder
       end
 
       #
       def license=(license)
         Valid.oneline!(license, "copyright.license")
-        @license = license
+        @data[:license] = license
       end
 
       # Standard copyright stamp.

@@ -1,59 +1,51 @@
 module Indexer
 
-  class Model
-    def self.r(revision)
-      Class.new(self) do
-        include const_get("V%s" % [revision || REVISION])
-      end
+  #
+  # Main model that ties in all the other models.
+  #
+  module Metadata
+    extend Revisioned
+    extend Loadable
+
+    #
+    # Set the revision. This attribute, by definition, must be outside of the
+    # revisioned definition of Metadata.
+    #
+    def revision=(value)
+      @data['revision'] = value.to_i
     end
   end
 
-  class Author < Model
-    #def self.v(revision)
-    #  V[revision || REVISION]::Author
-    #end
+  module Author
+    extend Revisioned
   end
 
-  class Company < Model
-    #def self.v(revision)
-    #  V[revision || REVISION]::Author
-    #end
+  module Company
+    extend Revisioned
   end
 
-  class Conflict < Model
-    #def self.v(revision, *args, &blk)
-    #  V[revision || REVISION]::Conflict
-    #end
+  module Conflict
+    extend Revisioned
   end
 
-  class Copyright < Model
-    #def self.v(revision)
-    #  V[revision || REVISION]::Copyright
-    #end
+  module Copyright
+    extend Revisioned
   end
 
-  class Resource < Model
-    #def self.v(revision)
-    #  V[revision || REVISION]::Resource
-    #end
+  module Resource
+    extend Revisioned
   end
 
-  class Repository < Model
-    #def self.v(revision, *args, &blk)
-    #  V[revision || REVISION]::Repository
-    #end
+  module Repository
+    extend Revisioned
   end
 
-  class Requirement < Model
-    #def self.v(revision, *args, &blk)
-    #  V[revision || REVISION]::Requirement
-    #end
+  module Requirement
+    extend Revisioned
   end
 
-  #class Dependency < Model
-    #def self.v(revision=nil)
-    #  V[revision || REVISION]::Dependency
-    #end
-  #end
+  module Dependency
+    extend Revisioned
+  end
 
 end

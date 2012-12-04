@@ -8,7 +8,8 @@ module Indexer
     # set of types or labels. It is also difficult to determine if label's and types
     # should in fact be infered or just left empty if not provided. Any insight welcome!
     #
-    class Resource < Indexer::Resource
+    class Resource < Model
+      include Indexer::Resource
 
       # Parse `data` returning a new Resource instance.
       #
@@ -19,17 +20,17 @@ module Indexer
       def self.parse(data)
         case data
         when String
-          new('uri'=>data)
+          new(:uri=>data)
         when Array
           h, d = {}, data.dup  # TODO: data.rekey(&:to_s)
           h.update(d.pop) while Hash === d.last
           if x = d.find{ |e| Valid.uri?(e) }
-            h['uri'] = d.delete(x)
+            h[:uri] = d.delete(x)
           end
           if x = d.find{ |e| Valid.word?(e) && e.downcase == e }
-            h['type'] = d.delete(x)
+            h[:type] = d.delete(x)
           end
-          h['label'] = d.shift unless d.empty?
+          h[:label] = d.shift unless d.empty?
           raise ValidationError, "malformed resource -- #{data.inspect}" unless d.empty?
           new(h)
         when Hash
@@ -43,22 +44,22 @@ module Indexer
       # Initialize new Resource instance.
       #
       def initialize(data={})
+        @data = {}
+
         data = data.rekey(&:to_sym)
 
         ## best to assign in this order
         self.uri   = data.delete(:uri)
         self.type  = data.delete(:type) if data.key?(:type)
 
-        data.each do |field, value|
-          send("#{field}=", value)
-        end
+        merge!(data)
       end
 
       #
       # A label that can be used to identify the purpose of a
       # particular repository.
       #
-      attr_reader :label
+      attr :label
 
       #
       # Set the resource name. This can be any brief one line description.
@@ -69,8 +70,8 @@ module Indexer
       #
       def label=(label)
         Valid.oneline!(label)  # should be word!
-        @type  = infer_type(label) unless @type
-        @label = label.to_str
+        @data[:type]  = infer_type(label) unless @type
+        @data[:label] = label.to_str
       end
 
       #
@@ -82,21 +83,21 @@ module Indexer
       #
       # The repository's URI.
       #
-      attr_reader :uri
+      attr :uri
 
       #
       # Set repository URI
       #
       def uri=(uri)
         Valid.uri!(uri)  # TODO: any other limitations?
-        @type = infer_type(uri) unless @type
-        @uri  = uri
+        @data[:type] = infer_type(uri) unless @type
+        @data[:uri]  = uri
       end
 
       #
       #
       #
-      attr_reader :type
+      attr :type
 
       #
       # Set the type of the resource. The type is a single downcased word.
@@ -110,22 +111,22 @@ module Indexer
       #
       def type=(type)
         Valid.word!(type)
-        @label = infer_label(type) unless @label
-        @type  = type.to_str.downcase
+        @data[:label] = infer_label(type) unless @label
+        @data[:type]  = type.to_str.downcase
       end
 
-      #
-      # Convert resource to Hash.
-      #
-      # @return [Hash]
-      #
-      def to_h
-        h = {}
-        h['uri']   = uri
-        h['label'] = label if label
-        h['type']  = type  if type
-        h
-      end
+      ##
+      ## Convert resource to Hash.
+      ##
+      ## @return [Hash]
+      ##
+      #def to_h
+      #  h = {}
+      #  h['uri']   = uri
+      #  h['label'] = label if label
+      #  h['type']  = type  if type
+      #  h
+      #end
 
       #
       # Recognized types and the default labels that do with them.

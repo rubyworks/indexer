@@ -16,10 +16,10 @@ module Indexer
 
         class_eval %{
           def #{name}
-            @data['#{name}']
+            @data[:#{name}]
           end
           def #{name}=(val)
-            @data['#{name}'] = val
+            @data[:#{name}] = val
           end
         }
       end
@@ -30,13 +30,15 @@ module Indexer
       end
 
       # The revision of ruby meta specification.
-      def revision ; 0 ; end
+      def revision
+        2013
+      end
 
       # The type of ruby meta specification.
       attr_accessor :type
 
       # Files from which to import metadata.
-      attr_accessor :import
+      attr_accessor :sources
 
       # The name of the project
       attr_accessor :name
@@ -152,19 +154,18 @@ module Indexer
       #
       def initialize_attributes
         @data = {
-          'type'         => 'ruby',
-          'source'       => [],
-          'authors'      => [],
-          'copyrights'   => [],
-          'alternatives' => [],
-          'requirements' => [],
-          'dependencies' => [],
-          'conflicts'    => [],
-          'repositories' => [],
-          'resources'    => [],
-          'categories'   => [],
-          'extra'        => {},
-          'load_path'    => ['lib']
+          :type          => 'ruby',
+          :sources       => [],
+          :authors       => [],
+          :copyrights    => [],
+          :alternatives  => [],
+          :requirements  => [],
+          :dependencies  => [],
+          :conflicts     => [],
+          :repositories  => [],
+          :resources     => [],
+          :categories    => [],
+          :load_path     => ['lib']
         }
       end
 

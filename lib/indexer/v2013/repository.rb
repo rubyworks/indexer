@@ -5,7 +5,8 @@ module Indexer
     # The Repository class models a packages SCM repository location.
     # It consists of two parts, the `scm` type of repository, it's `url`.
     #
-    class Repository < Indexer::Repository
+    class Repository < Model
+      include Indexer::Repository
 
       # Parse `data` returning a new Repository instance.
       #
@@ -38,9 +39,7 @@ module Indexer
       # Initialize new Repository instance.
       #
       def initialize(data={})
-        data.each do |field, value|
-          send("#{field}=", value)
-        end
+        super(data)
 
         self.scm = infer_scm(uri) unless scm
       end
@@ -58,7 +57,7 @@ module Indexer
       #
       def name=(name)
         Valid.oneline!(name)  # should be word!
-        @name = name.to_str
+        @data[:name] = name.to_str
       end
 
       #
@@ -72,8 +71,8 @@ module Indexer
       def uri=(uri)
         Valid.oneline!(uri)
         #Valid.uri!(uri)  # TODO: any other limitations?
-        @scm = infer_scm(uri)
-        @uri = uri
+        @data[:scm] = infer_scm(uri)
+        @data[:uri] = uri
       end
 
       #
@@ -95,7 +94,7 @@ module Indexer
       #
       def scm=(scm)
         Valid.word!(scm)
-        @scm = scm.to_str.downcase
+        @data[:scm] = scm.to_str.downcase
       end
 
       #
@@ -112,7 +111,7 @@ module Indexer
       def webcvs=(uri)
         Valid.oneline!(uri)
         Valid.uri!(uri)  # TODO: any other limitations?
-        @webcvs = uri
+        @data[:webcvs] = uri
       end
 
       # TODO: Should we rename Repository#webcvs to just #web ?
@@ -120,16 +119,6 @@ module Indexer
       #
       alias_method :web, :webcvs
       alias_method :web=, :webcvs=
-
-      #
-      def to_h
-        h = {}
-        h['uri']    = uri
-        h['scm']    = scm    if scm
-        h['name']   = name   if name
-        h['webcvs'] = webcvs if webcvs
-        h
-      end
 
     private
 

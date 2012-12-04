@@ -5,7 +5,8 @@ module Indexer
     # The Conflict class models the name and versions of
     # packages that have know incompatibilities.
     #
-    class Conflict < Indexer::Conflict
+    class Conflict < Model
+      include Indexer::Conflict
 
       # Parse `data` into a Dependency instance.
       #
@@ -15,7 +16,7 @@ module Indexer
         when String
           parse_string(data)
         when Array
-          new(*data)
+          parse_array(data)
         when Hash
           parse_hash(data)
         else
@@ -29,22 +30,20 @@ module Indexer
       #
       def self.parse_string(data)
         name, version = data.split(/\s+/)
-        new(name, version)
+        new(:name=>name, :version=>version)
+      end
+
+      #
+      #
+      def self.parse_array(data)
+        name, versin = *data
+        new(:name=>name, :version=>version)
       end
 
       #
       #
       def self.parse_hash(data)
-        name    = data.delete('name')    || data.delete(:name)
-        version = data.delete('version') || data.delete(:version)
-        new(name, version)
-      end
-
-      # Initialize new instance of Conflict.
-      #
-      def initialize(name, version=nil)
-        self.name    = name
-        self.version = version
+        new(data)
       end
 
     public
@@ -54,13 +53,13 @@ module Indexer
       #
       # Yea it's *ALWAYS* THEIR fault ;-)
       #
-      attr_reader :name
+      attr :name
 
       #
       # Set the name of the package.
       #
       def name=(name)
-        @name = name.to_s
+        @data[:name] = name.to_s
       end
 
       #
@@ -74,7 +73,7 @@ module Indexer
       # Set the version constraint.
       #
       def version=(version)
-        @version = Version::Constraint.parse(version)
+        @data[:version] = Version::Constraint.parse(version)
       end
 
     end

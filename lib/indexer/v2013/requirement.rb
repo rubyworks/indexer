@@ -7,7 +7,8 @@ module Indexer
     # QUESTION: Does Requirement really need to handle multiple version constraints?
     # Currently this only supports one version constraint.
     #
-    class Requirement < Indexer::Requirement
+    class Requirement < Model
+      include Indexer::Requirement
 
       # Parse `data` into a Requirement instance.
       #
@@ -96,15 +97,21 @@ module Indexer
         end
       end
 
+      #
       # Create new instance of Requirement.
       #
       def initialize(name, specifics={})
-        @name   = name.to_s
-        @groups = []
+        specifics[:name] = name
+        super(specifics)
+      end
 
-        specifics.each do |key, value|
-          send("#{key}=", value)
-        end
+      #
+      def initialize_attributes
+        @data = {
+          :groups    => [],
+          :engines   => [],
+          :platforms => []
+        }
       end
 
     public
@@ -116,7 +123,7 @@ module Indexer
       #
       #
       def name=(name)
-        @name = name.to_s
+        @data[:name] = name.to_s
       end
 
       #
@@ -133,7 +140,7 @@ module Indexer
       #   Version constraint(s)
       #
       def version=(version)
-        @version = Version::Constraint.parse(version)
+        @data[:version] = Version::Constraint.parse(version)
       end
 
       #
@@ -144,7 +151,7 @@ module Indexer
       #
       # @return [Boolean] development requirement?
       def development?
-        @development
+        @data[:development]
       end
 
       #
@@ -153,7 +160,7 @@ module Indexer
       # @param [Boolean] true/false development requirement
       #
       def development=(boolean)
-        @development = !!boolean
+        @data[:development] = !!boolean
       end
 
       #
@@ -161,7 +168,7 @@ module Indexer
       #
       # @return [Boolean] runtime requirement?
       def runtime?
-       ! @development
+       ! @data[:development]
       end
 
       #
@@ -178,7 +185,7 @@ module Indexer
       # @return [Array, String] list of groups
       #
       def groups=(groups)
-        @groups = [groups].flatten
+        @data[:groups] = [groups].flatten
       end
 
       #
@@ -191,7 +198,7 @@ module Indexer
       #
       # @return [Boolean] optional requirement?
       def optional?
-        @optional
+        @data[:optional]
       end
 
       #
@@ -200,7 +207,7 @@ module Indexer
       # @param [Boolean] optional requirement?
       #
       def optional=(boolean)
-        @optional = !!boolean
+        @data[:optional] = !!boolean
       end
 
       #
@@ -208,9 +215,9 @@ module Indexer
       # the `RUBY_ENGINE` value and optionally a version constraint
       # on `RUBY_VERSION`.
       #
-      # @return [Hash] name and version constraint
+      # @return [Array] name and version constraint
       #
-      attr_reader :engines
+      attr :engines
 
       #
       # Applies only for specified Ruby engines. Each entry can be
@@ -224,7 +231,7 @@ module Indexer
       #   ]
       #
       def engines=(engines)
-        @engines = Array(engines).map do |engine|
+        @data['engines'] = Array(engines).map do |engine|
           case engine
           when String
             name, vers = engine.strip.split(/\s+/)
@@ -245,7 +252,7 @@ module Indexer
       alias_method :engine,  :engines
       alias_method :engine=, :engines=
 
-      attr_reader :platforms
+      attr :platforms
 
       #
       # Applies only for specified platforms. The platform must be verbatim
@@ -255,7 +262,7 @@ module Indexer
       #   requirement.platforms = ['x86_64-linux']
       #
       def platforms=(platforms)
-        @platforms = Array(platforms)
+        @data[:platforms] = Array(platforms)
       end
 
       alias_method :platform,  :platforms
@@ -265,14 +272,14 @@ module Indexer
       # The public repository resource in which the requirement source code
       # can be found.
       #
-      attr_reader :repository
+      attr :repository
 
       #
       # Set the public repository resource in which the requirement
       # source code can be found.
       #
       def repository=(repository)
-        @repository = Repository.parse(repository)
+        @data[:repository] = Repository.parse(repository)
       end
 
       alias :repo :repository
@@ -280,28 +287,29 @@ module Indexer
 
       # Convert to canonical hash.
       def to_h
-        h = {}
-        h['name']        = name
-        h['version']     = version.to_s    if version
-        h['groups']      = groups          if not groups.empty?
-        h['development'] = development?    if development?
-        h['optional']    = optional?       if optional?
-        h['platforms']   = platforms       if platforms
-        h['engines']     = engines_to_h    if engines
+        h = super
+
+        h['version']     = version.to_s
         h['repository']  = repository.to_h if repository
+
+        h.delete('groups')    if h['groups']    && h['groups'].empty?
+        h.delete('engines')   if h['engines']   && h['engines'].empty?
+        h.delete('platforms') if h['platforms'] && h['platforms'].empty?
+
         h
       end
 
     private
 
-      def engines_to_h
-        engines.map do |engine|
-          hash = {}
-          hash['name'] = engine['name']
-          hash['version'] = engine['version'].to_s
-          hash
-        end
-      end
+      # ensure engine entries are strings
+      #def engines_to_h
+      #  engines.map do |engine|
+      #    hash = {}
+      #    hash['name'] = engine['name']
+      #    hash['version'] = engine['version'].to_s
+      #    hash
+      #  end
+      #end
 
     end
 

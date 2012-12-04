@@ -6,11 +6,19 @@ module Indexer
     # file format. It is a one-to-one mapping with no method aliases or other
     # conveniences.
     #
-    class Validator < Indexer::Base
+    class Validator < Model #Indexer::Validator
 
       include Attributes
 
       # -- Writers ------------------------------------------------------------
+
+      #
+      def revision=(value)
+        if value.to_i != 2013
+          # technically this should never happen
+          Valid.raise_invalid_message("invalid revision for 2013 -- #{value}")
+        end
+      end
 
       # Project's _packaging name_ must be a string without spaces
       # using only `[a-zA-Z0-9_-]`.
@@ -243,19 +251,19 @@ module Indexer
       #
       def initialize_attributes
         @data = {
-          'type'         => 'ruby',
-          'source'       => [],
-          'authors'      => [],
-          'copyrights'   => [],
-          'requirements' => [],
-          'dependencies' => [],
-          'alternatives' => [],
-          'conflicts'    => [],
-          'repositories' => [],
-          'resources'    => [],
-          'categories'   => [],
-          'extra'        => {},
-          'load_path'    => ['lib']
+          :type         => 'ruby',
+          :sources       => [],
+          :authors       => [],
+          :requirements  => [],
+          :dependencies  => [],
+          :alternatives  => [],
+          :conflicts     => [],
+          :resources     => [],
+          :repositories  => [],
+          :categories    => [],
+          :load_path     => ['lib'],
+          :copyrights    => [],
+          :extra         => {}
         }
       end
 

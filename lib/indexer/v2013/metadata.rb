@@ -6,7 +6,8 @@ module Indexer
     # for developers. It offers method aliases and models various parts
     # of the specification with useful classes.
     #
-    class Metadata < Indexer::Base
+    class Metadata < Model
+      include Indexer::Metadata
 
       include Attributes
       include Conversion
@@ -39,13 +40,13 @@ module Indexer
       # @param [String, Array] path(s)
       #   Paths from which metadata can be extracted.
       #
-      def import=(list)
-        @data['import'] = [list].flatten
+      def sources=(list)
+        @data[:sources] = [list].flatten
       end
 
       # TODO: Temporary alias
-      alias :source  :import
-      alias :source= :import=
+      alias :source  :sources
+      alias :source= :sources=
 
       #
       # Sets the name of the project.
@@ -56,9 +57,9 @@ module Indexer
       def name=(name)
         name = name.to_s if Symbol === name
         Valid.name!(name, :name)
-        @data['name']  = name.to_str.downcase
-        @data['title'] = @data['name'].capitalize unless @data['title']  # TODO: use #titlecase
-        @data['name']
+        @data[:name]  = name.to_str.downcase
+        @data[:title] = @data[:name].capitalize unless @data[:title]  # TODO: use #titlecase
+        @data[:name]
       end
 
       #
@@ -67,7 +68,7 @@ module Indexer
       #
       def title=(title)
         Valid.oneline!(title, :title)
-        @data['title'] = title.to_str.gsub(/\s+/, ' ')
+        @data[:title] = title.to_str.gsub(/\s+/, ' ')
       end
 
       #
@@ -79,7 +80,7 @@ module Indexer
       #
       def namespace=(namespace)
         Valid.constant!(namespace)
-        @data['namespace'] = namespace
+        @data[:namespace] = namespace
       end
 
       #
@@ -87,7 +88,7 @@ module Indexer
       #
       def summary=(summary)
         Valid.string!(summary, :summary)
-        @data['summary'] = summary.to_str.gsub(/\s+/, ' ')
+        @data[:summary] = summary.to_str.gsub(/\s+/, ' ')
       end
 
       #
@@ -102,17 +103,17 @@ module Indexer
       def version=(version)
         case version
         when Version::Number
-          @data['version'] = version
+          @data[:version] = version
         when Hash
           major = version['major'] || version[:major]
           minor = version['minor'] || version[:minor]
           patch = version['patch'] || version[:patch]
           build = version['build'] || version[:build]
-          @data['version'] = Version::Number.new(major,minor,patch,build)
+          @data[:version] = Version::Number.new(major,minor,patch,build)
         when String
-          @data['version'] = Version::Number.parse(version.to_s)
+          @data[:version] = Version::Number.parse(version.to_s)
         when Array
-          @data['version'] = Version::Number.new(*version)
+          @data[:version] = Version::Number.new(*version)
         else
           raise(ValidationError,"version must be a Hash or a String")
         end
@@ -124,7 +125,7 @@ module Indexer
       def codename=(codename)
         codename = codename.to_s if Symbol === codename
         Valid.oneline!(codename, :codename)
-        @data['codename'] = codename.to_str
+        @data[:codename] = codename.to_str
       end
 
       #
@@ -134,7 +135,7 @@ module Indexer
       #   The production date for this version.
       #
       def date=(date)
-        @data['date'] = \
+        @data[:date] = \
           case date
           when String
             Date.parse(date)
@@ -152,7 +153,7 @@ module Indexer
       #   The creation date of this project.
       #
       def created=(date)
-        @data['created'] = \
+        @data[:created] = \
           case date
           when String
            Valid.utc_date!(date)
@@ -185,7 +186,7 @@ module Indexer
       #   The copyrights and licenses of the project.
       #
       def copyrights=(copyrights)
-        @data['copyrights'] = \
+        @data[:copyrights] = \
           case copyrights
           when String
             [Copyright.parse(copyrights, @_license)]
@@ -198,7 +199,7 @@ module Indexer
           else
             raise(ValidationError, "copyright must be a String, Hash or Array")
           end
-        @data['copyrights']
+        @data[:copyrights]
       end
 
       #
@@ -206,7 +207,7 @@ module Indexer
       # but expects the parameter to represent only one copyright.
       #
       def copyright=(copyright)
-        @data['copyrights'] = [Copyright.parse(copyright)]
+        @data[:copyrights] = [Copyright.parse(copyright)]
       end
 
       # TODO: Should their just be a "primary" license field ?
@@ -215,7 +216,7 @@ module Indexer
       # Set copyright license for all copyright holders.
       #
       def license=(license)
-        if copyrights = @data['copyrights']
+        if copyrights = @data[:copyrights]
           copyrights.each do |c|
             c.license = license  # TODO: unless c.license ?
           end
@@ -229,7 +230,7 @@ module Indexer
       #   The originating authors of the project.
       #
       def authors=(authors)
-        @data['authors'] = (
+        @data[:authors] = (
           list = Array(authors).map do |a|
                    Author.parse(a)
                  end
@@ -246,7 +247,7 @@ module Indexer
       #   The require-paths or a glob-pattern.
       #
       def load_path=(paths)
-        @data['load_path'] = \
+        @data[:load_path] = \
           Array(paths).map do |path|
             Valid.path!(path)
             path
@@ -255,7 +256,7 @@ module Indexer
 
       # List of language engine/version family supported.
       def engines=(value)
-        @data['engines'] = (
+        @data[:engines] = (
           a = [value].flatten
           a.each{ |x| Valid.oneline!(x) }
           a
@@ -268,7 +269,7 @@ module Indexer
       # @deprecated
       #
       def platforms=(value)
-        @data['platforms'] = (
+        @data[:platforms] = (
           a = [value].flatten
           a.each{ |x| Valid.oneline!(x) }
           a
@@ -289,9 +290,9 @@ module Indexer
         requirements = [requirements] if String === requirements
         case requirements
         when Array, Hash
-          @data['requirements'].clear
+          @data[:requirements].clear
           requirements.each do |specifics|
-            @data['requirements'] << Requirement.parse(specifics)
+            @data[:requirements] << Requirement.parse(specifics)
           end
         else
           raise(ValidationError,"requirements must be an Array or Hash")
@@ -310,9 +311,9 @@ module Indexer
       def dependencies=(dependencies)
         case dependencies
         when Array, Hash
-          @data['dependencies'].clear
+          @data[:dependencies].clear
           dependencies.each do |specifics|
-            @data['dependencies'] << Dependency.parse(specifics)
+            @data[:dependencies] << Dependency.parse(specifics)
           end
         else
           raise(ValidationError,"dependencies must be an Array or Hash")
@@ -334,9 +335,9 @@ module Indexer
       def conflicts=(conflicts)
         case conflicts
         when Array, Hash
-          @data['conflicts'].clear
+          @data[:conflicts].clear
           conflicts.each do |specifics|
-            @data['conflicts'] << Conflict.parse(specifics)
+            @data[:conflicts] << Conflict.parse(specifics)
           end
         else
           raise(ValidationError, "conflicts must be an Array or Hash")
@@ -352,10 +353,10 @@ module Indexer
       def alternatives=(alternatives)
         Valid.array!(alternatives, :alternatives)
 
-        @data['alternatives'].clear
+        @data[:alternatives].clear
 
         alternatives.to_ary.each do |name|
-          @data['alternatives'] << name.to_s
+          @data[:alternatives] << name.to_s
         end
       end
 
@@ -368,11 +369,11 @@ module Indexer
       def categories=(categories)
         categories = Array(categories)
 
-        @data['categories'].clear
+        @data[:categories].clear
 
         categories.to_ary.each do |name|
           Valid.oneline!(name.to_s)
-          @data['categories'] << name.to_s
+          @data[:categories] << name.to_s
         end
       end
 
@@ -384,7 +385,7 @@ module Indexer
       #
       def suite=(value)
         Valid.oneline!(value, :suite)
-        @data['suite'] = value
+        @data[:suite] = value
       end
 
       #
@@ -396,9 +397,9 @@ module Indexer
       def repositories=(repositories)
         case repositories
         when Hash, Array
-          @data['repositories'].clear
+          @data[:repositories].clear
           repositories.each do |specifics|
-            @data['repositories'] << Repository.parse(specifics)
+            @data[:repositories] << Repository.parse(specifics)
           end
         else
           raise(ValidationError, "repositories must be an Array or Hash")
@@ -414,14 +415,14 @@ module Indexer
       def resources=(resources)
         case resources
         when Array
-          @data['resources'].clear
+          @data[:resources].clear
           resources.each do |data|
-            @data['resources'] << Resource.parse(data)
+            @data[:resources] << Resource.parse(data)
           end
         when Hash
-          @data['resources'].clear
+          @data[:resources].clear
           resources.each do |type, uri|
-            @data['resources'] << Resource.new(:uri=>uri, :type=>type.to_s)
+            @data[:resources] << Resource.new(:uri=>uri, :type=>type.to_s)
           end
         else
           raise(ValidationError, "repositories must be an Array or Hash")
@@ -436,7 +437,7 @@ module Indexer
       #
       def webcvs=(uri)
         Valid.uri!(uri, :webcvs)
-        @data['webcvs'] = uri
+        @data[:webcvs] = uri
       end
 
       #
@@ -447,7 +448,7 @@ module Indexer
       #
       def organization=(organization)
         Valid.oneline!(organization)
-        @data['organization'] = organization
+        @data[:organization] = organization
       end
 
       #
@@ -460,7 +461,7 @@ module Indexer
       #   The new post-installation message.
       #
       def install_message=(message)
-        @data['install_message'] = \
+        @data[:install_message] = \
           case message
           when Array
             message.join($/)
@@ -470,15 +471,15 @@ module Indexer
           end
       end
 
-      #
-      # Set extraneous developer-defined metdata.
-      #
-      def extra=(extra)
-        unless extra.kind_of?(Hash)
-          raise(ValidationError, "extra must be a Hash")
-        end
-        @data['extra'] = extra
-      end
+      ##
+      ## Set extraneous developer-defined metdata.
+      ##
+      #def extra=(extra)
+      #  unless extra.kind_of?(Hash)
+      #    raise(ValidationError, "extra must be a Hash")
+      #  end
+      #  @data[:extra] = extra
+      #end
 
       # -- Utility Methods ----------------------------------------------------
 
@@ -735,21 +736,21 @@ module Indexer
       def to_h
         date = self.date || Time.now
 
-        data = @data.dup
+        h = super
 
-        data['version']      = version.to_s
+        h['version']      = version.to_s
 
-        data['date']         = date.strftime('%Y-%m-%d')
-        data['created']      = created.strftime('%Y-%m-%d') if created
+        h['date']         = date.strftime('%Y-%m-%d')
+        h['created']      = created.strftime('%Y-%m-%d') if created
 
-        data['authors']      = authors.map      { |x| x.to_h }
-        data['copyrights']   = copyrights.map   { |x| x.to_h }
-        data['requirements'] = requirements.map { |x| x.to_h }
-        data['conflicts']    = conflicts.map    { |x| x.to_h }
-        data['repositories'] = repositories.map { |x| x.to_h }
-        data['resources']    = resources.map    { |x| x.to_h }
+        h['authors']      = authors.map      { |x| x.to_h }
+        h['copyrights']   = copyrights.map   { |x| x.to_h }
+        h['requirements'] = requirements.map { |x| x.to_h }
+        h['conflicts']    = conflicts.map    { |x| x.to_h }
+        h['repositories'] = repositories.map { |x| x.to_h }
+        h['resources']    = resources.map    { |x| x.to_h }
 
-        data
+        h
       end
 
       # Create nicely formated project "about" text.

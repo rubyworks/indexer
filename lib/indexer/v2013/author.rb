@@ -9,7 +9,8 @@ module Indexer
     #
     # TODO: Should we have `team` field (think Github)?
     #
-    class Author < Indexer::Author
+    class Author < Model
+      include Indexer::Author
 
       # Parse `entry` and create Author object.
       def self.parse(entry)
@@ -55,13 +56,16 @@ module Indexer
       end
 
       #
-      def initialize(settings)
-        @roles = []
-
-        settings.each do |field, value|
-          send("#{field}=", value)
-        end
+      def initialize(data)
+        super(data)
         #raise ArgumentError, "person must have a name" unless name
+      end
+
+      #
+      def initialize_attributes
+        @data = {
+          :roles => []
+        }
       end
 
       #
@@ -70,7 +74,7 @@ module Indexer
       #
       def name=(name)
         Valid.oneline!(name, :name)
-        @name = name
+        @data[:name] = name
       end
 
       #
@@ -79,7 +83,7 @@ module Indexer
       #
       def email=(email)
         Valid.email!(email, :email)
-        @email = email
+        @data[:email] = email
       end
 
       #
@@ -88,7 +92,7 @@ module Indexer
       #
       def website=(website)
         Valid.url!(website, :website)
-        @website = website
+        @data[:website] = website
       end
 
       #
@@ -96,7 +100,7 @@ module Indexer
 
       # TODO: validate team
       def team=(team)
-        @team = team
+        @data[:team] = team
       end
 
       # List of roles the person plays in the project.
@@ -105,7 +109,7 @@ module Indexer
 
       #
       def roles=(role)
-        @roles = (
+        @data[:roles] = (
           r = [role].flatten
           r.each{ |x| Valid.oneline?(x) }
           r
