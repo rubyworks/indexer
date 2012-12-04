@@ -1,40 +1,43 @@
-# <span class="ititle">Indexer</span> v<span class="iversion">0.1.0</span>
+# <span class="ititle">Indexer</span> (v<span class="iversion">0.1.0</span>)
 
-_Enable Your Ruby Project Metadata_
+<b class="isummary">Enable Your Project's Metadata<b>
 
 [![Build Status](https://secure.travis-ci.org/rubyworks/indexer.png)](http://travis-ci.org/rubyworks/indexer)
 
-Indexer defines a detailed and well-defined project metadata specification
-for Ruby projects.
+<p class="idescription">Indexer gives developers a unified data format for reusable project metadata.</p>
 
-A project's metadataq is canonized and stored in a `.ruby.lock` file.
-The specification is very strict, yet simple enough for Ruby developers
-to work with the file format without an intermediate API.
+Indexer defines a *canonical*, detailed and strict, project metadata specification. The strictness
+of the specification makes the format simple enough for developers to use without an intermediate API.
+Although Indexer also provides a convenience API for working with the specification and its data 
+more loosely when suitable to the usecase. Indexer also specifies a stanadard location for canonized
+metadata to be kept, in a `.index` file.
 
-Howerver, the project also provides a conveneient API for working with
-specification and its data when suitable to the usecase.
+Indexer provides a tool to import metadata from external sources. Indexer can handle a variety of metadata
+source formats, including YAML, HTML Micorformat and Ruby DSL scripts.
+
 
 ## Resources
 
 <ul>
 <li><a class="iresource" href="http://rubyworks.github.com/indexer" name="home">Homepage</a></li>
-<li><a class="iresource" href="http://github.com/rubyworks/indexer" name="code">Source Code</a></li>
+<li><a class="iresource" href="http://github.com/rubyworks/indexer" name="code">Source Code</a> (Github)</li>
+<li><a class="iresource" href="http://rubydoc.info/gems/indexer/frames" name="docs">API Reference</a></li>
 </ul>
 
 ## Requirements
 
 <ul>
 <li class="irequirement">
-  <span class="name">nokogiri</span> <span class="version">1.5+</span></span>
+  <a class="name" href="http://nokogiri.org/">nokogiri</span> <span class="version">1.5+</span></span>
 </li>
 <li class="irequirement">
-  <span class="name">redcarpet</span> <span class="version">2.2+</span></span>
+  <a class="name" href="https://github.com/vmg/redcarpet">redcarpet</a> <span class="version">2.2+</span></span>
 </li>
 <li class="irequirement">
-  <span class="name">qed</span> <span class="version">2.9+</span> <span class="groups">(test)</span>
+  <a class="name" href="http://rubyworks.github.com/qed/">qed</a> <span class="version">2.9+</span> <span class="groups">(test)</span>
 </li>
 <li class="irequirement">
-  <span class="name">ae</span> <span class="version"></span> <span class="groups">(test)</span>
+  <a class="name" href="http://rubyworks.github.com/ae/">ae</span> <span class="version"></span> <span class="groups">(test)</span>
 </li>
 </ul>
 
@@ -44,7 +47,11 @@ specification and its data when suitable to the usecase.
 <li class="vcard iauthor">
   <div class="nickname">trans</div>
   <div><a class="email" href="mailto:transfire@gmail.com">transfire@gmail.com</a></div>
-  <div><a class="url" href="http://example.com/">http://trans.gihub.com/</a></div>
+  <div><a class="url" href="http://trans.gihub.com/">http://trans.github.com/</a></div>
+</li>
+<li class="vcard iauthor">
+  <div class="nickname">postmodern</div>
+  <div><a class="url" href="http://postmodern.github.com/">http://postmodern.github.com/</a></div>
 </li>
 </ul>
 
@@ -59,3 +66,6 @@ specification and its data when suitable to the usecase.
 </li>
 <ul>
 
+<div stlye="display: none;">
+  <span class="icategory">metadata</span>
+<div>
