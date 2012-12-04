@@ -20,10 +20,10 @@ source formats, including YAML, HTML Micorformat and Ruby DSL scripts.
 
 Indexer is a Ruby application, so as long as you have Ruby installed, it is easy to install Indexer via RubyGems.
 
-  $ gem install indexer
+    $ gem install indexer
 
 
-### Instructions
+## Instructions
 
 Indexer is capable of generating a canonical `.index` file from a variety of sources. Being so flexiable, exactly
 how a developer descided to store a project's metadata is a largely a matter of taste. But in general there are
