@@ -18,10 +18,14 @@ module Indexer
     #
     # Require all import mixins.
     #
-    def self.require_importer
+    def self.require_importers
       require_relative 'importer/file'
       require_relative 'importer/ruby'
       require_relative 'importer/yaml'
+      require_relative 'importer/html'
+      require_relative 'importer/markdown'
+      #require_relative 'importer/rdoc'
+      #require_relative 'importer/textile'
       require_relative 'importer/gemspec'
       require_relative 'importer/gemfile'
       require_relative 'importer/version'
@@ -56,7 +60,7 @@ module Indexer
         end
       end
 
-      import = Importer.new #(metadata)
+      importer = Importer.new #(metadata)
 
       source.each do |src|
         importer.import(src)
@@ -84,7 +88,7 @@ module Indexer
     def import(source)
       success = super(source) if defined?(super)
       if success
-        metadata.source << source unless metadata.source.include?(source)
+        metadata.sources << source unless metadata.sources.include?(source)
       else
         raise "metadata source not found or not a known type -- #{source}"
       end
