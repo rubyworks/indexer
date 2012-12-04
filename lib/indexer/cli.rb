@@ -45,7 +45,7 @@ module Indexer
       end
 
       parser.on_tail('--help', '-h', "display this help message") do
-        puts opt
+        puts parser
         exit 0
       end
 
