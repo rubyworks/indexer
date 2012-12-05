@@ -4,10 +4,16 @@ module Indexer
   #
   class Command
 
+    #
+    # Shortcut to `new(argv).run`.
+    #
     def self.run(argv=ARGV)
       new(argv).run
     end
 
+    #
+    #
+    #
     def initialize(argv=ARGV)
       @argv     = argv
 
@@ -17,6 +23,9 @@ module Indexer
       @revision = REVISION
     end
 
+    #
+    #
+    #
     def run
       cmd = :show
       args = ARGV.clap @argv,
@@ -34,7 +43,7 @@ module Indexer
       send(cmd, *args)
     rescue => error
       raise error if $DEBUG
-      $stderr.puts error
+      $stderr.puts "#{File.basename($0)} error: #{error}"
     end
 
     #
@@ -48,8 +57,9 @@ module Indexer
       end
     end
 
-    #
+    # TODO: if not sources given, fallback to update?
     def source(*args)
+      raise Error.exception("no sources given") if args.empty?
       metadata = Indexer.import(*args)
       if @stdout
         puts metadata.to_yaml
@@ -71,6 +81,7 @@ module Indexer
 
     #
     def append(*args)
+      raise Error.exception("no sources given") if args.empty?
       metadata = Metadata.open
       metadata = Indexer.import(*(metadata.sources & args))
       if @stdout
@@ -88,10 +99,6 @@ module Indexer
       else
         raise ArgumentError, "unknown file type"
       end
-    end
-
-    #
-    def init
     end
 
     #
@@ -150,8 +157,9 @@ module Indexer
 
   private
 
+    #
     # TODO: support --stdout option
-
+    #
     def create_gemspec(file=nil)
       if file
         if file.extname(file) != '.gemspec'
@@ -170,11 +178,11 @@ module Indexer
         exit -1
       end
 
-      code = V[which]::GemspecExporter.source_code
+      code = GemspecExporter.source_code
 
       File.open(file, 'w') do |f|
         f << code
-        f << "\nIndexer::V#{which}::Gemspec.instance"
+        f << "\nIndexer::GemspecExporter.gemspec"
       end
 
       if static
