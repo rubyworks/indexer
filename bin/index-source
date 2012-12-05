@@ -1,3 +1,0 @@
-#!/usr/bin/env ruby
-require 'indexer/cli/source'
-Indexer::CLI::Source.execute

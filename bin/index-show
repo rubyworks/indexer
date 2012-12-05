@@ -1,4 +1,0 @@
-#!/usr/bin/env ruby
-require 'indexer/cli/show'
-Indexer::CLI::Show.execute
-
