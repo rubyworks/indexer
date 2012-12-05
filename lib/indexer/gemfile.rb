@@ -16,23 +16,21 @@
     #
     class Dsl
 
-=begin
       #
-      # Dynamically update a Gemfile from the `.ruby`. Just call `rubyfile`
+      # Dynamically update a Gemfile from the `.index` file. Just call `index`
       # from your Gemfile.
       #
       #     rubyfile
       #
       # This is analogous to the Gemfile's `gemspec` method.
       #
-      def rubyfile
-        spec = Metadata.open
-
-        spec.requirements.each do |name, req|
+      def index
+        spec = Indexer::Metadata.open
+        spec.requirements.each do |req|
+          next if req.external?
           gem(req.name, req.version, :group=>req.groups)
         end
       end
-=end
 
       #
       def metadata

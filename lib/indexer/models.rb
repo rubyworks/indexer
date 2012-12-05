@@ -1,0 +1,12 @@
+require_relative 'models/attributes'
+require_relative 'models/conversion'
+require_relative 'models/author'
+require_relative 'models/copyright'
+require_relative 'models/conflict'
+require_relative 'models/resource'
+require_relative 'models/repository'
+require_relative 'models/requirement'
+require_relative 'models/dependency'
+require_relative 'models/metadata'
+require_relative 'models/validator'
+

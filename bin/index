@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
-require 'indexer/cli/index'
-Indexer::CLI::Index.execute
+#require 'indexer/cli/index'
+#Indexer::CLI::Index.execute
+
+require 'indexer'
+Indexer::Command.run
 
