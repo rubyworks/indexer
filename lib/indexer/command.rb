@@ -5,18 +5,16 @@ module Indexer
   class Command
 
     #
-    # Shortcut to `new(argv).run`.
+    # Shortcut to `new.run(argv)`.
     #
     def self.run(argv=ARGV)
-      new(argv).run
+      new.run(argv)
     end
 
     #
     #
     #
-    def initialize(argv=ARGV)
-      @argv = argv
-
+    def initialize
       @force  = false
       @stdout = false
       @static = false
@@ -25,9 +23,9 @@ module Indexer
     #
     #
     #
-    def run
+    def run(argv=ARGV)
       cmd = nil
-      args = ARGV.clap(
+      args = cli(argv,
         '-d --debug'    => lambda{ $DEBUG = true },
         '-w --warn'     => lambda{ $VERBOSE = true },
         '-f --force'    => lambda{ @force = true },
@@ -59,7 +57,10 @@ module Indexer
         end
       else
         Metadata.lock!(:force=>@force)
-        puts metadata.about(*fields) unless fields.empty?
+        unless fields.empty?
+          metadata = Metadata.open
+          puts metadata.about(*fields)
+        end
       end
     end
 
