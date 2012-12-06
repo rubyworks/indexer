@@ -53,22 +53,38 @@ using plain YAML, so it's nearly as easy to take this approach. By convention th
 but it too can be called anything one prefers.
 
 On the Indexer wiki you can find detailed tutorials on a variety of setups, along with thier pros and cons.
+As an example of getting started, lets say we want to customize our metadata via the Ruby DSL in `Indexfile`,
+but we also want to keep the version information is a separate `VERSION` file. First create the `VERSION` file.
 
-Once one has the metadata sources setup, its easy to build the canonical `.index` file using the `index` 
-command line interface. For example, lets say we have customized our metadata via a DSL in `Indexfile`,
-but we are also keeping the version information is a separate `VERSION` file. Then we can simply issue
-the `index` command with the `-s/--source` option:
+    $ echo '0.1.0' > VERSION
 
-    $ index -s VERSION Indexfile 
+Next we need the `Indexfile`. Indexer makes out life easier by offering us some template generation for 
+common approaches. In this case we use the `-g/--generate` command option, specifying that we want an
+`Indexfile`.
 
-And indexer will utilize both sources to construct the `.index` file.
+    $ index --generate Indexfile
+
+Now we can edit the Indexfile to suite our project.
+
+    $ vim Indexfile
+
+Once we have the metadata sources all setup, its easy to build the canonical `.index` file using the `index` 
+command line interface.  Then we can simply issue the `index` command with the `-u/--using` command option:
+
+    $ index --using VERSION Indexfile 
+
+Indexer will utilize both sources and create the `.index` file.
 
 Over time project metadata tends to evolve and change. To keep the canoncial `.index` file up to date simply
-use the `index` command line tool with the the update option `-u/--update`.
+call the `index` command without any options.
 
-    $ index -u
+    $ index
 
-For more information on using Indexer, see the Wiki, API documentation, QED specification and the Manpages.
+By default the `.index` file will not be updated if it has a modification time newer than its source files.
+If need be, use the `-f/--force` option to override this.
+
+That's the quick "one two". For more information on using Indexer, see the Wiki, API documentation, QED specifications
+and the Manpages.
 
 
 ## Resources
