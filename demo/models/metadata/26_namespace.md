@@ -1,10 +1,10 @@
-## Indexer::V0::Metadata#namespace
+## Indexer::Metadata#namespace
 
 The namespace field is toplevel module or class name of the project's API.
 For example, if the project uses `module Foo` to encapsulate it's 
 functionality, than the namespace would be "Foo".
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
 
     spec.namespace = "Foo"
 

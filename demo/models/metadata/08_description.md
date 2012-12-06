@@ -1,9 +1,9 @@
-## Indexer::V0::Metadata#description
+## Indexer::Metadata#description
 
 The `description` field is used to describe a project in detail.
 It SHOULD be a single paragraph.
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
 
     spec.description = "HelloWorld is the best way to say hello.\nJust say it!"
 

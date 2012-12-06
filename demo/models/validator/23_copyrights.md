@@ -5,7 +5,7 @@ and license information.
 
 License values SHOULD be identifiers from SPDX.
 
-    data = Indexer::V0::Validator.new
+    data = Indexer::Validator.new
 
     data.copyrights = [
       { 'year'    => '2010',

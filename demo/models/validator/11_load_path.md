@@ -15,6 +15,6 @@ The `load_path` value MUST be an Array of String.
 
 By default the value is ['lib']
 
-    data = Indexer::V0::Validator.new
+    data = Indexer::Validator.new
     data.load_path.should = ['lib']
 

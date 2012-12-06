@@ -27,7 +27,9 @@ And these are not valid words.
 ### word!
 
     check do |word|
-      Indexer::Valid.word!(word)
+      ! Indexer::ValidationError.raised? do
+        Indexer::Valid.word!(word)
+      end
     end
 
 Again, these are all valid words.

@@ -1,4 +1,4 @@
-# Indexer::V0::Metadata#engines
+# Indexer::Metadata#engines
 
 The `engines` field holds the RUBY_ENGINE and and RUBY_VERSION requirements for
 the project/package. If given, only matching Rubies can make use of it.
@@ -6,7 +6,7 @@ the project/package. If given, only matching Rubies can make use of it.
 The `engines` field MUST be an array of strings with only a single line of text
 in the format of `"<name> [<version-constraint>]"`.
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
 
     spec.engines = ['mri 1.8.7+', 'jruby']
 

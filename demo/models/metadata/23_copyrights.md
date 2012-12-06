@@ -1,8 +1,8 @@
-## Indexer::V0::Metadata#copyright
+## Indexer::Metadata#copyright
 
 The `copyrights` field is a list of copyright and licens information.
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
 
 The copyright list is canonically a mapping.
 

@@ -2,7 +2,7 @@
 
 The `summary` field is used to breifly describe a project.
 
-    data = Indexer::V0::Validator.new
+    data = Indexer::Validator.new
 
     data.summary = "Convenient Way to Say Hello"
 

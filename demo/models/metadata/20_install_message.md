@@ -1,4 +1,4 @@
-## Indexer::V0::Metadata#install_message
+## Indexer::Metadata#install_message
 
 The `install_message` field holds the <i>post install message</i>,
 which is displayed after a package is installed to provide users

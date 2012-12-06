@@ -1,25 +1,31 @@
-## Indexer::V0::Metadata#extra
+## Indexer::Metadata#method_missing
 
-The `extra` field is used to store extraneous information that
-a project developer may want to provide in the `.ruby` that is
+To facilitate additonal uses beyond the well defined specification,
+the Metadata class is open to store extraneous information that
+a project developer may want to provide in the `.index` that is
 not supported by the specification. Besides personal usecases,
-it might also serve as a safe place to explore new specification
-fields for the future. On the whole, it is not likely to be used
-much at all, but is made available for the rare case.
+it might also serve as a way to explore new specification fields
+for the future. 
 
-The `extra` field is simply a Hash.
+Note that the value of the field can only be a Numeric or String,
+or an Array or Hash or the same.
 
-    spec = Indexer::V0::Metadata.new
+    data = Indexer::Metadata.new
 
-    spec.extra.should == {}
+    data.notify = 'bob@gmail.com'
 
-It can only be assigned a Hash.
+We can see that the arbitrary field has been set.
 
-    spec.extra = {'notify'=>'bob@gmail.com'}
+    data.notify.should == 'bob@gmail.com'
 
-Anything else will raise an `InvalidMetadata` exception.
+Anything else will raise a `ValidationError` exception.
 
-    no 100
+    check do |obj|
+      ! Indexer::ValidationError.raised? do
+        data.notify = obj
+      end
+    end
+
     no :symbol
     no Object.new
 

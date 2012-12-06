@@ -1,4 +1,4 @@
-# Indexer::V0::Metadata#platforms
+# Indexer::Metadata#platforms
 
 The `platform` field holds the RUBY_PLATFORM requirements for the project/package.
 If given, only matching platforms can make use of it.
@@ -6,7 +6,7 @@ If given, only matching platforms can make use of it.
 The `platform` field MUST be an array of strings with only a single line of text
 that match valid value of RUBY_PLATFORM.
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
 
     spec.platforms = ['x86_64-linux']
 

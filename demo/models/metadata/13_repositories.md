@@ -1,8 +1,8 @@
-## Indexer::V0::Metadata#repositories
+## Indexer::Metadata#repositories
 
 The `repositories` field holds a list of repository URLs indexed by an id.
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
 
     spec.repositories = [
       {

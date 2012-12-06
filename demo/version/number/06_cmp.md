@@ -9,7 +9,7 @@ all the common inequality methods.
     check do |n1, n2|
       v1 = Indexer::Version::Number.parse(n1)
       v2 = Indexer::Version::Number.parse(n2)
-      v1.should == v2
+      v1 == v2
     end
 
     ok  '1.0.0', '1.0.0'
@@ -20,7 +20,7 @@ all the common inequality methods.
     check do |n1, n2|
       v1 = Indexer::Version::Number.parse(n1)
       v2 = Indexer::Version::Number.parse(n2)
-      v1.should > v2
+      v1 > v2
     end
 
     ok '1.0.1', '1.0.0'
@@ -36,7 +36,7 @@ all the common inequality methods.
     check do |n1, n2|
       v1 = Indexer::Version::Number.parse(n1)
       v2 = Indexer::Version::Number.parse(n2)
-      v1.should < v2
+      v1 < v2
     end
 
     ok '1.0.1', '1.0.2'
@@ -54,7 +54,7 @@ all the common inequality methods.
     check do |n1, n2|
       v1 = Indexer::Version::Number.parse(n1)
       v2 = Indexer::Version::Number.parse(n2)
-      v1.should >= v2
+      v1 >= v2
     end
 
     ok '1.0.1', '1.0.0'
@@ -69,7 +69,7 @@ all the common inequality methods.
     check do |n1, n2|
       v1 = Indexer::Version::Number.parse(n1)
       v2 = Indexer::Version::Number.parse(n2)
-      v1.should <= v2
+      v1 <= v2
     end
 
     ok '1.0.1', '1.0.2'
@@ -84,7 +84,7 @@ all the common inequality methods.
     check do |n1, n2|
       v1 = Indexer::Version::Number.parse(n1)
       v2 = Indexer::Version::Number.parse(n2)
-      v1.should =~ v2
+      v1 =~ v2
     end
 
     ok '1.0.0', '1.0'

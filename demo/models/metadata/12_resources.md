@@ -1,8 +1,8 @@
-## Indexer::V0::Metadata#resources
+## Indexer::Metadata#resources
 
 The `resources` field holds a list of URLs index by type.
 
-    metadata = Indexer::V0::Metadata.new
+    metadata = Indexer::Metadata.new
 
     metadata.resources = {
       'home' => 'http://foo.org',

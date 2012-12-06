@@ -22,7 +22,7 @@ fields is:
 
 Only `name` and `version` are required sub-fields.
 
-    data = Indexer::V0::Validator.new
+    data = Indexer::Validator.new
 
     data.requirements = [
       {'name'=>'foo', 'version'=>'1.0+'},

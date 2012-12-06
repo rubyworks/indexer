@@ -6,7 +6,7 @@ known not to be compatible.
 The format of the field is a mapping to package names indexing version
 constraints.
 
-    data = Indexer::V0::Validator.new
+    data = Indexer::Validator.new
 
     data.conflicts = [
       { 'name' => 'bad_robot', 'version' => ['>=1.0'] },

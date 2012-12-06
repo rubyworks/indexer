@@ -2,7 +2,7 @@
 
 The `codename` field is used to name the specific version.
 
-    data = Indexer::V0::Validator.new
+    data = Indexer::Validator.new
     data.codename = "Lazy Louse"
 
 The `codename` value MUST have only one lone of text.

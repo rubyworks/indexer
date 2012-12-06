@@ -1,4 +1,4 @@
-## Indexer::V0::Metadata#load_path
+## Indexer::Metadata#load_path
 
 The `load_path` field is the means by which a developer instructs
 Ruby's load system of the locations within the project to look for
@@ -6,7 +6,7 @@ files when `#require` or `#load` are used.
 
 The `load_path` value MUST be an Array of String.
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
     spec.load_path = ['lib', 'ext']
 
 Or any object that responds to `#to_ary`.
@@ -42,6 +42,6 @@ The elements must also be valid path strings.
 
 By default the value, when no load_path is set, is `['lib']`.
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
     spec.load_path.should = ['lib']
 

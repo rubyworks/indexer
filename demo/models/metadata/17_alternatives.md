@@ -1,11 +1,11 @@
-## Indexer::V0::Metadata#alternatives
+## Indexer::Metadata#alternatives
 
 The `alternatives` field holds a list of other packages with which this
 package can act as a reasonable substitue and vice-versa.
 
 The format of the field is an array.
 
-    spec = Indexer::V0::Metadata.new
+    spec = Indexer::Metadata.new
 
     spec.alternatives = ['BlueCloth','rdiscount']
 

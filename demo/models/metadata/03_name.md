@@ -1,4 +1,4 @@
-## Indexer::V0::Metadata#name
+## Indexer::Metadata#name
 
 A valid `name` is a word starting with a letter, ending with a letter or number
 and containing only `a-z`, `A-Z`, `0-9` and `_` or `-` characters.
@@ -12,7 +12,7 @@ Examples of good @names are:
 
 To verify this we can assign each name.
 
-    metadata = Indexer::V0::Metadata.new
+    metadata = Indexer::Metadata.new
 
     @names.each do |name|
       metadata.name = name
@@ -27,7 +27,7 @@ And these are not good @names:
 
 Likewise, we can verify this by trying to assign each name.
 
-    metadata = Indexer::V0::Metadata.new
+    metadata = Indexer::Metadata.new
 
     @names.each do |name|
       expect Indexer::ValidationError do

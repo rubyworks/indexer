@@ -7,7 +7,7 @@ numbering policies. As long as the version number (which is actually a string)
 starts with a numeric digit and consists of a series of dot and/or dash separated
 alphanumeric "point values", then .ruby can work with it.
 
-    data = Indexer::V0::Validator.new
+    data = Indexer::Validator.new
 
 Here are examples of valid version numbers.
 

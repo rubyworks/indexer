@@ -3,7 +3,7 @@
 ### version_string?
 
   check do |str|
-    Indexer::Valid.assert.version_string?(str)
+    Indexer::Valid.version_string?(str)
   end
 
   ok '1.0.0'
@@ -17,7 +17,9 @@
 ### version_string!
 
   check do |str|
-    Indexer::Valid.version_string!(str)
+    ! Indexer::ValidationError.raised? do
+      Indexer::Valid.version_string!(str)
+    end
   end
 
   ok '1.0.0'

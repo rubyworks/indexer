@@ -3,7 +3,7 @@
 The `description` field is used to describe a project in detail.
 It SHOULD be a single paragraph.
 
-    data = Indexer::V0::Validator.new
+    data = Indexer::Validator.new
 
     data.description = "HelloWorld is the best way to say hello.\nJust say it!"
 

@@ -5,7 +5,7 @@ require 'ae/should'
 # Copy and paste for now, b/c lib is not mature.
 #
 
-#require 'ae/ok'  # /check ?
+#require 'ae//check'
 
 def check(msg=nil, &block)
   if block.arity == 0
@@ -24,15 +24,7 @@ end
 
 def no(*args)
   block, message = *@__c__
-  begin
-    result = block.call(*args)
-  rescue Exception => error
-    #if error.respond_to?(:assertion?) && error.assertion?
-      true
-    #else
-    #  raise error
-    #end
-  end
+  result = block.call(*args)
   refute(result, message)
 end
 
