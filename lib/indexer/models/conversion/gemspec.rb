@@ -3,7 +3,7 @@ module Indexer
   module Conversion
 
     #
-    # Create a Gem::Specification from a Meta::Spec.
+    # Create a Gem::Specification from Metadata.
     #
     # Becuase the specificaiton is extensive, a Gem::Specification
     # can be created that is sufficient for most needs. However, there
@@ -50,15 +50,20 @@ module Indexer
     def import_gemspec(gemspec)
       require 'rubygems'
 
-      # TODO: ensure this is robust
-      authors = [gemspec.authors].flatten.zip([gemspec.email].flatten)
-
-      # TODO: how to handle license(s) ?
-
       if not Gem::Specification === gemspec
-        # TODO: YAML-based gem specs
+        # TODO: YAML-based gem specs ?
         gemspec = Gem::Specification.load(gemspec)
       end
+
+      # TODO: ensure this is robust
+      authors = (
+        zip = [gemspec.authors].flatten.zip([gemspec.email].flatten)
+        zip.map do |(name, email)|
+          email ? {:name=>name, :email=>email} : {:name=>name}
+        end
+      )
+
+      # TODO: how to handle license(s) ?
 
       self.name         = gemspec.name
       self.version      = gemspec.version.to_s
