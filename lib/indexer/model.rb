@@ -185,6 +185,38 @@ module Indexer
       to_h.to_yaml(io)
     end
 
+    #
+    # Models are open collections. Any arbitrary settings can be made
+    # in order to support non-specification indexing.
+    #
+    def method_missing(sym, *args, &blk)
+      super(sym, *args, &blk) if blk
+      name = sym.to_s
+      type = name[-1,1]
+
+      case type
+      when '='
+        value = (
+          case v = args.first
+          when String  then String(v)
+          when Integer then Integer(v)
+          when Float   then Float(v)
+          when Array   then Array(v)
+          when Hash    then Hash(v)
+          else
+            raise ValidationError, "custom metadata for `#{sym}' not simple type -- `#{value.class}'"
+          end
+        )
+        @data[name.chomp('=').to_sym] = value
+      when '!'
+        super(sym, *args, &blk)
+      when '?'
+        super(sym, *args, &blk)
+      else
+        key?(name) ? @data[name.to_sym] : super(sym, *args, &blk)
+      end
+    end
+
   private
 
     #
