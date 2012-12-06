@@ -2,7 +2,7 @@
 
 The `repository` method 
 
-    r = V0::Requirement.new('foo')
+    r = Requirement.new('foo')
 
     r.repository = {
       :uri => 'http://wootworld.com/foo.git',

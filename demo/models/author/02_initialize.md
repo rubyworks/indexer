@@ -3,18 +3,17 @@
 The constructor takes a hash of entries. Recognized entries
 are `name`, `email`, `website` and `role`.
 
-    author = V0::Author.new(
+    author = Author.new(
       :name    => 'Thomas T. Thomas',
       :email   => 'tom@mail.com',
       :website => 'http://tom.com',
       :role    => 'development'
     )
 
-Indexer uses a dynamically module to allow revisioned components
-to be tested with a non-revisioned "tag ancestor".
+We should be able to query the author object for the various settings.
 
-    author.assert.kind_of?(Indexer::Author)
-
-The tag module can be used as a factory for creating a new 
-revisioned component.
+    author.name     #=> 'Thomas T. Thomas'
+    author.email    #=> 'tom@mail.com'
+    author.website  #=> 'http://tom.com'
+    author.roles    #=> ['development']
 

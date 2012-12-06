@@ -2,7 +2,7 @@
 
 The `parse` method
 
-    r = V0::Requirement.parse('foo 1.0+')
+    r = Requirement.parse('foo 1.0+')
 
     expect Indexer::ValidationError do
       V0::Requirement.parse('---')

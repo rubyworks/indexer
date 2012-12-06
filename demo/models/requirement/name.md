@@ -2,7 +2,7 @@
 
 The `name` method
 
-    r = V0::Requirement.parse('foo 1.0+')
+    r = Requirement.parse('foo 1.0+')
 
     r.name.should == 'foo'
 
