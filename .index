@@ -1,7 +1,6 @@
 ---
 type: ruby
 sources:
-- Indexfile
 - README.md
 authors:
 - name: trans
@@ -9,7 +8,7 @@ authors:
 - name: postmodern
 requirements:
 - version: 1.5+
-  name: nokogiri 1.5+
+  name: nokogiri
 - version: 2.2+
   name: redcarpet
 - groups:
@@ -19,7 +18,7 @@ requirements:
 - groups:
   - test
   version: 
-  name: ae  (test)
+  name: ae
 dependencies: []
 alternatives: []
 conflicts: []
@@ -33,10 +32,7 @@ resources:
 - type: api
   uri: http://rubydoc.info/gems/indexer/frames
   label: API Reference
-repositories:
-- name: upstream
-  scm: git
-  uri: http://github.com/rubyworks/indexer/indexer.git
+repositories: []
 categories:
 - metadata
 load_path:
@@ -51,4 +47,4 @@ summary: Enable Your Project's Metadata
 description: Indexer gives developers a unified data format for reusable project metadata.
 name: indexer
 title: Indexer
-date: '2012-12-04'
+date: '2012-12-06'
