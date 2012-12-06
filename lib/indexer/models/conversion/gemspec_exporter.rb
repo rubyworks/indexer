@@ -48,9 +48,9 @@ module Indexer
       @root_check = false
 
       if metadata
-        root = metadata.delete(:root)
-        if root
-          @root = root
+        root_dir = metadata.delete(:root)
+        if root_dir
+          @root = root_dir
           @root_check = true
         end
         metadata = nil if metadata.empty?
@@ -164,13 +164,13 @@ module Indexer
     def to_gemspec
       if has_root?
         Gem::Specification.new do |gemspec|
-          to_gemspec_data(gemsepc)
-          to_gemspec_paths(gemsepc)
+          to_gemspec_data(gemspec)
+          to_gemspec_paths(gemspec)
         end
       else
         Gem::Specification.new do |gemspec|
-          to_gemspec_data(gemsepc)
-          to_gemspec_paths(gemsepc)
+          to_gemspec_data(gemspec)
+          to_gemspec_paths(gemspec)
         end
       end
     end

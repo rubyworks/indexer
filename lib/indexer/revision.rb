@@ -22,7 +22,7 @@ module Indexer
         begin
           require "revisions/r#{revision}"
           __send__("r#{revision}", data)
-        rescue 
+        rescue LoadError
           raise ValidationError, "unknown revision #{revision}"
         end
       else

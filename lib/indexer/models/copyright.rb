@@ -34,11 +34,10 @@ module Indexer
     end
 
     #
-    #def initialize(holder, year=nil, license=nil)
-    #  self.holder  = holder
-    #  self.year    = year    if year
-    #  self.license = license if license
-    #end
+    def initialize(data)
+      super(data)
+      raise(ValidationError, "copyright must have a holder") unless holder
+    end
 
     #
     attr :year
@@ -63,10 +62,15 @@ module Indexer
 
     #
     def license=(license)
-      Valid.oneline!(license, "copyright.license")
-      @data[:license] = license
+      if license.nil?
+        @data.delete(:license)
+      else
+        Valid.oneline!(license, "copyright.license")
+        @data[:license] = license
+      end
     end
 
+    #
     # Standard copyright stamp.
     #
     def to_s

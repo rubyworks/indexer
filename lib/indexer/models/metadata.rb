@@ -170,7 +170,11 @@ module Indexer
       @data[:date] = \
         case date
         when String
-          Date.parse(date)
+          begin
+            Date.parse(date)
+          rescue ArgumentError
+            raise ValidationError, "invalid date for `date' - #{date.inspect}"
+          end
         when Date, Time, DateTime
           date
         else

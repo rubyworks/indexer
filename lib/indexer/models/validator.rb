@@ -7,11 +7,44 @@ module Indexer
   class Validator < Model
     include Attributes
 
+    #class << self
+    #  private
+    #  alias :create :new
+    #end
+
+    #
+    # Revision factory returns a versioned instance of the model class.
+    #
+    # @param [Hash] data
+    #   The data to populate the instance.
+    #
+    def self.new(data={})
+      data = revise(data)
+      super(data)
+    end
+
+    #
+    # Load metadata, ensuring canoncial validity.
+    #
+    # @param [String] data
+    #   The data to be validate and then to populate the instance.
+    #
+    def self.valid(data)
+      new(data)
+    end
+
+    #
+    # Update metadata to current revision if using old revision.
+    #
+    def self.revise(data)
+      Revision.upconvert(data)
+    end
+
     # -- Writers ------------------------------------------------------------
 
     #
     def revision=(value)
-      if value.to_i != 2013
+      if value.to_i != REVISION
         # technically this should never happen
         Valid.raise_invalid_message("invalid revision for 2013 -- #{value}")
       end
@@ -234,6 +267,8 @@ module Indexer
 
     # By saving via the Validator, we help ensure only the canoncial
     # form even makes it to disk.
+    #
+    # TODO: Only save when when different?
     #
     def save!(file)
       File.open(file, 'w') do |f|

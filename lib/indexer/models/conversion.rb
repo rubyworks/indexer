@@ -9,5 +9,6 @@ module Indexer
 end
 
 require_relative 'conversion/gemspec'
+require_relative 'conversion/gemspec_exporter'
 require_relative 'conversion/gemfile'
 

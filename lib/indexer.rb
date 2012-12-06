@@ -6,7 +6,7 @@ module Indexer
   LOCK_FILE = '.index'
 
   # Default metadata file for use by end-developer.
-  USER_FILE = 'Indexfile'  # 'Metadata'
+  USER_FILES = '{Indexfile,Indexfile.rb,Metadata,Metadata.yml,Metadata.yaml}'
 
   # Indexer library directory.
   LIBDIR = File.dirname(__FILE__) + '/indexer'

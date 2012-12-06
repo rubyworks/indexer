@@ -33,7 +33,7 @@ module Indexer
     #
     #
     def self.parse_array(data)
-      name, versin = *data
+      name, version = *data
       new(:name=>name, :version=>version)
     end
 
