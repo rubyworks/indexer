@@ -106,7 +106,7 @@ module Indexer
     # Raise lock file missing error.
     #
     def lock_file_missing(from=nil)
-      raise Error.exception("could not locate locked metadata", Errno::ENOENT)
+      raise Error.exception("could not locate .index file", Errno::ENOENT)
     end
 
     #
@@ -117,11 +117,41 @@ module Indexer
     end
 
     #
-    def ensure_locked
-      unless exists?
-        files = [USER_FILE]
-        Importer.import(*files)
+    # Lockdown the metadata (via Importer) and return updated metadata.
+    #
+    # Options :force
+    #
+    def lock(*sources)
+      opts = (Hash === sources.last ? sources.pop : {})
+
+      file    = nil
+      needed  = true
+      sources = sources.flatten
+
+      if sources.empty?
+        if file = exists?
+          metadata = Metadata.open
+          sources = metadata.sources
+        else
+          sources = Dir.glob(USER_FILES, File::FNM_CASEFOLD)
+          raise Error.exception("could not find default sources") if sources.empty?
+        end
       end
+
+      if file && !opts[:force]
+        date = sources.map{ |s| File.mtime(s) }.max
+        needed = false if File.mtime(file) > date
+      end
+
+      Importer.import(*sources) if needed
+    end
+
+    #
+    # Lockdown the metadata (via Importer) and save.
+    #
+    def lock!(*sources)
+      metadata = lock(*sources)
+      metadata.save! if metadata
     end
 
   end
