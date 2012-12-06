@@ -3,7 +3,7 @@
 name    <%= name.inspect %>
 version <%= version.inspect %>
 title   <%= title.inspect %>
-summary <%= summary.inpsect %>
+summary <%= summary.inspect %>
 
 description \
   <% description.inspect %>
@@ -19,12 +19,12 @@ requirements [
 ]
 
 repositories {
-  'upstream' => 'http://github.com/organization/app_name/app_name.git'
+  'upstream' => 'http://github.com/organization/app_name/<%= name %>.git'
 }
 
 resources {
-  'home' => 'http://organization.github.org/app_name',
-  'code' => 'http://github.com/organization/app_name'
+  'home' => 'http://organization.github.org/<%= name %>',
+  'code' => 'http://github.com/organization/<%= name %>'
 }
 
 categories ['foo']
