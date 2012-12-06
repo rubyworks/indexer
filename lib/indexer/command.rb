@@ -40,6 +40,7 @@ module Indexer
     rescue => error
       raise error if $DEBUG
       $stderr.puts "#{File.basename($0)} error: #{error}"
+      exit -1
     end
 
     #
@@ -107,20 +108,22 @@ module Indexer
         index [command-option] [options...] [arguments...]
 
         (none) [fields...]              update index and provide information from index
-        -u --using [sources...]         create index using given information sources
+        -u --using <sources...>         create index using given information sources
         -a --adding <sources...>        update index appending additional information sources
         -r --remove <sources...>        update index removing given information sources
-        -g --generate [file-type]       generate template file using the index (gemspec, indexfile, metadata)
+        -g --generate <type> [fname]    generate a file (gemspec, indexfile, metadata)
         -h --help                       show this help message
 
         -o --stdout                     output to console instead of saving to file
         -f --force                      force protected file overwrite if file already exists or is up to date
-        -s --static                     keep index as is or generate static format (if file-type supports it)
+        -s --static                     keep index as is or generate static format if file-type supports it
       END
     end
 
+  private
+
     #
-    def init(*args)
+    def create_indexfile(*args)
       require 'erb'
 
       if args.first
@@ -129,33 +132,75 @@ module Indexer
         outfile = "Indexfile"
       end
 
-      if File.exist?(outfile)
-        raise Error.exception("#{$0}: #{outfile} file already exists.", IOError) 
+      if File.exist?(outfile) && !(@stdout or @force)
+        raise Error.exception("#{outfile} file already exists", IOError) 
       end
 
-      template_dir = File.join(DATADIR, "v#{REVISION}")
+      template_dir  = File.join(DATADIR, "r#{REVISION}")
+      template_file = File.join(template_dir, 'ruby.txt')
 
-      if @static #yaml
-        template_file = File.join(template_dir, 'yaml.txt')
+      if Metadata.exists?
+        metadata = Metadata.open
       else
-        template_file = File.join(template_dir, 'ruby.txt')
+        metadata = Metadata.new
       end
 
-      metadata = Metadata.new
-
+      # this is a little weak, but...
       if gemspec = Dir['{,pkg/}*.gemspec'].first
         metadata.import_gemspec(gemspec)
       end
 
       template = ERB.new(File.read(template_file))
-      result   = template.result(Form.new(metadata).binding)
+      result   = template.result(Form.new(metadata).get_binding)
 
-      File.open(outfile, 'w') do |f|
-        f << result
+      if @stdout
+        puts result
+      else
+        File.open(outfile, 'w') do |f|
+          f << result
+        end
       end
     end
 
-  private
+    #
+    def create_metadata(*args)
+      require 'erb'
+
+      if args.first
+        outfile = args.first
+      else
+        outfile = "Metadata"
+      end
+
+      if File.exist?(outfile) && !(@stdout or @force)
+        raise Error.exception("#{outfile} file already exists", IOError) 
+      end
+
+      template_dir  = File.join(DATADIR, "r#{REVISION}")
+      template_file = File.join(template_dir, 'yaml.txt')
+
+      if Metadata.exists?
+        metadata = Metadata.open
+      else
+        metadata = Metadata.new
+      end
+
+      # this is a little weak, but...
+      if gemspec = Dir['{,pkg/}*.gemspec'].first
+        metadata.import_gemspec(gemspec)
+      end
+
+      template = ERB.new(File.read(template_file))
+      result   = template.result(Form.new(metadata).get_binding)
+
+      if @stdout
+        puts result
+      else
+        File.open(outfile, 'w') do |f|
+          f << result
+        end
+      end
+    end
 
     #
     # TODO: support --stdout option
@@ -168,21 +213,28 @@ module Indexer
       else
         # TODO: look for pre-existent gemspec, but to do that right we should get
         #       the name from the .index file if it eixts.
-        file = '.gemspec'  # Dir['{,*}.gemspec'].first || '.gemspec'
+        file = Dir['{,pkg/}*.gemspec'].first
       end
 
       #lib_file = File.join(DIR, "v#{which}", "gemspec.rb")
 
       if File.exist?(file) && !$FORCE
-        $stderr.puts "`#{file}' already exists, use -f/--force to overwrite."
-        exit -1
+        raise Error.exception("`#{file}' already exists, use -f/--force to overwrite.")
       end
 
-      code = GemspecExporter.source_code
+      text = GemspecExporter.source_code + "\nIndexer::GemspecExporter.gemspec"
 
-      File.open(file, 'w') do |f|
-        f << code
-        f << "\nIndexer::GemspecExporter.gemspec"
+      if @static
+        text = eval(code, CleanBinding.new, file)
+        text = spec.to_yaml
+      end
+
+      if @stdout
+        puts text
+      else
+        File.open(file, 'w') do |f|
+          f << text
+        end
       end
 
       if @static
@@ -207,7 +259,7 @@ module Indexer
       def method_missing(s, *a, &b)
         @metadata.public_send(s, *a, &b) || '<fill-out #{s}>'
       end
-      public :binding
+      def get_binding; binding; end
     end
 
     #
