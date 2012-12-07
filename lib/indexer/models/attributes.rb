@@ -28,9 +28,11 @@ module Indexer
     end
 
     # The revision of ruby meta specification.
-    def revision
-      2013
-    end
+    attr_accessor :revision
+
+    #def revision
+    #  REVISION
+    #end
 
     # The type of ruby meta specification.
     attr_accessor :type
@@ -94,10 +96,7 @@ module Indexer
     #attr_accessor :executables
 
     # The packages this package requires to function.
-    attr_accessor :requirements
-
-    # The system pacakges this package needs to function.
-    attr_accessor :dependencies
+    attr_accessor :requirements  #:dependencies
 
     # A list of packages that provide more or less the same functionality.
     # A good example is for a markdown library.
@@ -158,7 +157,6 @@ module Indexer
         :copyrights    => [],
         :alternatives  => [],
         :requirements  => [],
-        :dependencies  => [],
         :conflicts     => [],
         :repositories  => [],
         :resources     => [],

@@ -48,6 +48,14 @@ module Indexer
         # technically this should never happen
         Valid.raise_invalid_message("invalid revision for 2013 -- #{value}")
       end
+      super(value)
+    end
+
+    # Project's _type_ must be a string without spaces
+    # using only `[a-zA-Z0-9_-:/]`.
+    def type=(value)
+      Valid.type!(value, :type)
+      super(value)
     end
 
     # Project's _packaging name_ must be a string without spaces
@@ -283,19 +291,18 @@ module Indexer
     #
     def initialize_attributes
       @data = {
-        :type         => 'ruby',
+        :type          => 'ruby',
+        :revision      => REVISION,
         :sources       => [],
         :authors       => [],
         :requirements  => [],
-        :dependencies  => [],
-        :alternatives  => [],
         :conflicts     => [],
+        :alternatives  => [],
         :resources     => [],
         :repositories  => [],
         :categories    => [],
         :load_path     => ['lib'],
-        :copyrights    => [],
-        :extra         => {}
+        :copyrights    => []
       }
     end
 

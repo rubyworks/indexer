@@ -332,7 +332,7 @@ module Indexer
     def to_h
       h = super
 
-      h['version']     = version.to_s  if version
+      h['version']     = version.to_s
       h['repository']  = repository.to_h if repository
 
       h.delete('groups')    if h['groups']    && h['groups'].empty?

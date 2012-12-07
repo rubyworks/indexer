@@ -5,6 +5,9 @@ module Indexer
     extend self
 
     # Valid name regular expression.
+    TYPE = /^[A-Za-z][\/:A-Za-z0-9_-]*[A-Za-z0-9]$/
+
+    # Valid name regular expression.
     NAME = /^[A-Za-z][A-Za-z0-9_-]*[A-Za-z0-9]$/ 
 
     # Valid URL regular expression.
@@ -18,6 +21,18 @@ module Indexer
 
     # FIXME: Regular expression to limit date-time fields to ISO 8601 (Zulu).
     DATE = /^\d\d\d\d-\d\d-\d\d(\s+\d\d:\d\d:\d\d)?$/
+
+    #
+    def type?(type)
+      TYPE =~ type
+    end
+
+    #
+    def type!(type, field=nil)
+      string!(type, field)
+      raise_invalid("type", type, field) unless type?(name)
+      return type
+    end
 
     #
     def name?(name)

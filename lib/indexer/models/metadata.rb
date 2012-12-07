@@ -67,6 +67,15 @@ module Indexer
     end
 
     #
+    # Set the revision. This is in a sense a dummy setting, since the actual
+    # revision is alwasy the latest.
+    #
+    def type=(value)
+      Valid.type!(value, :type)
+      @data['type'] = type.to_str
+    end
+
+    #
     # Sources for building index file.
     #
     # @param [String, Array] path(s)
@@ -246,7 +255,7 @@ module Indexer
       @data[:copyrights] = [Copyright.parse(copyright)]
     end
 
-    # TODO: Should their just be a "primary" license field ?
+    # TODO: Should their be a "primary" license field ?
 
     #
     # Set copyright license for all copyright holders.
@@ -313,8 +322,7 @@ module Indexer
     end
 
     #
-    # Sets the requirements of the project. Also commonly refered
-    # to as dependencies.
+    # Sets the requirements of the project. Also commonly called dependencies.
     #
     # @param [Array<Hash>, Hash{String=>Hash}, Hash{String=>String}] requirements
     #   The requirement details.
@@ -336,31 +344,10 @@ module Indexer
     end
 
     #
-    #
+    # Dependencies is an alias for requirements.
     #
     alias :dependencies  :requirements
     alias :dependencies= :requirements=
-
-    #
-    # Binary pacakge dependecies.
-    #
-    # @param [Array<Hash>, Hash{String=>Hash}, Hash{String=>String}] requirements
-    #   The dependency details.
-    #
-    # @raise [ValidationError]
-    #   The dependencies must be an `Array` or `Hash`.
-    #
-    def dependencies=(dependencies)
-      case dependencies
-      when Array, Hash
-        @data[:dependencies].clear
-        dependencies.each do |specifics|
-          @data[:dependencies] << Dependency.parse(specifics)
-        end
-      else
-        raise(ValidationError,"dependencies must be an Array or Hash")
-      end
-    end
 
     #
     # Sets the packages with which this package is known to have
@@ -672,17 +659,7 @@ private :each_path
     # @return [Array<Requirement>] runtime requirements.
     def runtime_requirements
       requirements.select do |requirement|
-        requirements.runtime?
-      end
-    end
-
-    #
-    # Returns the runtime dependencies of the project.
-    #
-    # @return [Array<Dependency>] runtime dependencies.
-    def runtime_dependencies
-      dependecies.select do |dependency|
-        dependency.runtime?
+        requirement.runtime?
       end
     end
 
@@ -693,17 +670,37 @@ private :each_path
     #
     def development_requirements
       requirements.select do |requirement|
-        ! requirements.runtime?
+        requirement.development?
       end
     end
 
     #
-    # Returns the development dependencies of the project.
+    # Returns the runtime requirements of the project.
     #
-    # @return [Array<Dependency>] development dependencies.
-    def development_dependencies
-      dependecies.select do |dependency|
-        ! dependency.runtime?
+    # @return [Array<Requirement>] runtime requirements.
+    def external_requirements
+      requirements.select do |requirement|
+        requirement.external?
+      end
+    end
+
+    #
+    # Returns the external runtime requirements of the project.
+    #
+    # @return [Array<Requirement>] external runtime requirements.
+    def external_runtime_requirements
+      requirements.select do |requirement|
+        requirement.external? && requirement.runtime?
+      end
+    end
+
+    #
+    # Returns the external development requirements of the project.
+    #
+    # @return [Array<Requirement>] external development requirements.
+    def external_development_requirements
+      requirements.select do |requirement|
+        requirement.external? && requirement.development?
       end
     end
 
@@ -777,6 +774,7 @@ private :each_path
 
       h = super
 
+      h['revision']     = REVISION
       h['version']      = version.to_s
 
       h['date']         = date.strftime('%Y-%m-%d')
