@@ -24,7 +24,7 @@ module Indexer
 
     # Standard file patterns.
     PATTERNS = {
-      :root => '{.index,.ruby,Gemfile}',
+      :root => '{.index,Gemfile,lib}',
       :bin  => 'bin/*',
       :lib  => 'lib/{**/}*', #.rb',
       :ext  => 'ext/{**/}extconf.rb',
