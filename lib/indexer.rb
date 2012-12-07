@@ -1,11 +1,14 @@
 module Indexer
+  # Name of this program.
+  NAME = 'indexer'
+
   # Current stable revision of the specification (by year).
   REVISION = 2013
 
   # File name of locked metadata file.
   LOCK_FILE = '.index'
 
-  # Default metadata file for use by end-developer.
+  # Default metadata file name for use by end-developer.
   USER_FILES = '{Indexfile,Indexfile.rb,Metadata,Metadata.yml,Metadata.yaml}'
 
   # Indexer library directory.
@@ -13,6 +16,21 @@ module Indexer
 
   # Indexer library directory.
   DATADIR = File.dirname(__FILE__) + '/../data/indexer'
+
+  # Project metadata via RubyGems, fallback to .index file.
+  def self.const_missing(name)
+    name = name.to_s.downcase
+    begin
+      Gem.loaded_specs[NAME].send(name).to_s
+    rescue StandardError
+      file = File.join(File.dirname(__FILE__), '..', '.index')
+      if File.exist?(file)
+        require 'yaml'
+        data = YAML.load_file(file)
+        data[name]        
+      end
+    end
+  end
 end
 
 require 'yaml'
@@ -24,15 +42,11 @@ require 'indexer/version/constraint'
 
 require 'indexer/core_ext'
 require 'indexer/command'
-
 require 'indexer/error'
 require 'indexer/valid'
-
-require 'indexer/loadable'
 require 'indexer/revision'
-require 'indexer/model'
-require 'indexer/models'
-require 'indexer/importer'
 
-#require 'indexer/gemfile'
+require 'indexer/model'
+require 'indexer/metadata'
+require 'indexer/importer'
 
