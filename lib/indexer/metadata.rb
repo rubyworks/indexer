@@ -1,3 +1,8 @@
+require_relative 'loadable'
+require_relative 'attributes'
+require_relative 'conversion'
+require_relative 'validator'
+
 module Indexer
 
   # Conventional interface for specification provides convenience 
