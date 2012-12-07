@@ -7,7 +7,7 @@
 
 ## Description
 
-<p class="idescription">Indexer gives developers a unified data format for reusable project metadata.</p>
+<p class="idescription">Indexer provides projects with a universal metadata format.</p>
 
 Indexer defines a *canonical*, detailed and strict, project <span class="icategory">metadata</span> specification.
 The strictness of the specification makes the format simple enough for developers to use without an intermediate API.
@@ -16,7 +16,7 @@ more loosely when suitable to the usecase. Indexer also specifies a stanadard lo
 metadata to be kept, in a `.index` file.
 
 Indexer provides a tool to import metadata from external sources. Indexer can handle a variety of metadata
-source formats, including YAML, HTML Micorformat and Ruby DSL scripts.
+source formats, including YAML, HTML Microformats and Ruby DSL scripts.
 
 
 ## Installation
@@ -93,6 +93,7 @@ and the Manpages.
 <li><a class="iresource" href="http://rubyworks.github.com/indexer" name="home">Homepage</a></li>
 <li><a class="iresource" href="http://github.com/rubyworks/indexer" name="code">Source Code</a> (Github)</li>
 <li><a class="iresource" href="http://rubydoc.info/gems/indexer/frames" name="docs">API Reference</a></li>
+<li><a class="irepository" href="http://github.com/rubyworks/indexer/indexer.git" name="upstream">Master Git Repo</a></li>
 </ul>
 
 
@@ -113,6 +114,7 @@ and the Manpages.
 </li>
 </ul>
 
+
 ## Authors
 
 <ul>
@@ -126,6 +128,7 @@ and the Manpages.
   <div><a class="url" href="http://postmodern.github.com/">http://postmodern.github.com/</a></div>
 </li>
 </ul>
+
 
 ## Copyrights
 
