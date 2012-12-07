@@ -15,7 +15,6 @@ module Indexer
 
       #
       def self.parse(constraint)
-        constraint = nil if constraint == ""
         new(constraint)
       end
 
@@ -32,7 +31,8 @@ module Indexer
         when Array
           @stamp = "%s %s" % [@operator, @number]
         when String
-          @stamp = constraint || '0+'
+          constraint = "0+" if constraint.strip == ""
+          @stamp = constraint
         end
       end
 
@@ -73,6 +73,8 @@ module Indexer
         case constraint
         when Array
           op, num = constraint
+        when ""
+          op, val = ">=", "0"
         when /^(.*?)\~$/
           op, val = "=~", $1
         when /^(.*?)\+$/
