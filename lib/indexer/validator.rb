@@ -131,13 +131,13 @@ module Indexer
     end
 
     # Dependencies must be a list of package references.
-    def dependencies=(value)
-      Valid.array!(value, :dependencies)
-      value.each_with_index do |r, i|
-        Valid.hash!(r, "dependencies #{i}")
-      end
-      super(value)
-    end
+    #def dependencies=(value)
+    #  Valid.array!(value, :dependencies)
+    #  value.each_with_index do |r, i|
+    #    Valid.hash!(r, "dependencies #{i}")
+    #  end
+    #  super(value)
+    #end
 
     # List of packages with which this project cannot function.
     def conflicts=(value)
@@ -171,22 +171,6 @@ module Indexer
       super(value)
     end
 
-# TODO: Company or Organization or both?
-
-    # Company must be a single line string.
-    def company=(value)
-      Valid.oneline!(value, :company)
-      super(value)
-    end
-
-# TODO: Maybe organization should be a list or organization objects?
-
-    # Organization must be a single line string.
-    def organization=(value)
-      Valid.oneline!(value, :organization)
-      super(value)
-    end     
-
     # The creation date must be a valide UTC formatted date.
     def created=(value)
       Valid.utc_date!(value, :created)
@@ -207,6 +191,14 @@ module Indexer
       value.each{ |h| Valid.hash!(h, :authors) }
       super(value)
     end
+
+    # Organizations must be an array of hashes in the form
+    # of `{name: ..., email: ..., website: ..., roles: [...] }`.
+    def organizations=(value)
+      Valid.array!(value, :organizations)
+      value.each{ |h| Valid.hash!(h, :organizations) }
+      super(value)
+    end     
 
     # Resources must be an array of hashes in the form
     # of `{uri: ..., name: ..., type: ...}`.
@@ -295,6 +287,7 @@ module Indexer
         :revision      => REVISION,
         :sources       => [],
         :authors       => [],
+        :organizations => [],
         :requirements  => [],
         :conflicts     => [],
         :alternatives  => [],

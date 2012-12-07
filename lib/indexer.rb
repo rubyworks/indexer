@@ -47,6 +47,7 @@ require 'indexer/valid'
 require 'indexer/revision'
 
 require 'indexer/model'
+require 'indexer/components'
 require 'indexer/metadata'
 require 'indexer/importer'
 

@@ -289,6 +289,34 @@ module Indexer
       )
     end
 
+    #
+    alias author= authors=
+
+    #
+    # Set the orgnaization to which the project belongs.
+    #
+    # @param [String] organization
+    #   The name of the organization.
+    #
+    def organizations=(organizations)
+      @data[:organizations] = (
+        list = Array(organizations).map do |org|
+                 Organization.parse(org)
+               end
+        warn "Duplicate organizations listed" if list != list.uniq
+        list
+      )
+    end
+
+    #
+    alias :organization= :organizations=
+
+    # Company is a typical synonym for organization.
+    alias :company :organizations
+    alias :company= :organizations=
+    alias :companies :organizations=
+    alias :companies= :organizations=
+
     # TODO: should we warn if directory does not exist?
 
     # Sets the require paths of the project.
@@ -475,17 +503,6 @@ module Indexer
     end
 
     #
-    # Set the orgnaization to which the project belongs.
-    #
-    # @param [String] organization
-    #   The name of the organization.
-    #
-    def organization=(organization)
-      Valid.oneline!(organization)
-      @data[:organization] = organization
-    end
-
-    #
     # Sets the post-install message of the project.
     #
     # @param [Array, String] message
@@ -584,30 +601,30 @@ module Indexer
 
 # TODO: What was used for again, load_path ?
 =begin
-#
-# Iterates over the paths.
-#
-# @param [Array<String>, String] paths
-#   The paths or path glob pattern to iterate over.
-#
-# @yield [path]
-#   The given block will be passed each individual path.
-#
-# @yieldparam [String] path
-#   An individual path.
-#
-def each_path(paths,&block)
-  case paths
-  when Array
-    paths.each(&block)
-  when String
-    Dir.glob(paths,&block)  # TODO: should we be going this?
-  else
-    raise(ValidationError, "invalid path")
+  #
+  # Iterates over the paths.
+  #
+  # @param [Array<String>, String] paths
+  #   The paths or path glob pattern to iterate over.
+  #
+  # @yield [path]
+  #   The given block will be passed each individual path.
+  #
+  # @yieldparam [String] path
+  #   An individual path.
+  #
+  def each_path(paths,&block)
+    case paths
+    when Array
+      paths.each(&block)
+    when String
+      Dir.glob(paths,&block)  # TODO: should we be going this?
+    else
+      raise(ValidationError, "invalid path")
+    end
   end
-end
 
-private :each_path
+  private :each_path
 =end
 
     # -- Calculations -------------------------------------------------------
@@ -779,18 +796,19 @@ private :each_path
 
       h = super
 
-      h['revision']     = REVISION
-      h['version']      = version.to_s
+      h['revision']      = REVISION
+      h['version']       = version.to_s
 
-      h['date']         = date.strftime('%Y-%m-%d')
-      h['created']      = created.strftime('%Y-%m-%d') if created
+      h['date']          = date.strftime('%Y-%m-%d')
+      h['created']       = created.strftime('%Y-%m-%d') if created
 
-      h['authors']      = authors.map      { |x| x.to_h }
-      h['copyrights']   = copyrights.map   { |x| x.to_h }
-      h['requirements'] = requirements.map { |x| x.to_h }
-      h['conflicts']    = conflicts.map    { |x| x.to_h }
-      h['repositories'] = repositories.map { |x| x.to_h }
-      h['resources']    = resources.map    { |x| x.to_h }
+      h['authors']       = authors.map       { |x| x.to_h }
+      h['organizations'] = organizations.map { |x| x.to_h }
+      h['copyrights']    = copyrights.map    { |x| x.to_h }
+      h['requirements']  = requirements.map  { |x| x.to_h }
+      h['conflicts']     = conflicts.map     { |x| x.to_h }
+      h['repositories']  = repositories.map  { |x| x.to_h }
+      h['resources']     = resources.map     { |x| x.to_h }
 
       h
     end

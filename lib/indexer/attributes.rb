@@ -71,6 +71,9 @@ module Indexer
     # The first author should be the primary contact.
     attr_accessor :authors
 
+    # The organizations involved with the project.
+    attr_accessor :organizations
+
     # The resource locators for the project.
     attr_accessor :resources
 
@@ -131,29 +134,26 @@ module Indexer
     # The date the project was started.
     attr_accessor :created
 
-    # The company by which the project is being developed.
-    #attr_accessor :company
-
-    # The organization under which the project is being developed.
-    attr_accessor :organization
-
     # The toplevel namespace of API, e.g. `module Foo` or `class Bar`.
     # NOTE: how to best handle this?
     attr_accessor :namespace
 
     # Any user-defined extraneous metadata.
-    attr_accessor :extra
+    #attr_accessor :extra
 
   protected
 
     #
     # Initializes the {Metadata} attributes.
     #
+    # @todo Is it okay to default type to `ruby`?
+    #
     def initialize_attributes
       @data = {
         :type          => 'ruby',
         :sources       => [],
         :authors       => [],
+        :organizations => [],
         :copyrights    => [],
         :alternatives  => [],
         :requirements  => [],
