@@ -12,6 +12,7 @@ lib/indexer/components/author.rb
 lib/indexer/components/conflict.rb
 lib/indexer/components/copyright.rb
 lib/indexer/components/dependency.rb
+lib/indexer/components/organization.rb
 lib/indexer/components/repository.rb
 lib/indexer/components/requirement.rb
 lib/indexer/components/resource.rb
@@ -44,6 +45,5 @@ lib/indexer/version/constraint.rb
 lib/indexer/version/exceptions.rb
 lib/indexer/version/number.rb
 lib/indexer.rb
-TODO.md
 HISTORY.md
 README.md
