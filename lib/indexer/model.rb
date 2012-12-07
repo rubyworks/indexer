@@ -213,7 +213,7 @@ module Indexer
       when '?'
         super(sym, *args, &blk)
       else
-        key?(name) ? @data[name.to_sym] : super(sym, *args, &blk)
+        key?(name) ? @data[name.to_sym] : nil #super(sym, *args, &blk)
       end
     end
 

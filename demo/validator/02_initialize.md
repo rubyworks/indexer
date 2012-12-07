@@ -13,8 +13,8 @@ In addition, certain attributes will have default values.
 
     data.copyrights.should   == []
     data.authors.should      == []
+    data.organizations.should == []
     data.requirements.should == []
-    data.dependencies.should == []
     data.conflicts.should    == []
     data.repositories.should == []
     data.resources.should    == []

@@ -150,6 +150,7 @@ module Indexer
     #
     def initialize_attributes
       @data = {
+        :revision      => REVISION,
         :type          => 'ruby',
         :sources       => [],
         :authors       => [],

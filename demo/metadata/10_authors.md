@@ -6,13 +6,14 @@ The Metadata class allows, of course, the canonical format.
 
     spec = Indexer::Metadata.new
 
-    spec.authors = [
-      { 'name'  => 'Bob Williams',
-        'email' => 'bob@mail.com'
+    spec.organizations = [
+      { 'name'  => 'Bobs Williams',
+        'email' => 'bob@mail.com',
+        'roles' => ['sponser']
       },
       { 'name'  => 'John Delight',
         'email' => 'dlite@mail.com',
-        'roles' => ['QA']
+        'roles' => ['development']
       }
     ]
 

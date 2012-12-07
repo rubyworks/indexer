@@ -46,7 +46,7 @@ module Indexer
     def revision=(value)
       if value.to_i != REVISION
         # technically this should never happen
-        Valid.raise_invalid_message("invalid revision for 2013 -- #{value}")
+        Valid.raise_invalid_message("revision is not current #{REVISION} -- #{value}")
       end
       super(value)
     end
