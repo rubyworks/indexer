@@ -16,9 +16,8 @@ module Indexer
             load_markdown(source)
             return true
           end
-
-          super(source) if defined?(super)
         end
+        super(source) if defined?(super)
       end
 
       #

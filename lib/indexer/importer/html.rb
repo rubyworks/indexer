@@ -20,9 +20,8 @@ module Indexer
             load_html(source)
             return true
           end
-
-          super(source) if defined?(super)
         end
+        super(source) if defined?(super)
       end
 
       #
@@ -42,15 +41,17 @@ module Indexer
 
         data = {}
 
-        %w{version summary description}.each do |field|
+        %w{version summary description created}.each do |field|
           load_html_simple(field, doc, data)
         end
 
         load_html_name(doc, data)
         load_html_title(doc, data)
-        load_html_resources(doc, data)
         load_html_authors(doc, data)
+        load_html_organizations(doc, data)
         load_html_requirements(doc, data)
+        load_html_resources(doc, data)
+        load_html_repositories(doc, data)
         load_html_copyrights(doc, data)
         load_html_categories(doc, data)
 
@@ -125,7 +126,7 @@ module Indexer
           entry = {}
 
           entry['uri']   = node.attr('href')
-          entry['type']  = node.attr('name')  # okay to use name for this?
+          entry['type']  = node.attr('name') || node.attr('title')  # best choice for this?
           entry['label'] = node.content.strip
 
           data['resources'] << entry if entry['uri']
@@ -156,6 +157,10 @@ module Indexer
             text = n.content.strip
             text = text.sub(/^[(]/, '').sub(/[)]$/, '').strip
             entry['groups'] = text.split(/\s+/)
+
+            if %w{test build document development}.any?{ |g| entry['groups'].include?(g) }
+              entry['development'] = true
+            end
           end
 
           data['requirements'] << entry if entry['name']
@@ -163,7 +168,7 @@ module Indexer
       end
 
       #
-      #
+      # Class is `iauthor`.
       #
       def load_html_authors(doc, data)
         nodes = doc.css('.iauthor')
@@ -184,7 +189,63 @@ module Indexer
             entry['email'] = text
           end
 
+          if n = node.at_css('.website')
+            text = n.attr(:href) || n.content.strip
+            entry['website'] = text
+          end
+
           data['authors'] << entry if entry['name']
+        end
+      end
+
+      #
+      # Class is `iorg`.
+      #
+      def load_html_organizations(doc, data)
+        nodes = doc.css('.iorg')
+        return if (nodes.nil? or nodes.empty?)
+
+        data['organizations'] ||= []
+
+        nodes.each do |node|
+          entry = {}
+
+          if n = node.at_css('.name')
+            entry['name'] = n.content.strip
+          end
+
+          if n = node.at_css('.email')
+            text = n.attr(:href) || n.content.strip
+            text = text.sub(/^mailto\:/i, '')
+            entry['email'] = text
+          end
+
+          if n = node.at_css('.website')
+            text = n.attr(:href) || n.content.strip
+            entry['website'] = text
+          end
+
+          data['organizations'] << entry if entry['name']
+        end
+      end
+
+      #
+      # Class is `irepo`.
+      #
+      def load_html_repositories(doc, data)
+        nodes = doc.css('.irepo')
+        return if (nodes.nil? or nodes.empty?)
+
+        data['repositories'] ||= []
+
+        nodes.each do |node|
+          entry = {}
+
+          entry['uri']   = node.attr('href')
+          entry['type']  = node.attr('name') || node.attr('title')  # best choice for this?
+          entry['label'] = node.content.strip
+
+          data['resources'] << entry if entry['uri']
         end
       end
 
