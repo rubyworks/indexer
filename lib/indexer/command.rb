@@ -203,29 +203,29 @@ module Indexer
     end
 
     #
-    # TODO: support --stdout option
+    # Create a .gemspec file for use with indexer. Or a static one if `--static` option is used.
     #
     def create_gemspec(file=nil)
       if file
-        if file.extname(file) != '.gemspec'
+        if File.extname(file) != '.gemspec'
           warn "gemspec file without .gemspec extension"
         end
       else
         # TODO: look for pre-existent gemspec, but to do that right we should get
         #       the name from the .index file if it eixts.
-        file = Dir['{,pkg/}*.gemspec'].first
+        file = Dir['{,*,pkg/*}.gemspec'].first || '.gemspec'
       end
 
       #lib_file = File.join(DIR, "v#{which}", "gemspec.rb")
 
-      if File.exist?(file) && !$FORCE
+      if file && File.exist?(file) && !@force
         raise Error.exception("`#{file}' already exists, use -f/--force to overwrite.")
       end
 
       text = GemspecExporter.source_code + "\nIndexer::GemspecExporter.gemspec"
 
       if @static
-        text = eval(code, CleanBinding.new, file)
+        spec = eval(text, CleanBinding.new, file)
         text = spec.to_yaml
       end
 
@@ -234,13 +234,6 @@ module Indexer
       else
         File.open(file, 'w') do |f|
           f << text
-        end
-      end
-
-      if @static
-        spec = eval(File.read(file), CleanBinding.new, file)
-        File.open(file, 'w') do |f|
-          f << spec.to_yaml
         end
       end
     end
