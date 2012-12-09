@@ -789,7 +789,9 @@ module Indexer
     #
     # Convert convenience form of metadata to canonical form.
     #
-    # @todo: Make sure this generates the canonical form.
+    # @todo: A more robust means of insuring sources never self references.
+    #
+    # @todo: Make sure this *always* generates the canonical form.
     #
     def to_h
       date = self.date || Time.now
@@ -797,6 +799,8 @@ module Indexer
       h = super
 
       h['revision']      = REVISION
+      h['sources' ]      = sources - ['.index']  # avoid self reference
+
       h['version']       = version.to_s
 
       h['date']          = date.strftime('%Y-%m-%d')
