@@ -189,7 +189,7 @@ module Indexer
             entry['email'] = text
           end
 
-          if n = node.at_css('.website')
+          if n = node.at_css('.website') || node.at_css('.uri') || node.at_css('.url')
             text = n.attr(:href) || n.content.strip
             entry['website'] = text
           end
@@ -220,7 +220,7 @@ module Indexer
             entry['email'] = text
           end
 
-          if n = node.at_css('.website')
+          if n = node.at_css('.website') || node.at_css('.uri') || node.at_css('.url')
             text = n.attr(:href) || n.content.strip
             entry['website'] = text
           end
