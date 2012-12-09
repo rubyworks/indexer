@@ -11,7 +11,7 @@ end
 
 desc "run tests (needs qed)"
 task :test do
-  sh "qed -Ilib spec/"
+  sh "qed -Ilib demo/"
 end
 
 desc "coverage report"
@@ -21,7 +21,7 @@ end
 
 desc "build gem"
 task :gem do
-  sh "gem build indexer.gemspec"
+  sh "gem build pkg/indexer.gemspec"
 end
 
 desc "release gem"
