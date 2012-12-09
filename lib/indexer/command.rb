@@ -210,7 +210,7 @@ module Indexer
 
       #lib_file = File.join(DIR, "v#{which}", "gemspec.rb")
 
-      if file && File.exist?(file) && !@force
+      if file && File.exist?(file) && !@force && !@stdout
         raise Error.exception("`#{file}' already exists, use -f/--force to overwrite.")
       end
 
