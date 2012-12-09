@@ -153,6 +153,11 @@ module Indexer
             entry['version'] = n.content.strip
           end
 
+          # TODO: better approach to optional field?
+          if n = node.at_css('.optional')
+            entry['optional'] = true  #n.content.strip != "false"
+          end
+
           if n = (node.at_css('.groups') || node.at_css('.group'))
             text = n.content.strip
             text = text.sub(/^[(]/, '').sub(/[)]$/, '').strip

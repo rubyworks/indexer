@@ -7,6 +7,6 @@ rvm:
   - rbx
   - rbx-19mode
   - jruby
-  #- jruby-19mode
+  - jruby-19mode
   - ree
 

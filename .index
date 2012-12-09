@@ -13,7 +13,10 @@ organizations: []
 requirements:
 - version: 1.5+
   name: nokogiri
+- version: 0.14+
+  name: kramdown
 - version: 2.0+
+  optional: true
   name: redcarpet
 - groups:
   - test

@@ -25,14 +25,32 @@ module Indexer
       #
       def load_markdown(file)
         require 'nokogiri'
-        require 'redcarpet'
 
-        renderer = Redcarpet::Render::HTML.new()
-        markdown = Redcarpet::Markdown.new(renderer, :autolink=>true, :tables=>true, :space_after_headers=>true)
-        html     = markdown.render(File.read(file))
-        doc      = Nokogiri::HTML(html)
+        text = File.read(file)
+
+        begin
+          require 'redcarpet'
+          html = render_with_redcarpet(text)
+        rescue LoadError
+          require 'kramdown'
+          html = render_with_kramdown(text)
+        end
+
+        doc = Nokogiri::HTML(html)
 
         load_html(doc)
+      end
+
+      #
+      def render_with_redcarpet(text)
+        renderer = Redcarpet::Render::HTML.new()
+        markdown = Redcarpet::Markdown.new(renderer, :autolink=>true, :tables=>true, :space_after_headers=>true)
+        markdown.render(text)
+      end
+
+      #
+      def render_with_kramdown(text)
+        Kramdown::Document.new(text).to_html
       end
 
     end
