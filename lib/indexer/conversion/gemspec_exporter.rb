@@ -16,10 +16,10 @@ module Indexer
   #
   class GemspecExporter
 
-    # File globs to include in package (unless manifest file exists).
-    FILES = ".index .ruby .yardopts alt bin ext lib man spec test [A-Z]*.*" unless defined?(FILES)
+    # File globs to include in package --unless a manifest file exists.
+    FILES = ".index .yardopts alt bin data demo ext features lib man spec test try* [A-Z]*.*" unless defined?(FILES)
 
-    # File globs to omit.
+    # File globs to omit from FILES.
     OMIT = "Config.rb" unless defined?(OMIT)
 
     # Standard file patterns.
