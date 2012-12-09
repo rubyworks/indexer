@@ -17,18 +17,30 @@ module Indexer
   # Indexer library directory.
   DATADIR = File.dirname(__FILE__) + '/../data/indexer'
 
-  # Project metadata via RubyGems, fallback to .index file.
-  def self.const_missing(name)
-    name = name.to_s.downcase
+  # Metadata from the project's `indexer.yml` index file.
+  # This is used as a fallback for #const_missing.
+  #
+  # Returns [Hash] of metadata.
+  def self.index
+    @index ||= (
+      require 'yaml'
+      dir  = File.dirname(__FILE__)
+      file = Dir[File.join(dir, "{#{NAME}.yml,../.index}")].first
+      file ? YAML.load_file(file) : {}
+    )
+  end
+
+  # Project metadata via RubyGems, fallback to index file.
+  #
+  # TODO: The #to_s on the gemspec return value is a bit too simplistic. But how to fix?
+  #       The goal is reduce the value to a basic type (String, Hash, Array, Numeric).
+  #
+  def self.const_missing(const_name)
+    name = const_name.to_s.downcase
     begin
       Gem.loaded_specs[NAME].send(name).to_s
     rescue StandardError
-      file = File.join(File.dirname(__FILE__), '..', '.index')
-      if File.exist?(file)
-        require 'yaml'
-        data = YAML.load_file(file)
-        data[name]        
-      end
+      index[name] || super(const_name)
     end
   end
 end
