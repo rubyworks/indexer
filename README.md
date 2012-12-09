@@ -106,7 +106,7 @@ and the Manpages.
   <a class="name" href="http://nokogiri.org/">nokogiri</a> <span class="version">1.5+</span></span>
 </li>
 <li class="irequirement">
-  <a class="name" href="https://github.com/vmg/redcarpet">redcarpet</a> <span class="version">2.2+</span></span>
+  <a class="name" href="https://github.com/vmg/redcarpet">redcarpet</a> <span class="version">2.0+</span></span>
 </li>
 <li class="irequirement">
   <a class="name" href="http://rubyworks.github.com/qed/">qed</a> <span class="version">2.9+</span> <span class="groups">(test)</span>

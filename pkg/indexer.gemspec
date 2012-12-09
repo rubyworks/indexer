@@ -24,7 +24,7 @@ module Indexer
 
     # Standard file patterns.
     PATTERNS = {
-      :root => '{.index,Gemfile,lib}',
+      :root => '{.index,Gemfile}',
       :bin  => 'bin/*',
       :lib  => 'lib/{**/}*', #.rb',
       :ext  => 'ext/{**/}extconf.rb',
@@ -269,7 +269,7 @@ module Indexer
       root_files = patterns[:root]
       if Dir.glob(root_files).first
         Pathname.new(Dir.pwd)
-      elsif Dir.glob("../#{ROOT}").first
+      elsif Dir.glob("../#{root_files}").first
         Pathname.new(Dir.pwd).parent
       else
         #raise "Can't find root of project containing `#{root_files}'."

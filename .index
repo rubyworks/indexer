@@ -6,20 +6,24 @@ sources:
 authors:
 - name: trans
   email: transfire@gmail.com
+  website: http://trans.gihub.com/
 - name: postmodern
+  website: http://postmodern.github.com/
 organizations: []
 requirements:
 - version: 1.5+
   name: nokogiri
-- version: 2.2+
+- version: 2.0+
   name: redcarpet
 - groups:
   - test
   version: 2.9+
+  development: true
   name: qed
 - groups:
   - test
   version: 0+
+  development: true
   name: ae
 conflicts: []
 alternatives: []
@@ -47,4 +51,4 @@ summary: Enable Your Project's Metadata
 description: Indexer provides projects with a universal metadata format.
 name: indexer
 title: Indexer
-date: '2012-12-07'
+date: '2012-12-09'
