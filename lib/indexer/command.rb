@@ -89,14 +89,14 @@ module Indexer
     end
 
     #
-    def generate(type, *args)
+    def generate(type, outfile=nil)
       case type.downcase
       when 'gemspec'
-        create_gemspec(*args)
-      when 'indexfile', 'ruby'
-        create_indexfile(*args)
-      when 'metadata', 'yaml'
-        create_metadata(*args)
+        create_gemspec(outfile)
+      when 'ruby', 'index.rb', 'indexfile'
+        create_ruby(outfile)
+      when 'yaml', 'index.yml', 'index.yaml'
+        create_yaml(outfile)
       else
         raise Error.exception("unknown file type")
       end
@@ -116,21 +116,17 @@ module Indexer
 
         -o --stdout                     output to console instead of saving to file
         -f --force                      force protected file overwrite if file already exists or is up to date
-        -s --static                     keep index as is or generate static format if file-type supports it
+        -s --static                     keep index as is or generate static format if generator supports it
       END
     end
 
   private
 
     #
-    def create_indexfile(*args)
+    def create_ruby(outfile=nil)
       require 'erb'
 
-      if args.first
-        outfile = args.first
-      else
-        outfile = "Indexfile"
-      end
+      outfile = "Indexfile" unless outfile
 
       if File.exist?(outfile) && !(@stdout or @force)
         raise Error.exception("#{outfile} file already exists", IOError) 
@@ -163,14 +159,10 @@ module Indexer
     end
 
     #
-    def create_metadata(*args)
+    def create_yaml(outfile)
       require 'erb'
 
-      if args.first
-        outfile = args.first
-      else
-        outfile = "Metadata"
-      end
+      outfile = "Index.yml" unless outfile
 
       if File.exist?(outfile) && !(@stdout or @force)
         raise Error.exception("#{outfile} file already exists", IOError) 
