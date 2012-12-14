@@ -254,21 +254,22 @@ module Indexer
     #   ]
     #
     def engines=(engines)
-      @data['engines'] = Array(engines).map do |engine|
-        case engine
-        when String
-          name, vers = engine.strip.split(/\s+/)
-          vers = nil if vers.empty?
-        when Array
-          name, vers = *engine
-        when Hash
-          name = engine['name']
-          vers = engine['version']
-        end
-        e = {}
-        e['name']    = name
-        e['version'] = Version::Constraint.parse(vers) if vers
-        e
+      @data[:engines] = Array(engines).map do |engine|
+        Engine.parse(engine)
+        #case engine
+        #when String
+        #  name, vers = engine.strip.split(/\s+/)
+        #  vers = nil if vers.empty?
+        #when Array
+        #  name, vers = *engine
+        #when Hash
+        #  name = engine['name']
+        #  vers = engine['version']
+        #end
+        #e = {}
+        #e['name']    = name
+        #e['version'] = Version::Constraint.parse(vers) if vers
+        #e
       end
     end
 
@@ -334,6 +335,7 @@ module Indexer
 
       h['version']     = version.to_s if version
       h['repository']  = repository.to_h if repository
+      h['engines']     = engines.map{ |e| e.to_h }
 
       h.delete('groups')    if h['groups']    && h['groups'].empty?
       h.delete('engines')   if h['engines']   && h['engines'].empty?

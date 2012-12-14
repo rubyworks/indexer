@@ -1,15 +1,17 @@
 module Indexer
 
-  # The Conflict class models the name and versions of
-  # packages that have know incompatibilities.
+  # The Engine class models the name and version of a
+  # the language necessray to run the software.
   #
-  class Conflict < Model
+  class Engine < Model
 
     # Parse `data` into a Dependency instance.
     #
     # TODO: What about respond_to?(:to_str) for String, etc.
     def self.parse(data)
       case data
+      when Engine
+        data
       when String
         parse_string(data)
       when Array
@@ -17,7 +19,7 @@ module Indexer
       when Hash
         parse_hash(data)
       else
-        raise(ValidationError, "Conflict")
+        raise(ValidationError, "Engine")
       end
     end
 
