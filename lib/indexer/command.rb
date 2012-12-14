@@ -26,15 +26,15 @@ module Indexer
     def run(argv=ARGV)
       cmd = nil
       args = cli(argv,
-        '-d --debug'    => lambda{ $DEBUG = true },
-        '-w --warn'     => lambda{ $VERBOSE = true },
-        '-f --force'    => lambda{ @force = true },
-        '-o --stdout'   => lambda{ @stdout = true },
-        '-s --static'   => lambda{ @static = true },
-        '-u --using'    => lambda{ no_cmd!(cmd); cmd = :using },
-        '-a --adding'   => lambda{ no_cmd!(cmd); cmd = :adding },
-        '-g --generate' => lambda{ no_cmd!(cmd); cmd = :generate },
-        '-h --help'     => lambda{ no_cmd!(cmd); cmd = :help }
+        '-u --using'     => lambda{ no_cmd!(cmd); cmd = :using },
+        '-a --adding'    => lambda{ no_cmd!(cmd); cmd = :adding },
+        '-g --generate'  => lambda{ no_cmd!(cmd); cmd = :generate },
+        '-w --webserver' => lambda{ no_cmd!(cmd); cmd = :webserver },
+        '-h --help'      => lambda{ no_cmd!(cmd); cmd = :help },
+        '-d --debug'     => lambda{ $DEBUG = true; $VERBOSE = true },
+        '-f --force'     => lambda{ @force = true },
+        '-o --stdout'    => lambda{ @stdout = true },
+        '-s --static'    => lambda{ @static = true }
       )
       send(cmd || :show, *args)
     rescue => error
@@ -103,6 +103,12 @@ module Indexer
     end
 
     #
+    def webserver
+      require 'indexer/webui'
+      Indexer::WebUI::Server.start(ARGV)
+    end
+
+    #
     def help
       puts <<-END
         index [command-option] [options...] [arguments...]
@@ -112,6 +118,7 @@ module Indexer
         -a --adding <sources...>        update index appending additional information sources
         -r --remove <sources...>        update index removing given information sources
         -g --generate <type> [fname]    generate a file (gemspec, indexfile, metadata)
+        -w --webserver                  (experimental) edit .index file via web interface
         -h --help                       show this help message
 
         -o --stdout                     output to console instead of saving to file
@@ -132,8 +139,7 @@ module Indexer
         raise Error.exception("#{outfile} file already exists", IOError) 
       end
 
-      template_dir  = File.join(DATADIR, "r#{REVISION}")
-      template_file = File.join(template_dir, 'ruby.txt')
+      template_file = File.join(DATADIR, 'ruby.txt')
 
       if Metadata.exists?
         metadata = Metadata.open
@@ -168,8 +174,7 @@ module Indexer
         raise Error.exception("#{outfile} file already exists", IOError) 
       end
 
-      template_dir  = File.join(DATADIR, "r#{REVISION}")
-      template_file = File.join(template_dir, 'yaml.txt')
+      template_file = File.join(DATADIR, 'yaml.txt')
 
       if Metadata.exists?
         metadata = Metadata.open
