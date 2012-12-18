@@ -319,17 +319,20 @@ module Indexer
 
     # TODO: should we warn if directory does not exist?
 
-    # Sets the require paths of the project.
+    # Sets the named paths of the project.
     #
-    # @param [Array<String>, String] paths
-    #   The require-paths or a glob-pattern.
+    # @param [Hash[String]=Array<String>] path_map
+    #   Mappaing of names to list of paths.
     #
-    def load_path=(paths)
-      @data[:load_path] = \
-        Array(paths).map do |path|
-          Valid.path!(path)
-          path
+    def paths=(path_map)
+      @data[:paths] = \
+        map = {}
+        path_map = path_map.to_hash if path_map.respond_to?(:to_hash)
+        Valid.hash!(path_map)
+        path_map.each do |name, paths|
+          map[name.to_s] = Array(paths).map{ |path| Valid.path!(path) }
         end
+        map
     end
 
     # List of language engine/version family supported.
@@ -535,6 +538,20 @@ module Indexer
     # -- Utility Methods ----------------------------------------------------
 
     #
+    # Legacy method to common Ruby path via `paths['load']`.
+    #
+    def load_path
+      paths['load']
+    end
+
+    #
+    # Legacy method to set `paths['load']`.
+    #
+    def load_path=(path)
+      paths['load'] = Array(path).map{ |path| Valid.path!(path) }
+    end
+
+    #
     # Adds a new requirement.
     #
     # @param [String] name
@@ -599,7 +616,7 @@ module Indexer
       true
     end
 
-# TODO: What was used for again, load_path ?
+# TODO: What was used for again, load path ?
 =begin
   #
   # Iterates over the paths.

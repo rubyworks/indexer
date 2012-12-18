@@ -65,15 +65,15 @@ module Indexer
 
       # TODO: how to handle license(s) ?
 
-      self.name         = gemspec.name
-      self.version      = gemspec.version.to_s
-      self.date         = gemspec.date
-      self.title        = gemspec.name.capitalize
-      self.summary      = gemspec.summary
-      self.description  = gemspec.description || gemspec.summary
-      self.authors      = authors
-      self.load_path    = gemspec.require_paths
-      self.homepage     = gemspec.homepage
+      self.name          = gemspec.name
+      self.version       = gemspec.version.to_s
+      self.date          = gemspec.date
+      self.title         = gemspec.name.capitalize
+      self.summary       = gemspec.summary
+      self.description   = gemspec.description || gemspec.summary
+      self.authors       = authors
+      self.paths['load'] = gemspec.require_paths
+      self.homepage      = gemspec.homepage
 
       #self.engines      = gemspec.platform
       #self.extensions   = gemspec.extensions

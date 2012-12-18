@@ -11,15 +11,15 @@ to the initializer.
 
 In addition, certain attributes will have default values.
 
-    data.copyrights.should   == []
-    data.authors.should      == []
+    data.copyrights.should    == []
+    data.authors.should       == []
     data.organizations.should == []
-    data.requirements.should == []
-    data.conflicts.should    == []
-    data.repositories.should == []
-    data.resources.should    == []
+    data.requirements.should  == []
+    data.conflicts.should     == []
+    data.repositories.should  == []
+    data.resources.should     == []
 
-    data.load_path.should    == ['lib']
+    data.paths.should         == { 'load' => ['lib'] }
 
 ### Validator Argument
 

@@ -101,11 +101,12 @@ module Indexer
       super(value)
     end
 
-    # Loadpath must be an Array of valid pathnames or a String of pathnames
-    # separated by colons or semi-colons.
-    def load_path=(value)
-      Valid.array!(value, :load_path)
-      value.each_with_index{ |path, i| Valid.path!(path, "load_path #{i}") }
+    # Paths must be a Hash of names mapped to an Array of valid pathnames.
+    def paths=(value)
+      Valid.hash!(value, :paths)
+      value.each do |name, paths|
+        paths.each_with_index{ |path, i| Valid.path!(path, "paths[#{name}] ##{i}") }
+      end
       super(value)
     end
 
@@ -294,7 +295,7 @@ module Indexer
         :resources     => [],
         :repositories  => [],
         :categories    => [],
-        :load_path     => ['lib'],
+        :paths         => {'load' => ['lib']},
         :copyrights    => []
       }
     end

@@ -85,8 +85,12 @@ module Indexer
     # URI for linking to source code.
     attr_accessor :webcvs
 
-    # The directories to search within the project when requiring files
-    attr_accessor :load_path  # :loadpath or :require_paths ?
+    # Map of path sets which can be used to identify paths within the project.
+    #
+    # For example, the `load` key is used by Ruby projectss to define which paths
+    # to search within the project when requiring files.
+    #
+    attr_accessor :paths
 
     # List of language engine/version family supported.
     attr_accessor :engines
@@ -162,7 +166,7 @@ module Indexer
         :repositories  => [],
         :resources     => [],
         :categories    => [],
-        :load_path     => ['lib']
+        :paths         => {'load' => ['lib']}
       }
     end
 
