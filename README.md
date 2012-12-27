@@ -1,4 +1,4 @@
-# <span class="ititle">Indexer</span> (v<span class="iversion">0.1.0</span>)
+# <span class="ititle">Indexer</span> (v<span class="iversion">0.2.0</span>)
 
 <b class="isummary">Enable Your Project's Metadata<b>
 
