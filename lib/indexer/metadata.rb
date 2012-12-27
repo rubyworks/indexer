@@ -51,7 +51,7 @@ module Indexer
     end
 
     #
-    # Create a new Meta::Spec given a Gem::Specification or .gemspec file.
+    # Create a new Metadata instance given a Gem::Specification or .gemspec file.
     #
     # @param [Gem::Specification,String] gemspec
     #   RubyGems Gem::Specification object or path to .gemspec file.
