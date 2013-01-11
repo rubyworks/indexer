@@ -13,7 +13,7 @@ module Indexer
 
       case file
       when String
-        # FIXME: Is this the correct way fot load a gemfile?
+        # FIXME: Is this the correct way to load a gemfile?
         bundle = ::Bundler::Dsl.new
         bundle.eval_gemfile(file)
       when NilClass

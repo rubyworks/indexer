@@ -541,14 +541,14 @@ module Indexer
     # Legacy method to common Ruby path via `paths['load']`.
     #
     def load_path
-      paths['load']
+      paths['lib']
     end
 
     #
     # Legacy method to set `paths['load']`.
     #
     def load_path=(path)
-      paths['load'] = Array(path).map{ |path| Valid.path!(path) }
+      paths['lib'] = Array(path).map{ |path| Valid.path!(path) }
     end
 
     #

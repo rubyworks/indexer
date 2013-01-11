@@ -166,7 +166,7 @@ module Indexer
         :repositories  => [],
         :resources     => [],
         :categories    => [],
-        :paths         => {'load' => ['lib']}
+        :paths         => {'lib' => ['lib']}
       }
     end
 

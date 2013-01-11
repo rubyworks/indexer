@@ -295,7 +295,7 @@ module Indexer
         :resources     => [],
         :repositories  => [],
         :categories    => [],
-        :paths         => {'load' => ['lib']},
+        :paths         => {'lib' => ['lib']},
         :copyrights    => []
       }
     end
