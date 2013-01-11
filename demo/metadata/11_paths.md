@@ -1,21 +1,24 @@
 ## Indexer::Metadata#paths
 
-The `paths` field is a means by which a project's paths can be
-designated. This example a Ruby developer can use it to specify
-the locations within the project that Ruby's load system should
-look for files when `#require` or `#load` are used.
+The `paths` field is a means by which project paths can be designated.
+In general, it is intended for the path keys to correspond to the FHS
+(File Hierarchy Standard), although there is no absolute requirement.
+
+For example, Ruby developer's use the `lib` entry to specify the locations
+within the project that Ruby's load system should look for files when `#require`
+or `#load` are used.
 
 The `paths` value MUST be a Hash.
 
     spec = Indexer::Metadata.new
-    spec.paths = { 'load' => ['lib'] }
+    spec.paths = { 'lib' => ['lib'] }
 
 Or any object that responds to `#to_hash`.
 
     o = Object.new
 
     def o.to_hash
-      { 'load' => ['lib'] }
+      { 'lib' => ['lib'] }
     end
 
     spec.paths = o
@@ -42,8 +45,8 @@ The elements must also be valid path strings.
 
     no 'load'=>[100, 200]
 
-By default the value, when no paths are set, is `{ 'load=> ['lib']}`.
+By default the value, when no paths are set, is `{ 'lib=> ['lib']}`.
 
     spec = Indexer::Metadata.new
-    spec.paths.should = {'load' => ['lib']}
+    spec.paths.should = {'lib' => ['lib']}
 

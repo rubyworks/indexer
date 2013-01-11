@@ -22,7 +22,7 @@ In addition, certain attributes will have default values.
     metadata.repositories.should == []
     #metadata.resources.should   == []
 
-    metadata.paths.should        == { 'load' => ['lib'] }
+    metadata.paths.should        == { 'lib' => ['lib'] }
 
 ### Metadata Arguments
 

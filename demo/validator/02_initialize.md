@@ -19,7 +19,7 @@ In addition, certain attributes will have default values.
     data.repositories.should  == []
     data.resources.should     == []
 
-    data.paths.should         == { 'load' => ['lib'] }
+    data.paths.should         == { 'lib' => ['lib'] }
 
 ### Validator Argument
 

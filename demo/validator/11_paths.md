@@ -7,7 +7,7 @@ look for files when `#require` or `#load` are used.
 
 The `paths` value MUST be a Hash of String mapped to an Array of String.
 
-    ok 'load' => ['lib', 'ext']
+    ok 'lib' => ['lib', 'ext']
 
     no 100
     no :symbol
@@ -15,8 +15,8 @@ The `paths` value MUST be a Hash of String mapped to an Array of String.
     no Object.new
     no ['lib']
 
-By default the value is `{'load' => ['lib'] }`.
+By default the value is `{'lib' => ['lib'] }`.
 
     data = Indexer::Validator.new
-    data.paths.should = { 'load' => ['lib'] }
+    data.paths.should = { 'lib' => ['lib'] }
 
