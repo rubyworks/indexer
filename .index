@@ -2,21 +2,25 @@
 type: ruby
 revision: 2013
 sources:
-- README.md
+- var
 authors:
 - name: trans
   email: transfire@gmail.com
-  website: http://trans.gihub.com/
+  website: http://trans.gihub.com
 - name: postmodern
-  website: http://postmodern.github.com/
-organizations: []
+  website: http://postmodern.github.com
+organizations:
+- name: Rubyworks
+  website: http://rubyworks.github.com
 requirements:
 - version: 1.5+
   name: nokogiri
 - version: 0.14+
   name: kramdown
-- version: 2.0+
-  optional: true
+- groups:
+  - optional
+  version: 2.0+
+  development: true
   name: redcarpet
 - groups:
   - test
@@ -25,7 +29,6 @@ requirements:
   name: qed
 - groups:
   - test
-  version: 0+
   development: true
   name: ae
 conflicts: []
@@ -39,20 +42,23 @@ resources:
   label: Source Code
 - type: api
   uri: http://rubydoc.info/gems/indexer/frames
-  label: API Reference
-repositories: []
+  label: API Guide
+repositories:
+- name: upstream
+  scm: git
+  uri: http://github.com/rubyworks/indexer/indexer.git
 categories:
 - metadata
 paths:
-  load:
+  lib:
   - lib
 copyrights:
 - holder: Rubyworks
   year: '2012'
   license: BSD-2-Clause
-version: 0.2.0
 summary: Enable Your Project's Metadata
-description: Indexer provides projects with a universal metadata format.
-name: indexer
 title: Indexer
-date: '2012-12-27'
+name: indexer
+description: Indexer provides projects with a universal metadata format.
+version: ''
+date: '2013-01-18'

@@ -1,13 +1,13 @@
-# <span class="ititle">Indexer</span> (v<span class="iversion">0.2.0</span>)
+# Indexer
 
-<b class="isummary">Enable Your Project's Metadata<b>
+**Enable Your Project's Metadata
 
 [![Build Status](https://secure.travis-ci.org/rubyworks/indexer.png)](http://travis-ci.org/rubyworks/indexer)
 
 
 ## Description
 
-<p class="idescription">Indexer provides projects with a universal metadata format.</p>
+Indexer provides projects with a universal metadata format.
 
 Indexer defines a *canonical*, detailed and strict, project <span class="icategory">metadata</span> specification.
 The strictness of the specification makes the format simple enough for developers to use without an intermediate API.
@@ -91,33 +91,19 @@ and the Manpages.
 
 ## Resources
 
-<ul>
-<li><a class="iresource" href="http://rubyworks.github.com/indexer" name="home">Homepage</a></li>
-<li><a class="iresource" href="http://github.com/rubyworks/indexer" name="code">Source Code</a> (Github)</li>
-<li><a class="iresource" href="http://rubydoc.info/gems/indexer/frames" name="docs">API Reference</a></li>
-<li><a class="irepository" href="http://github.com/rubyworks/indexer/indexer.git" name="upstream">Master Git Repo</a></li>
-</ul>
+* [Website](http://rubyworks.github.com/indexer)
+* [Source Code](http://github.com/rubyworks/indexer) (Github)
+* [API Guide](http://rubydoc.info/gems/indexer/frames)
+* [Master Git Repo](http://github.com/rubyworks/indexer/indexer.git)
 
 
 ## Requirements
 
-<ul>
-<li class="irequirement">
-  <a class="name" href="http://nokogiri.org/">nokogiri</a> <span class="version">1.5+</span></span>
-</li>
-<li class="irequirement">
-  <a class="name" href="http://kramdown.rubyforge.org/">kramdown</a> <span class="version">0.14+</span>
-</li>
-<li class="irequirement">
-  <a class="name" href="https://github.com/vmg/redcarpet">redcarpet</a> <span class="version">2.0+</span> (<span class="optional">optional</span>)
-</li>
-<li class="irequirement">
-  <a class="name" href="http://rubyworks.github.com/qed/">qed</a> <span class="version">2.9+</span> <span class="groups">(test)</span>
-</li>
-<li class="irequirement">
-  <a class="name" href="http://rubyworks.github.com/ae/">ae</a> <span class="version"></span> <span class="groups">(test)</span>
-</li>
-</ul>
+* [nokogiri](http://nokogiri.org/) 1.5+
+* [kramdown](http://kramdown.rubyforge.org/) 0.14+
+* [redcarpet](https://github.com/vmg/redcarpet) 2.0+ (optional)
+* [qed](http://rubyworks.github.com/qed/) 2.9+ (test)
+* [ae](http://rubyworks.github.com/ae/) (test)
 
 
 ## Authors
@@ -137,12 +123,10 @@ and the Manpages.
 
 ## Copyrights
 
-<ul>
-<li class="icopyright">
-  &copy; <span class="year">2012</span> <span class="holder">Rubyworks</span>
-  <div class="license">
-    <a href="http://www.spdx.org/licenses/BSD-2-Clause" rel="license">BSD-2-Clause License</a>
-  </div>
-</li>
-<ul>
+Indexer is copyrighted open-source software.
+
+**&copy; 2012 Rubyworks**
+
+It can be modified and redistributed in accordance with the terms
+of the [BSD-2-Clause](http://www.spdx.org/licenses/BSD-2-Clause) license.
 

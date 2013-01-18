@@ -1,0 +1,7 @@
+---
+- name: trans
+  email: transfire@gmail.com
+  website: http://trans.gihub.com
+- name: postmodern
+  website: http://postmodern.github.com
+
