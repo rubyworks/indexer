@@ -14,7 +14,7 @@ Indexer defines a *canonical* project metadata specification which is both
 detailed and strict. The strictness of the specification makes the format simple
 enough for developers to use without an intermediate API. Although Indexer also
 provides a convenience API for working with the specification and its data more
-loosely when suitable to the usecase. Indexer also specifies a stanadard
+loosely when suitable to the usecase. Indexer also specifies a standard
 location for canonized metadata to be kept, in a `.index` file.
 
 Indexer provides a tool to import metadata from external sources. Indexer can
@@ -24,9 +24,9 @@ and Ruby DSL scripts.
 
 ## [Features](#features)
 
-* YAML-based format for universal accessability.
+* YAML-based format for universal accessibility.
 * Platform and programming language agnostic.
-* Canonical specificationt provides idempotent access.
+* Canonical specification provides idempotent access.
 * Convenient Ruby API available.
 * Supports custom metadata fields.
 
@@ -43,7 +43,7 @@ to install Indexer via RubyGems.
 ### [Metadata Sources](#sources)
 
 Indexer is capable of generating a canonical `.index` file from a variety of
-sources. Being so flexible, exactly how a developer descides to store a project's
+sources. Being so flexible, exactly how a developer decides to store a project's
 metadata is a largely a matter of taste. But in general there are four overall
 approaches:
 
@@ -56,7 +56,7 @@ put together a YAML document covering a project's metadata. Since Indexer is
 very flexible in it's parsing of the YAML, it really is a quick and user-friendly
 way to go. Typically this file will be called `Index.yml`, but there is no name
 requirement. In fact, Indexer will also let you split the metadata up over
-mutliple files, and can even go as far as using a *file store*,  which is
+multiple files, and can even go as far as using a *file store*,  which is
 a directory of files, one for each field.
 
 The second choice is, in many respects, the nicest because it does not require any
@@ -65,15 +65,15 @@ On the downside, it may require some HTML be hand-coded into the README. If your
 README's markup format has a sexy syntax for microformats, this approach rocks.
 Otherwise, another approach is probably the better choice.
 
-The last approach provides maximum flexiblity. Using the Ruby DSL one can literally
+The last approach provides maximum flexibility. Using the Ruby DSL one can literally
 script the metadata, which means it can come from anywhere at all. For example,
 you might want to pull the project's version from the `lib/project/version.rb`
-file, i.e. Bundler style. The DSL is as intutive and as flexible as using plain
+file, i.e. Bundler style. The DSL is as intuitive and as flexible as using plain
 YAML, so it's nearly as easy to take this approach. By convention this file is
 called `Indexfile` or `Index.rb`, but it too can be any file path one prefers.
 
 On the Indexer wiki you can find detailed tutorials on a variety of setups,
-along with thier pros and cons and various tip and tricks.
+along with their pros and cons and various tip and tricks.
 
 ### [Usage Example](#example)
 
@@ -102,7 +102,7 @@ the `-u/--using` command option:
 
 Indexer will utilize both sources and create the `.index` file.
 
-Over time project metadata tends to evolve and change. To keep the canoncial
+Over time project metadata tends to evolve and change. To keep the canonical
 `.index` file up to date simply call the `index` command without any options.
 
     $ index

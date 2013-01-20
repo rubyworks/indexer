@@ -2,17 +2,21 @@
 
 ## 0.3.0 / 2012-01-19
 
-Instead of using `paths['load']` for Ruby load path settings, use `paths['lib']`.
-In this manner the keys of the paths field can be generally based on standard
-locations in a project, and more generally on FHS. This release also removes the
-`extra` fields. Instead custom entries can be added at the root. Note that this 
-means that parts of the API will return `nil` instead of rasing an error when
-queried for a undefined field.
+The 0.3 release makes three significant improvements. First, instead of
+using `paths['load']` for the Ruby load path setting, it designates the use
+of `paths['lib']`. In this manner the keys of the paths field can be generally
+based on standard locations in a project, and more generally on FHS. Secondly,
+this release also removes the `extra` field. Instead custom entries can be added
+at the root of the document. Note that this means that parts of the API may
+return `nil` instead of raising an error when queried for an undefined field.
+To ensure that metadata van still be strongly validated the specification adds
+a `customs` field where the names of custom fields are specified.
 
 Changes:
 
 * Designate `paths['lib']` for Ruby's load path, instead of `paths['load']`.
-* Remove `extra` field from specification.
+* Remove `extra` field from specification; custom fields can be in root not.
+* Add `customs` field to allow customization in a robust manner.
 
 
 ## 0.2.0 / 2012-12-27
