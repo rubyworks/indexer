@@ -6,12 +6,12 @@
 [![Gem Version](https://badge.fury.io/rb/indexer.png)](http://badge.fury.io/rb/indexer)
 
 
-<br/>
+## [What is Indexer?](#whatis)
 
 Indexer provides projects with a universal metadata format.
 
-Indexer defines a *canonical*, detailed and strict, project metadata
-specification. The strictness of the specification makes the format simple
+Indexer defines a *canonical* project metadata specification which is both
+detailed and strict. The strictness of the specification makes the format simple
 enough for developers to use without an intermediate API. Although Indexer also
 provides a convenience API for working with the specification and its data more
 loosely when suitable to the usecase. Indexer also specifies a stanadard
@@ -20,6 +20,15 @@ location for canonized metadata to be kept, in a `.index` file.
 Indexer provides a tool to import metadata from external sources. Indexer can
 handle a variety of metadata source formats, including YAML, HTML Microformats
 and Ruby DSL scripts.
+
+
+## [Features](#features)
+
+* YAML-based format for universal accessability.
+* Platform and programming language agnostic.
+* Canonical specificationt provides idempotent access.
+* Convenient Ruby API available.
+* Supports custom metadata fields.
 
 
 ## [Instruction](#instruction)
