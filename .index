@@ -1,6 +1,6 @@
 ---
-type: ruby
 revision: 2013
+type: ruby
 sources:
 - var
 authors:
@@ -49,16 +49,19 @@ repositories:
   uri: http://github.com/rubyworks/indexer/indexer.git
 categories:
 - metadata
-paths:
-  lib:
-  - lib
 copyrights:
 - holder: Rubyworks
   year: '2012'
   license: BSD-2-Clause
+customs:
+- example
+paths:
+  lib:
+  - lib
 summary: Enable Your Project's Metadata
 title: Indexer
+version: 0.3.0
 name: indexer
+example: This is just an example of custom metadata.
 description: Indexer provides projects with a universal metadata format.
-version: ''
-date: '2013-01-18'
+date: '2013-01-20'
