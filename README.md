@@ -3,6 +3,7 @@
 **Enable Your Project's Metadata
 
 [![Build Status](https://secure.travis-ci.org/rubyworks/indexer.png)](http://travis-ci.org/rubyworks/indexer)
+[![Gem Version](https://badge.fury.io/rb/indexer.png)](http://badge.fury.io/rb/indexer)
 
 
 ## Description
