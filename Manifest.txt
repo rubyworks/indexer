@@ -1,5 +1,6 @@
-#!mast .index bin data lib [A-Z]*.*
+#!mast .index .ruby .yardopts bin data lib man *.md *.txt
 .index
+.yardopts
 bin/index
 data/indexer/index.kwalify
 data/indexer/index.yes
@@ -57,6 +58,5 @@ lib/indexer/webui/index-old.html
 lib/indexer/webui/index.html
 lib/indexer/webui.rb
 lib/indexer.rb
-Gemfile.lock
 HISTORY.md
 README.md
