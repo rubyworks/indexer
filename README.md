@@ -3,9 +3,9 @@
 
 ----
 
-# Indexer
+# INDEXER
 
-*Enable Your Project's Metadata*
+**Enable Your Project's Metadata**
 
 Indexer provides projects with a universal metadata format.
 
@@ -19,14 +19,14 @@ Indexer provides a tool to import metadata from external sources. Indexer can ha
 source formats, including YAML, HTML Microformats and Ruby DSL scripts.
 
 
-## Installation
+## [Installation](#installation)
 
 Indexer is a Ruby application, so as long as you have Ruby installed, it is easy to install Indexer via RubyGems.
 
     $ gem install indexer
 
 
-## Instruction
+## [Instruction](#instruction)
 
 Indexer is capable of generating a canonical `.index` file from a variety of sources. Being so flexiable, exactly
 how a developer descides to store a project's metadata is a largely a matter of taste. But in general there are
@@ -89,7 +89,7 @@ That's the quick "one two". For more information on using Indexer, see the Wiki,
 and the Manpages.
 
 
-## Resources
+## [Resources](#resources)
 
 * [Website](http://rubyworks.github.com/indexer)
 * [Source Code](http://github.com/rubyworks/indexer) (Github)
@@ -97,7 +97,7 @@ and the Manpages.
 * [Master Git Repo](http://github.com/rubyworks/indexer/indexer.git)
 
 
-## Requirements
+## [Requirements](#requirements)
 
 * [nokogiri](http://nokogiri.org/) 1.5+
 * [kramdown](http://kramdown.rubyforge.org/) 0.14+
@@ -106,7 +106,7 @@ and the Manpages.
 * [ae](http://rubyworks.github.com/ae/) (test)
 
 
-## Authors
+## [Authors](#authors)
 
 <ul>
 <li class="iauthor vcard">
@@ -121,7 +121,7 @@ and the Manpages.
 </ul>
 
 
-## Copyrights
+## [Copyrights](#copyrights)
 
 Indexer is copyrighted open-source software.
 
