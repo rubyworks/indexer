@@ -21,29 +21,24 @@ module Indexer
       #
       # Import files from a given directory. This will only import files
       # that have a name corresponding to a metadata attribute, unless
-      # the file is listed in a `.index_extra` file within the directory.
+      # the file name is listed in the `customs` file within the directory.
       #
-      # However, files with an extension of `.yml` or `.yaml` will be loaded
+      # However, files with an extension of `.index` will be loaded as YAML
       # wholeclothe and not as a single attribute.
       #
       # @todo Subdirectories are simply omitted. Maybe do otherwise in future?
       #
       def load_directory(folder)
         if File.directory?(folder)
-          extra = []
-          extra_file = File.join(folder, '.index_extra')
-          if File.exist?(extra_file)
-            extra = File.read(extra_file).split("\n")
-            extra = extra.collect{ |pattern| pattern.strip  }
-            extra = extra.reject { |pattern| pattern.empty? }
-            extra = extra.collect{ |pattern| Dir[File.join(folder, pattern)] }.flatten
-          end
+          customs = read_customs(folder)
+
           files = Dir[File.join(folder, '*')]
+
           files.each do |file|
             next if File.directory?(file)
             name = File.basename(file).downcase
-            next load_yaml(file) if %w{.yaml .yml}.include?(File.extname(file))
-            next load_field_file(file) if extra.include?(name)
+            next load_yaml(file) if File.extname(file) == '.index'
+            next load_field_file(file) if customs.include?(name)
             next load_field_file(file) if metadata.attributes.include?(name.to_sym)
           end
         end
@@ -82,6 +77,30 @@ module Indexer
             end
           end
         end
+      end
+
+      #
+      def read_customs(folder)
+        list = []
+        file = Dir[File.join(folder, 'customs{,.*}')].first
+        if file
+          if %w{.yaml .yml}.include?(File.extname(file))
+            list = YAML.load_file(file) || []
+            raise TypeError, "index: customs is not a array" unless Array === list
+          else
+            text = File.read(file)
+            if yaml?(text)
+              list = YAML.load_file(file) || []
+              raise TypeError, "index: customs is not a array" unless Array === list
+            else
+              list = text.split("\n")
+              list = list.collect{ |pattern| pattern.strip  }
+              list = list.reject { |pattern| pattern.empty? }
+              list = list.collect{ |pattern| Dir[File.join(folder, pattern)] }.flatten
+            end
+          end
+        end
+        return list
       end
 
     end

@@ -228,7 +228,7 @@ module Indexer
       super(value)
     end
 
-# TODO: How to handle project toplevel namespace?
+# TODO: How best to handle project toplevel namespace since it can be either a class or a module in a Ruby project?
 
     # Namespace must be a single line string.
     def namespace=(value)
@@ -251,9 +251,12 @@ module Indexer
       super(value)
     end
 
-    #
-    def extra=(value)
-      Valid.hash!(value, :extra)
+    # Custom field names must a valid list of strings.
+    def customs=(value)
+      Valid.array!(value, :customs)
+      value.each_with_index do |data, index|
+        Valid.string!(data, "customs ##{index}")
+      end
       super(value)
     end
 
@@ -284,8 +287,8 @@ module Indexer
     #
     def initialize_attributes
       @data = {
-        :type          => 'ruby',
         :revision      => REVISION,
+        :type          => 'ruby',
         :sources       => [],
         :authors       => [],
         :organizations => [],
@@ -295,8 +298,9 @@ module Indexer
         :resources     => [],
         :repositories  => [],
         :categories    => [],
+        :copyrights    => [],
+        :customs       => [],
         :paths         => {'lib' => ['lib']},
-        :copyrights    => []
       }
     end
 

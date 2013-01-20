@@ -80,16 +80,18 @@ module Indexer
     # The repository URLs for the project.
     attr_accessor :repositories
 
-    # TODO: Might webcvs simply be taken from the first repository instead?
+    # TODO: Might webcvs simply be taken from a repository?
+    #       Or perhaps from a specifically labeled resource?
 
     # URI for linking to source code.
     attr_accessor :webcvs
 
     # Map of path sets which can be used to identify paths within the project.
+    # The actual path keys largely depend on the project type, but in general
+    # should reflect the FHS,
     #
-    # For example, the `load` key is used by Ruby projectss to define which paths
-    # to search within the project when requiring files.
-    #
+    # For example, the `lib` path key is used by Ruby projects to designate
+    # which project paths to search within when requiring files.
     attr_accessor :paths
 
     # List of language engine/version family supported.
@@ -142,8 +144,8 @@ module Indexer
     # NOTE: how to best handle this?
     attr_accessor :namespace
 
-    # Any user-defined extraneous metadata.
-    #attr_accessor :extra
+    # The names of any user-defined fields.
+    attr_accessor :customs
 
   protected
 
@@ -166,6 +168,7 @@ module Indexer
         :repositories  => [],
         :resources     => [],
         :categories    => [],
+        :customs       => [],
         :paths         => {'lib' => ['lib']}
       }
     end

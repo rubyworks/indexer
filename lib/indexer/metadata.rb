@@ -525,15 +525,16 @@ module Indexer
         end
     end
 
-    ##
-    ## Set extraneous developer-defined metdata.
-    ##
-    #def extra=(extra)
-    #  unless extra.kind_of?(Hash)
-    #    raise(ValidationError, "extra must be a Hash")
-    #  end
-    #  @data[:extra] = extra
-    #end
+    #
+    # Set custom user-field names.
+    #
+    def customs=(customs)
+      #unless customs.kind_of?(Hash)
+        #raise(ValidationError, "customs must be an Array")
+        Valid.array!(customs)
+      #end
+      @data[:customs] = customs
+    end
 
     # -- Utility Methods ----------------------------------------------------
 
@@ -830,6 +831,11 @@ module Indexer
       h['conflicts']     = conflicts.map     { |x| x.to_h }
       h['repositories']  = repositories.map  { |x| x.to_h }
       h['resources']     = resources.map     { |x| x.to_h }
+
+      customs.each do |name|
+$stderr.puts self[name]
+        h[name] = self[name]
+      end
 
       h
     end
