@@ -25,13 +25,13 @@ module Indexer
       require_relative 'importer/file'
       require_relative 'importer/ruby'
       require_relative 'importer/yaml'
-      require_relative 'importer/html'
-      require_relative 'importer/markdown'
-      #require_relative 'importer/rdoc'
-      #require_relative 'importer/textile'
       require_relative 'importer/gemspec'
       require_relative 'importer/gemfile'
       require_relative 'importer/version'
+      #require_relative 'importer/html'
+      #require_relative 'importer/markdown'
+      #require_relative 'importer/rdoc'
+      #require_relative 'importer/textile'
 
       # for plugins to easily add additional importers
       super if defined?(super)
