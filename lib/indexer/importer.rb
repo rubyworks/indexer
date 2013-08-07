@@ -18,6 +18,9 @@ module Indexer
     #
     # Require all import mixins.
     #
+    # This method calls `super` if it is defined which makes it easy
+    # for plugins to add new importers.
+    #
     def self.require_importers
       require_relative 'importer/file'
       require_relative 'importer/ruby'
@@ -29,6 +32,9 @@ module Indexer
       require_relative 'importer/gemspec'
       require_relative 'importer/gemfile'
       require_relative 'importer/version'
+
+      # for plugins to easily add additional importers
+      super if defined?(super)
     end
 
     #
