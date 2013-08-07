@@ -32,8 +32,6 @@ lib/indexer/gemfile.rb
 lib/indexer/importer/file.rb
 lib/indexer/importer/gemfile.rb
 lib/indexer/importer/gemspec.rb
-lib/indexer/importer/html.rb
-lib/indexer/importer/markdown.rb
 lib/indexer/importer/ruby.rb
 lib/indexer/importer/version.rb
 lib/indexer/importer/yaml.rb
@@ -47,16 +45,6 @@ lib/indexer/validator.rb
 lib/indexer/version/constraint.rb
 lib/indexer/version/exceptions.rb
 lib/indexer/version/number.rb
-lib/indexer/webui/assets/dotruby_binding.js
-lib/indexer/webui/assets/dotruby_model.js
-lib/indexer/webui/assets/jquery-1.4.2.min.js
-lib/indexer/webui/assets/json2.js
-lib/indexer/webui/assets/knockout-2.0.0.js
-lib/indexer/webui/assets/testdata.json
-lib/indexer/webui/assets/underscore-min.js
-lib/indexer/webui/index-old.html
-lib/indexer/webui/index.html
-lib/indexer/webui.rb
 lib/indexer.rb
-HISTORY.md
 README.md
+HISTORY.md
