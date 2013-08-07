@@ -1,4 +1,4 @@
-#!mast .index .ruby .yardopts bin data lib man *.md *.txt
+#!mast -x etc .index .yardopts bin data lib man *.md *.txt
 .index
 .yardopts
 bin/index
