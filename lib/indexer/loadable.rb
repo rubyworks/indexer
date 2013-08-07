@@ -131,10 +131,10 @@ module Indexer
       if sources.empty?
         if file = exists?
           metadata = Metadata.open
-          sources = metadata.sources
+          sources  = metadata.sources
         else
-          sources = Dir.glob(USER_FILES, File::FNM_CASEFOLD)
-          raise Error.exception("could not find default sources") if sources.empty?
+          #sources = Dir.glob(USER_FILES, File::FNM_CASEFOLD)
+          raise Error.exception("Could not find a metadata source.") if sources.empty?
         end
       end
 
