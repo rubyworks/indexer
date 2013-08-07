@@ -13,15 +13,6 @@ organizations:
 - name: Rubyworks
   website: http://rubyworks.github.com
 requirements:
-- version: 1.5+
-  name: nokogiri
-- version: 0.14+
-  name: kramdown
-- groups:
-  - optional
-  version: 2.0+
-  development: true
-  name: redcarpet
 - groups:
   - test
   version: 2.9+
@@ -58,10 +49,11 @@ customs:
 paths:
   lib:
   - lib
-summary: Enable Your Project's Metadata
-title: Indexer
-version: 0.3.0
 name: indexer
-example: This is just an example of custom metadata.
+title: Indexer
+summary: Enable Your Project's Metadata
+created: '2011-06-01'
 description: Indexer provides projects with a universal metadata format.
-date: '2013-01-20'
+example: This is just an example of custom metadata.
+version: 0.3.1
+date: '2013-08-07'

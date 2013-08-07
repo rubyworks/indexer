@@ -1,7 +1,4 @@
 ---
-- nokogiri 1.5+
-- kramdown 0.14+
-- redcarpet 2.0+ (optional)
 - qed 2.9+ (test)
 - ae (test)
 
